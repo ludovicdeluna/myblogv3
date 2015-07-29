@@ -1,0 +1,11 @@
+---
+layout: page
+---
+{{ content }}
+{% assign current_year = 0 %}
+{% assign year_block = false %}
+{% for post in site.posts %}
+  {% include post_one_year.html %}
+{% endfor %}
+{% if year_block %}</ul>{% endif %}
+

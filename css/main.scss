@@ -1,0 +1,138 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+@charset "utf-8";
+
+
+
+// Our variables
+$base-font-family: Helvetica, Arial, sans-serif;
+$base-font-size:   16px;
+$small-font-size:  $base-font-size * 0.875;
+$base-line-height: 1.5;
+
+$spacing-unit:     30px;
+
+$text-color:       #111;
+$background-color: #fdfdfd;
+$brand-color:      #2a7ae2;
+
+$grey-color:       #828282;
+$grey-color-light: lighten($grey-color, 40%);
+$grey-color-dark:  darken($grey-color, 25%);
+
+// Width of the content area
+$content-width:    800px;
+
+$on-palm:          600px;
+$on-laptop:        800px;
+
+
+
+// Using media queries with like this:
+// @include media-query($on-palm) {
+//     .wrapper {
+//         padding-right: $spacing-unit / 2;
+//         padding-left: $spacing-unit / 2;
+//     }
+// }
+@mixin media-query($device) {
+    @media screen and (max-width: $device) {
+        @content;
+    }
+}
+
+
+
+// Import partials from `sass_dir` (defaults to `_sass`)
+@import
+        "base",
+        "layout",
+        "syntax-highlighting"
+;
+
+// Testings
+
+.header-banner-image {
+  background: grey no-repeat center center / cover;
+  height: 40vw;
+  min-height: 180px;
+  max-height: 45%;
+  overflow: hidden;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-banner-image.with_content{
+  display: table;
+}
+
+.header-banner-credits {
+  position: absolute;
+  right: 15px;
+  padding-top: 5px;
+  color: grey;
+  background: white;
+}
+
+div.header-category {
+  position: absolute;
+  text-align: center;
+  margin-top: -40px;
+  left: 0;
+  right: 0;
+}
+
+span.header-category{
+  font-size: 150%;
+  display: inline-block;
+  padding: 0 40px;
+  line-height: 80px;
+  vertical-align: middle;
+  background: darkblue;
+  color: white;
+}
+
+.wrapper {
+  position: relative;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 1000px;
+}
+
+.wrapper.content {
+  margin-top: 65px;
+  padding: 0 10px;
+}
+
+div[role=main]{
+  float: left;
+  width: calc( 100% - 220px );
+  overflow:hidden;
+}
+
+div[role=main]{
+  border-right: 1px solid #DBDBDB;
+  margin-right: 10px;
+  padding-right: 10px;
+}
+
+nav {
+  overflow: hidden;
+}
+
+@media screen and (max-width: 600px) {
+  div[role=main] {
+    float: none;
+    width: 100%;
+    border-right: none;
+    margin-right: 0;
+    padding-right: 0;
+  }
+}
+
+.site-footer {
+  clear: both;
+}
+
+html, body { height: 100% }

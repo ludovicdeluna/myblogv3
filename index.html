@@ -1,0 +1,16 @@
+---
+layout: default
+---
+<section class="posts">
+  <h1>Derniers billets</h1>
+  {% if paginator.page %}
+    {% for post in paginator.posts %}
+      {% include post_overview.html %}
+    {% endfor %}
+    {% include pagination.html %}
+  {% else %}
+    {% for post in site.posts %}
+      {% include post_overview.html %}
+    {% endfor %}
+  {% endif %}
+</section>

@@ -1,0 +1,9 @@
+{% capture year_post %}{{post.date | date: "%Y"}}{% endcapture %}
+{% if current_year != year_post %}
+  {% if year_block %}</ul>{% endif %}
+  <h5>{{ year_post }}</h5>
+  <ul>
+  {% unless year_block %}{% assign year_block = true %}{% endunless %}
+  {% assign current_year = year_post %}
+{% endif %}
+<li><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></li>

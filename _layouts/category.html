@@ -1,0 +1,15 @@
+---
+layout: page
+---
+{% assign current_year = 0 %}
+{% assign year_block = false %}
+{% for post in site.posts %}
+  {% for category in post.categories %}
+    {% if page.category == category %}
+      {% include post_one_year.html %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+{% if year_block %}</ul>{% endif %}
+

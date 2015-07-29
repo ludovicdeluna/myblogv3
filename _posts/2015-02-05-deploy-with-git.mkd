@@ -1,0 +1,349 @@
+---
+layout: post
+title:  "Deployer avec Git facilement"
+date:   2015-02-05 10:00:28
+categories: git
+tags: bash github
+---
+
+Les projets sont généralements hébergés sur un dépôt GIT. Qu'il s'agisse d'un
+dépôt sur serveur privé ou via un service (GitHub, Bitbucket), il est possible
+d'associer un déploiement automatique vers vos serveurs.
+
+Introduction
+------------
+
+Efficace pour des environnements de développement ou "staging" / "UAT", on
+préfèrera une méthode plus conventionnelle pour la production.
+
+Il ne s'agit pas ici de décrire une méthode visant à concurrencer des outils
+spécialisés (dont l'excellent capistrano) mais d'apporter une solution simple
+basée sur :
+
+- Les hooks (Git, Github, Bitbucket).
+- Un client Git.
+- Un shell script Unix lancé depuis CRON.
+- Un script (PHP, Ruby, Python ou autre) pour générer un jeton (appelé par le
+  Hook).
+
+
+Context
+-------
+
+On souhaite récupèrer de façon automatique le contenu de notre depôt Git sur
+notre serveur. Pour des raisons de sécurité ou de pratique, nous ne souhaitons
+pas que le référentiel (dossier .git) soit dans le dossier du site.
+
+Sur le serveur, nous avons :
+
+- Le dossier utilisé par les scripts d'exploitation, qui contiendra également
+  notre dépôt. Disons : ```/home/exploit/git/mon_site_web```
+- Le dossier web : ```/data/www/mon_site_web```
+
+
+### Principes
+
+Toute mise à jour de notre dépôt sur une branche cible enclenche un "Hook" qui
+va appeler une page web de notre serveur. La page web en elle-même va juste
+générer un jeton (simple fichier vide).
+
+Un script vérifie régulièrement la présence du jeton et lance la commande ```git
+pull``` lorsque ce dernier est présent. Un e-mail est ensuite envoyé à chaque
+déploiement.
+
+
+Pour la mise en place, il faut procéder ainsi :
+
+1. Créer un dépôt git sur le serveur et récupérer la branche du projet.
+2. Configurer le script web qui va générer un jeton.
+3. Configurer le shell script avec les bons chemuns et paramétrer CRON.
+4. Disposer d'une clé privée / pubique pour l'accès au dépôt GIT.
+5. Paramétrer le Hook du service Git contenant notre projet.
+
+
+Créer un dépôt git
+------------------
+
+Inutile ici de faire un simple ```git clone``` ! Il faut quelques étapes en
+plus, mais rien de bien compliqué, rassurez-vous :
+
+```
+mkdir /home/exploit/git/mon_site_web
+cd /home/exploit/git/mon_site_web
+
+git init
+git config core.worktree /data/www/mon_site_web
+git remote add origin git@github.com:MON_NOM/MON_PROJET.git
+git pull
+```
+
+> A chaque commande ```git pull``` depuis le dossier
+> ```/home/exploit/git/mon_site_web```, c'est le dossier web qui sera peuplé par
+> les fichiers de votre depôt git.
+
+
+Configurer le shell script
+--------------------------
+
+Le script doit décrire les éléments suivants :
+
+- DEPL_SITE_GIT : Le dossier contenant le dépôt GIT. Obligatoire, c'est là que
+  sera lancé la commande ```git pull```
+
+- DEPL_SITE_WEB : Le dossier du site web. Obligatoire, c'est là que le site sera
+  déployé
+
+- DEPL_JETON : Le dossier contenant le jeton. Facultatif si on ne veut pas
+  coupler le traitement avec un Hook. Dans ce dernier cas, chaque lancement du
+  script fait une synchronisation.
+
+- DEPL_CHOWN : L'utilisateur et le group utilisé par le service web. Si le
+  script avec le même compte que celui du service web, il faut laisser vide.
+
+- DEPL_EMAIL : Destinataire de l'e-mail à chaque déploiement. Si on ne veut pas
+  d'e-mail, laisser vide.
+
+- DEPL_FROM : Emetteur de l'e-mail. Laisser vide pour réutiliser la même adresse
+  que le destinataire.
+
+- DEPL_SUBJECT : En général, le nom du site. Il sera ensuite suivit par [OK] ou
+  [ERREUR] en fonction du déploiement.
+
+
+Et voici le script. Veiller à ce qu'il dispose des droits d'execution (chmod) :
+
+```bash
+#!/usr/bin/env bash
+clear
+
+# Paramétrages (Ne pas ajouter d'espaces)
+# Les 3 premiers sont des chemuns absolus (path entier)
+# Et oui, j'utilise export sans réfléchir par habitude :)
+export DEPL_SITE_GIT="/home/exploit/git/mon_site_web"
+export DEPL_SITE_WEB="/data/www/mon_site_web"
+export DEPL_JETON="/home/exploit/git/mon_site_web"       # (vide si off)
+export DEPL_CHOWN=""                  # utilisateur:groupe (vide si off)
+export DEPL_EMAIL="ludovic@moi.com"   # utilisateur@serveur.com (vide si off)
+export DEPL_FROM=""                   # vide si identique ci-dessus
+export DEPL_SUBJECT="mon site web"
+
+# Variables d'amorce
+export DEPL_GIT_REPOSITORY=""
+export DEPL_SENDMAIL=()
+export DEPL_SENDMAIL_PASS=1
+export DEPL_PASS=1
+export DEPL_MSG=""
+export DEPL_ERRORS=()
+export DEPL_FLAG="[OK]"
+[ -z "$DEPL_FROM" ] && DEPL_FROM=$DEPL_EMAIL
+
+# Affiche les paramètres
+echo "Paramètres de déploiement :"
+printf "Dossier git : %s\n" "$DEPL_SITE_GIT"
+printf "Site web : %s\n" "$DEPL_SITE_WEB"
+[ ! -z "$DEPL_CHOWN" ] && printf "Propriétaire : %s\n" "$DEPL_CHOWN"
+[ ! -z "$DEPL_JETON" ] && printf "Jeton : %s\n" "$DEPL_JETON" || echo "Jeton 0"
+[ ! -z "$DEPL_EMAIL" ] && printf "Envoie d'e-mail à : %s\n" "$DEPL_EMAIL"
+
+
+# Vérifie qu'on peut envoyer un e-mail
+if [ ! -z "$DEPL_EMAIL" ] && ! hash sendmail 2>/dev/null
+then
+  printf "Attention : Sendmail n'est pas installé. Aucun envoi d'e-mail\n"
+  DEPL_SENDMAIL_PASS=0
+fi
+
+# Vérifie qu'on a les deux dossiers
+for check_folder in "$DEPL_SITE_GIT" "$DEPL_SITE_WEB"
+do
+  if [ ! -d "$check_folder" ]
+  then
+    DEPL_ERRORS=("${DEPL_ERRORS[@]}" "Erreur d'accès au dossier $check_folder")
+  fi
+done
+
+# Affiche les infos git
+if [ ${#DEPL_ERRORS[@]} == 0 ]
+then
+  cd "$DEPL_SITE_GIT"
+  DEPL_GIT_REPOSITORY="$(git config --get remote.origin.url)"
+  if [ $? == 0 ]
+  then
+    printf "Dépôt git : %s\n" "$DEPL_GIT_REPOSITORY"
+  else
+    # Vérifie qu'on a un dépôt GIT paramétré (implicite)
+    DEPL_ERRORS=("${DEPL_ERRORS[@]}" "Pas de dépôt GIT dans $DEPL_SITE_GIT.")
+  fi
+fi
+
+echo ""
+
+# Affiche les erreurs si elles existent
+if [ ! ${#DEPL_ERRORS[@]} == 0 ]
+then
+  printf "%s\n" "${DEPL_ERRORS[@]}"
+  DEPL_PASS=0
+fi
+
+
+# Si tout est bon, on le dit et on poursuit
+if [ $DEPL_PASS == 1 ]
+then
+  echo "Configuration ok."
+  if [ ! -z "$DEPL_JETON" ] && [ ! -f "$DEPL_JETON" ]
+  then
+    DEPL_PASS=0
+    echo "Aucun jeton. Fin de traitement."
+    exit 0
+  fi
+
+else
+  DEPL_MSG="Configuration en échec"
+  echo "$DEPL_MSG"
+fi
+
+# Synchronisation (un e-mail est envoyé selon le résultat)
+if [ $DEPL_PASS == 1 ]
+then
+  echo "Synchronisation en cours..."
+  if git pull
+  then
+    DEPL_MSG="Synchronisation terminée."
+
+    if [ ! -z "$DEPL_CHOWN" ]
+    then
+      chown -R "$DEPL_CHOWN" "$DEPL_SITE_WEB"
+      if [ $? != 0 ]
+      then
+        DEPL_MSG="Erreur : Changement de propriétaire impossible : $DEPL_CHOWN"
+        DEPL_PASS=0
+      fi
+    fi
+
+  else
+    DEPL_MSG='Erreur : Echec de la commande git pull.'
+    DEPL_PASS=0
+  fi
+
+  # En cas de pépin, change le statut [OK] -> [ERROR] et affiche le résultat
+  [ $DEPL_PASS == 0 ] && DEPL_FLAG="[ERROR]"
+  [ ! -z "$DEPL_MSG" ] && echo "$DEPL_MSG"
+fi
+
+# Suppression du jeton
+if [ $DEPL_PASS == 1 ] && [ ! -z $DEPL_JETON ]
+then
+  echo "Suppression du jeton..."
+  rm $DEPL_JETON
+fi
+
+# E-Mail
+if [ ! -z "$DEPL_EMAIL" ]
+then
+  printf "Envoi de l'e-mail en cours...\n"
+  DEPL_SUBJECT="$DEPL_SUBJECT $DEPL_FLAG"
+  DEPL_SENDMAIL=("${DEPL_SENDMAIL[@]}" "From: $DEPL_FROM" "Subject: $DEPL_SUBJECT")
+  DEPL_SENDMAIL=("${DEPL_SENDMAIL[@]}" "To: $DEPL_EMAIL" "" "$DEPL_MSG" "." "")
+
+  printf "\n ---DEBUT EMAIL---\n"
+  printf "%s\n" "${DEPL_SENDMAIL[@]}"
+  printf " ---FIN EMAIL---\n\n"
+
+  if [ $DEPL_SENDMAIL_PASS == 1 ]
+  then # You know what ? J'ai pas testé ça !
+    printf "%s\n" "${DEPL_SENDMAIL[@]}" | sendmail $DEPL_EMAIL
+  fi
+
+  if [ $? != 0 ] || [ "$DEPL_SENDMAIL_PASS" == 0 ]
+  then
+    printf "Attention : E-mail non envoyé\n"
+  fi
+fi
+
+# Fin du programme et code de sortie
+if [ $DEPL_PASS == 1 ]
+then
+  echo "Fin du traitement."
+  exit 0
+
+else
+  echo "Echec de la synchronisation."
+  exit 1
+fi
+
+```
+
+A titre d'exemple, la configuration actuelle du script affiche le résultat
+suivant (ou similaire selon votre situation) losqu'il est lancé :
+
+```
+Paramètres de déploiement :
+Dossier git : /home/exploit/git/mon_site_web
+Site web : /data/www/mon_site_web
+Jeton 0
+Envoie d'e-mail à : ludovic@moi.com
+Attention : Sendmail n'est pas installé. Aucun envoi d'e-mail
+Dépôt git : git@github.com:ludovicdeluna/myblog.git
+
+Configuration ok.
+Synchronisation en cours...
+Already up-to-date.
+Synchronisation terminée.
+Envoi de l'e-mail en cours...
+
+ ---DEBUT EMAIL---
+From: ludovic@moi.com
+Subject: mon site web [OK]
+To: ludovic@moi.com
+
+Synchronisation terminée.
+.
+
+ ---FIN EMAIL---
+
+Attention : E-mail non envoyé
+Fin du traitement.
+```
+
+
+
+
+Définissez les accès
+--------------------
+
+### Générez vos clés SSH
+
+Utile uniquement si vous n'avez pas déjà un jeu de clé publique/privée. Ici, on
+peut se permettre d'avoir une clé privée sans passphrase (non cryptée).
+
+```
+ssh-keygen -t rsa -b 2048
+```
+
+Si vous avez déjà une clé privée et souhaitez l'extraire de façon non cryptée,
+lancez la commande suivante (dans le cas d'une clé RSA) :
+
+```
+openssl rsa -in id_rsa -out id_rsa.pem
+```
+
+Si vous souhaitez utiliser une clé privée cryptée, la meilleur méthode et la
+plus sécurisée et de lancer un ssh-agent et d'y ajouter la clé... Manuellement.
+Si vous le faite de façon automatisée sur le serveur qui contient la clé privée,
+les avantages de lé clé cryptée sont perdus.
+
+
+### Configurez le client SSH
+
+En règle générale, on utilise les accès SSH. Il faut donc parametrer le client
+SSH pour associer sa clé à son depôt GitHub. Attention à bien faire la
+configuration pour le compte qui va lancer la commande ```git pull``` (vérifiez
+bien votre script).
+
+
+### Déclarez la clé publique sur GitHub / BitBucket
+
+Depuis votre interface de gestion, se placer sur le dépôt git cible et afficher
+la liste des collaborateurs. Y ajouter la clé et le tour est joué.
+
+Voir pour ensuite : http://guides.beanstalkapp.com/deployments/deploy-with-capistrano.html

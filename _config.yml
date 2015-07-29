@@ -1,0 +1,40 @@
+# Site settings
+title: Your awesome title
+email: your-email@domain.com
+description: > # this means to ignore newlines until "baseurl:"
+  Write an awesome description for your new site here. You can edit this
+  line in _config.yml. It will appear in your document head meta (for
+  Google search results) and in your feed.xml site description.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://yourdomain.com" # the base hostname & protocol for your site
+twitter_username: jekyllrb
+github_username:  jekyll
+tag_title_prefix: Site avec &ldquo;
+
+# Added a spcial folder to keep all pages
+include: ['_pages']
+
+# Build settings.
+#markdown: kramdown
+markdown: redcarpet # More respect of fenced backtick. Kramdown GFM is bad.
+
+# Hightligter (Default: Pygments. Require Python)
+# To use Rouge, install it before (gem install rouge). Be aware, latest version
+# is really unstable. To use it, uncomment bellow:
+# highlighter: rouge
+
+# Pagination
+paginate: 5
+
+# Category generated page config
+cat_title_prefix: "Catégorie : "
+cat_title_suffix: ""
+
+# FrontMatter default settings
+defaults:
+  -
+    scope:
+      type: "posts"
+    values:
+      permalink: "posts/:categories/:year/:month/:day/:title/"
+      #excerpt_separator: "<!--more-->"

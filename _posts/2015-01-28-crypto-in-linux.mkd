@@ -1,0 +1,772 @@
+---
+layout: post
+title:  "Clé publique / privée chez le dev"
+date:   2015-01-28 17:05:31
+picture: pict2.jpg
+credits: Un super site sympa
+link: http://www.google.com
+categories: securité
+tags: PKI SSL SSH
+---
+
+
+
+Introduction
+------------
+
+Le principe de clé publique / privée est l'une des solutions la plus adaptée
+pour sécuriser les échanges électroniques. Qu'il s'agisse de crypter / décrypter
+des messages, signer des documents, certifier l'identité d'un service ou d'un
+utilisateur, le recours aux principes de clés est largement répandue. Voyons un
+peu sur quoi repose ce principe et comment il est utilisé.
+
+> Les commandes utilisées ici font partie des outils standards du monde Linux.
+> Si vous utilisez une autre plateforme (Mac OSX), il se peut que les versions
+> des outils ou leurs options diffèrent, voir que ces outils ne soient tout
+> simplement pas disponibles pour votre plateforme.
+
+
+Principes
+---------
+
+On ne peut pas parler de sécurité par clé privée / publique sans parler de
+ce qui est à sa base : La cryptographie asymétrique et ses principaux
+algorithmes qui sont :
+
+- **RSA** :  
+  Développé par trois mathématiciens en 1977 et breveté en 1983 par le
+  MIT (USA) puis utilisé dès 1990 par les laboratoires RSA Security INC en
+  Californie pour créer une norme de sécurité autour des clés publiques générées
+  par cet algorithme : PKCS (Public Key Cryptographic Standards), dont les
+  formats les plus répandus sont PKCS#1, PKCS#7, PKCS#8 et PKCS#12. Le nom RSA
+  vient de ses trois créateurs : Ron **R**ivest, Adi **S**hamir and Leonard
+  **A**dleman. Noter que les normes PKCS s'adressent également au stockage des
+  clés privées.
+
+- **DSA** :  
+  Développé par le NIST en 1991 à New York en réponse au RSA qui a l'époque
+  était breveté, c'est l'algorithme de cryptage asymétrique utilisé pour les
+  spécifications de sécurité DSS (Digital Signature Standard). Egalement breveté
+  mais non soumis à une redevance, ce format est celui favorisé par les
+  instances gouvernementales américaines. L'ensemble des standards sont
+  regroupés dans les normes de processus FIPS (Federal Information Processing
+  Standards), le format DSA étant décrit dans les spécifications FIPS 186 dès
+  1993.
+
+- **ECC** :  
+  Abbréviation de Elliptic Curve Cryptography, cet algorithme est initialement
+  proposé par deux mathématiciens en 1985 mais est réellement utilisé depuis
+  2004 pour sa capacité à être plus efficace que RSA pour une longueur de clé
+  identique.
+
+
+**Cryptographie asymétrique... Kesako ?**
+
+Les algorithmes de cryptographie les plus courants sont dits *symétriques*,
+c'est-à-dire qu'ils reposent sur un élément secret partagé par l'émetteur et
+le destinataire du message (le mot de passe ou la passphrase). Les plus courants
+dans le domaine des clés sont les algorithmes de cryptage DES / Triple DES
+(nommé DES3) et son successeur AES. Le principal inconvénient de ce système et
+que si l'élément secret est divulgué, la sécurité n'est plus assurée.
+
+A l'inverse, la cryptographie *asymétrique* implique d'utiliser deux éléments
+adressés à chacune des deux parties : Ce sont les clés. Chaque algorithme
+dispose d'un type de clé qui lui est propre (une clé RSA ne peut être utilisée
+que par un algorithme RSA).
+
+Points communs des algorithmes asymétriques :
+
+1.  Tout repose sur un jeu de deux clés.
+2.  La clé privée permet de déduire la clé publique (et une seule). Elle ne doit
+    pas être divulguée.
+3.  La clé publique ne permet pas de déduire la clé privée, elle peut être
+    distribuée librement.
+4.  On peut chiffrer un message avec la clé publique, mais il faudra la clé
+    privée pour le déchiffrer. C'est également vrai dans l'autre sens.
+
+> Le point faible de la sécurité par clé publique / privée reside dans la
+> longueur de la clé utilisée (qui conditionne le niveau de chiffrement) et
+> surtout dans le fait que la clé privée doit absolument rester secrète.
+
+
+Définitions
+-----------
+
+**Clé privée**  
+C'est l'élément principal dans un jeu de clé privé/public. Quel que soit
+l'algorithme associé à votre clé privée, on ne peut déduire qu'une - et une
+seule - clé publique d'après une clé privée... Si vous rejouez plusieurs fois le
+générateur de clé publique depuis une clé privée, vous aurez à chaque fois la
+même clé publique en résultat.
+
+
+**Clé publique**  
+Elle est générée dans un deuxième temps (certains outils le font de façon
+transparente) d'après la clé privée. Il n'est pas possible de déduire la clé
+privée depuis une clé publique (elle est de taille plus petite).
+
+
+**Passphrase**  
+C'est comparable à un mot de passe, mais concerne plutôt une phrase plus ou
+moins longue, et donc plus difficile à trouver pour d'éventuels pirates. En
+général, une longueur moyenne de passphrase compte 10 à 30 caractères.
+
+
+**Algorithme de Hachage**  
+Méthode mathématique permettant de créer une forme d'empreinte d'après un
+contenu. Toute modification de contenu fournira une empreinte différente.
+Dans le context de ce document, je vais volontairement utiliser le terme
+générique "encoder" pour référencer l'action de "hasher" un fichier
+(généralement en base64).
+
+
+**Algorithme de Cryptage**  
+Méthode mathématique permettant de transformer un message clair en message
+chiffré et donc illisible. Le cryptage est réversible et permet toujours de
+retrouver l'original non crypté, mais il faut en général utiliser un élément
+secret (mot de passe ou passphrase). L'action de crypter un fichier s'appelle
+"cryptage" ou "chiffrement".
+
+
+Usages
+------
+
+Dans quels cas nous utilisons les clés publiques / privées ?
+
+**Le cryptage**  
+  Son rôle est d'assurer qu'un échange entre deux personnes (ou deux machines)
+  ne pourra pas être intercepté. On l'utilise via des protocoles SSL (internet),
+  SSH et globalement les différents protocoles de sécurisation utilisés en
+  télécommunication.
+
+**La signature**  
+  Un peu plus complexe à réaliser car il nécessite d'utiliser un autre
+  algorithme, dit de *hachage* tels que SHA-1 ou MD5. Cet algorithme permet de
+  générer une empreinte d'un message (et non un cryptage car on ne peut déduire
+  le message d'origine d'après son empreinte). Toute modification du message
+  aura pour conséquence de modifier l'empreinte.
+
+  Le principe de signature repose sur la génération d'une empreinte sur 2
+  éléments : Le message que l'on souhaite signer et la clé publique du
+  signataire. Parfois, on a également un certificat, mais ce n'est pas
+  nécessaire. Enfin, l'empreinte est chiffrée via la clé privée du signataire.
+
+  Pour vérifier la signature, on déchiffre l'empreinte via la clé publique qui
+  l'accompagne et on regénère une nouvelle empreinte (via le même algorithme de
+  hachage). Si les deux empreintes correspondent, on a la preuve que :
+
+  - Le message (ou document) original n'a pas été altéré
+  - C'est bien le signataire qui a signé le document.
+  - Dans le cas où un certificat est inclus, ce dernier est vérifié via la même
+    procédure, répétée sur tout la chaîne de certification (jusqu'au certificat
+    Root). Il est parfois nécessaire d'utiliser un certificat si on n'a pas
+    recours à une architecture qui centralise les clés publiques et valide leur
+    porteur (propriétaire).
+
+  La signature est à la base de la création des certificats : Un document
+  électronique normalisé (X.509) contenant des informations administratives et
+  techniques (adresse du site que l'on souhaite certifier par exemple) qui est
+  signé par une autorité de certification, un peu à l'image du couple
+  tampon/signature produit par une organisation ou administration.
+
+**Authentification**  
+  L'un des protocoles d'authentification les plus répandus est le SSH (et oui,
+  lorsque vous utilisez GitHub pour vos projets, vous échangez via SSH). Le
+  principe est de déclarer sur le serveur la clé publique d'un utilisateur.
+
+  SSH utilise les deux types d'algorithmes : Asymétrique et symétrique. Lorsque
+  un utilisateur se connecteur à un serveur via SSH et qu'il dispose d'une clé
+  publique sur ce serveur, SSH va créer une passphrase. Celle-ci est transmise à
+  l'utilisateur mais de façon cryptée (avec la clé publique).
+
+  Le logiciel de l'utilisateur va décrypter la passphrase avec la clé privée.
+  Ensuite, tous les échanges seront cryptés en utilisant comme élément secret la
+  passphrase préalablement échangée.
+
+  Cette méthode a pour interêt :
+
+  - De valider que l'utilisateur a bien la clé privée. Dans le cas contraire, il
+    ne serait pas en mesure de déchiffrer la passphrase pour entamer des
+    échanges cryptés.
+  - Le cryptage / décryptage par algorithme symétrique est plus rapide. On
+    utilise donc le principe des clés que pour la phase d'authentification.
+
+> **Pourquoi mon client SSH ajoute le serveur à sa liste ?**  
+> La technique decrite ci-dessus permet au serveur de s'assurer que
+> l'utilisateur est bien qui il prétend être. Mais ce n'est pas vrai dans
+> l'autre sens. C'est pourquoi une empreinte du serveur est générée par le
+> logiciel SSH pour chaque nouvelle connexion. Si l'empreinte change,
+> l'utilisateur est averti. La liste des serveurs et leur empreinte est dans le
+> fichier ```.ssh/known_hosts```
+
+
+La norme de stockage ASN.1
+--------------------------
+
+C'est la base utilisée pour stocker les clés, certificats et chaîne de
+certification. Il décrit principalement deux conteneurs : L'un permet un
+stockage binaire (DER), l'autre permet un stockage textuel (PEM). Quelque soit
+le type d'algorithme utilisé (RSA, DSA, ECC) ou les normes associées (X.509),
+tous utilisent ASN.1 pour y stocker leur contenu.
+
+
+### DER (Distinguished Encoding Rules)
+
+Issu de la spécification [X.690][X.690], définit un format de stockage binaire.
+Ce format est par exemple utilisé sur de l'embarqué ou pour stocker les
+informations de carte bancaire sur les puces.
+
+**Extensions :**
+
+- .der : Clé publique ou privée au format PKCS#8 (type RSA, DES ou ECC)
+- .crt .cer .cert : Certificat au format X.509
+
+Pour convertir une clé privée stockée dans un fichier PEM vers un format DER,
+utiliser la commande suivante (clé au format RSA) :
+
+```
+openssl rsa -inform PEM -outform DER -in id_rsa.pem -out id_rsa.der
+```
+
+
+### PEM (Privacy Enhanced Email)
+
+Définit un format de stockage texte, qui a l'avantage d'être supporté par toutes
+les plateformes et facilement échangeable par formulaire web, e-mail, services
+d'échange. Le contenu d'un fichier PEM peut être visualisé et modifié avec
+n'importe quel éditeur, cependant le corps du contenu est encodé en
+[base64][RFC-3548] d'une longueur fixe. Un fichier PEM a une structure très
+simple.
+
+```
+-----DESCRIPTIF DU FICHIER-----
+...... Contenu encodé .........
+........ en base 64 ...........
+-----FIN DU CONTENU---------
+```
+
+**Extensions:**
+
+- .pem .key : Clé publique ou privée au format PKCS#8 (type RSA, DES ou ECC), ou
+              PKCS#1 (type RSA uniquement) qui est de moins en moins utilisé.
+- .crt .cer .cert : Certificat au format X.509
+- .csr : Demande de certificat
+- .crl : Liste de révocation de certificats / clés
+
+> Bien qu'il soit possible de stocker dans un fichier PEM plusieurs éléments, il
+> est recommandé de se limiter à un élément par fichier.
+
+Pour convertir une clé privée stockée dans un fichier DER vers un format PEM,
+utiliser la commande suivante (clé au format RSA) :
+
+```
+openssl rsa -inform DER -outform PEM -in id_rsa.der -out id_rsa.pem
+```
+
+La norme PKCS
+-------------
+
+La norme PKCS regroupe toutes les règles d'utilisation et d'encodage lié à la
+sécurisation d'échange par l'algorithme RSA. Cependant, une partie des normes
+PKCS sont également utilisées avec d'autres algorithmes, dont le DES.
+
+Les données PKCS peuvent être stockées dans un fichier PEM ou DER.
+
+
+### PKCS#1
+
+Utilisé pour stocker une clé publique ou clé privée avec ou sans cryptage, c'est
+la première version normalisée pour stocker les clés. Il a été ensuite remplacé
+par PKCS#8 mais est toujours utilisé.  
+**Extensions** : Aucune par défaut (si utilise un nom standardisé sous OpenSSH,
+eg : ```id_rsa```), sinon .key
+
+Exemples :
+
+```
+-----BEGIN RSA PUBLIC KEY-----
+..... Contenu encodé .........
+....... en base 64 ...........
+-----END RSA PUBLIC KEY-----
+```
+
+Et pour une clé privée :
+
+```
+-----BEGIN RSA PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: AES-128-CBC,D345A404789488745F2BE16F47F72D0A
+..... Contenu encodé .........
+....... en base 64 ...........
+-----END RSA PRIVATE KEY-----
+```
+
+
+> OpenSSH génère par défaut des fichiers au format PKCS#1 pour une clé RSA
+> privée lorsque celle-ci est cryptée.
+
+### PKCS#8
+
+Ce format est plus évolué que PKCS#1 et représente son successeur. Ce format
+permet de stocker des éléments utilisant d'autres algorithmes que RSA, dont le
+DES. En règle général, on lui préfère ce format, même si certains outils (dont
+OpenSSH) continuent d'utiliser PKCS#1 par défaut.  
+**Extensions** : .pem .der .key
+
+Exemples :
+
+```
+-----BEGIN PUBLIC KEY-----
+..... Contenu encodé .........
+....... en base 64 ...........
+-----END PUBLIC KEY-----
+```
+
+et pour une clé privée :
+
+```
+-----BEGIN ENCRYPTED PRIVATE KEY-----
+..... Contenu encodé .........
+....... en base 64 ...........
+-----END ENCRYPTED PRIVATE KEY-----
+```
+
+> Les versions récentes d'OpenSSH peuvent lire et écrire des fichiers PEM/DER au
+> format PKCS#8.
+
+
+### PKCS#7
+
+Format en standard ouvert ([RFC-2315][RFC-2315]) conçu pour stocker les clés
+publiques et les certificats serveur (hors clé privée) avec sa chaîne de
+certification, ce format est reconnu en natif par le framework Java et MS
+Windows, il est également le format par défaut utilisé par les produits open
+source tels que OpenSSL pour générer des certificats.  
+**Extensions** : .p7b .p7c
+
+Exemple de clé publique :
+
+```
+-----BEGIN PKCS7-----
+..... Contenu encodé .........
+....... en base 64 ...........
+-----END PKCS7-----
+```
+
+Exemple avec un certificat :
+
+```
+-----BEGIN CERTIFICATE-----
+..... Contenu encodé .........
+....... en base 64 ...........
+-----END CERTIFICATE-----
+```
+
+### PKCS#12
+
+Conteneur issu d'un standard privé pouvant inclure à la fois  une ou des clé(s)
+privé(s) et disposant de mécanismes de sécurité supplémentaires par rapport
+au format PKCS#7. Utilisé pour stocker un certificat serveur avec sa chaîne de
+certification ainsi que des clés privées, il est le format recommandé sur
+plateforme Windows (par rapport à PKCS#7).  
+**Extensions** : .pkcs12 .p12 .pfx (n'est plus utilisé)
+
+Quelques commandes utiles :
+
+- Récupérer la clé privée au format PKCS#8:  
+  ```
+  openssl pkcs12 -nocerts -in cert.p12 -out mykey.pem
+  ```
+
+- Récupérer le certificat au format PKCS#7:  
+  ```
+  openssl pkcs12 -clcerts -nokeys -in cert.p12 -out mycert.crt
+  ```
+
+
+### CRL (Certificate Revocation List)
+
+Fichier PEM ou DER contenant une liste de certificat à révoquer selon la
+[RFC-3280][RFC-3280].  
+**Extensions** : .crl
+
+
+SSH et SSH2 (RFC4716)
+---------------------
+
+OpenSSH utilise un format SSH1 pour les clés RSA (une ligne par clé) et SSH2
+pour les clés DSA (et par extention, RSA qui est également supporté). Noter que
+le client SSH reconnait également les formats PKCS#1 et PKCS#8, mais qu'on ne
+peut utiliser que le format SSH1 ou SSH2 pour renseigner respectivement le
+fichier ```authorized_keys``` ou ```authorized_keys2```.
+Exemple d'une clé publique au format SSH1 (RSA) :
+
+```
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDROeOtYw6Im1QhqWo8AxKpBkJQ+2TKX1QOy6c3bMB
+aar5AXdQ+b8sKM9rfAT5KoOfh8raIMo6h3aHD+tOsPaqApy3Hpvvn2Y0yKenONdvRdv7qua4tCEY9ji
+5C9Kko5PDsJ1W49R5CTvjpPFZI/ELHx7X+TymbSxcOwnuNjnj3UJW7+e1NPirBStFu2OAruOxMik8VV
+bJFiLcqnrHcW9yvxb8IAoLCcDKjHFw9zEa1ZKUurz2ik04MZbxsngo7H8KufUjzDmwbSMz/fM3UnLte
+ata/BnvHYUGpnB0WL/UXbvB4o9jvAaePpGtzHp52
+```
+
+> OpenSSH stocke par défaut les clés RSA privées cryptées en format PKCS#1. Il
+> est toutefois possible de modifier ce fonctionnement.
+
+Exemple avec un fichier SSH2 (RFC4716):
+
+```
+---- BEGIN SSH2 PUBLIC KEY ----
+Comment: "2048-bit RSA, converted by ubuntu@ubuntu from OpenSSH"
+AAAAB3NzaC1yc2EAAAADAQABAAABAQCvYwy4ZcnP3j74D8f06WVWHGPxIK8pIs8qDOE6lo
+QRSRauPf8Vy0TbT3TBovysWUa1I5b6EFdLfO29HkbebhqsIAVh2wgYf4tWte2zMWGvujGS
+0P7Dzx2wBrcnxVEFYRfFsT2PhI+NaoGmyDYeR+1tMDL4oPL7uSzzOPwHZih83eYMuRElIZ
+DD3b697IVDxHLGp8uJSJAE0VAlx7Uujd3UUjUt/Jc4ngsORGOR6ikW4u70tbWtzbTWQ7ld
+ysJHSATLbivg2jH2P5VnuHy2LWEuAjnWBvTtzpIB/EQFM1GufPQiUU//8CAP112CUbdLcd
+3G6ifvmVKXBAN6IOMY/+g9
+---- END SSH2 PUBLIC KEY ----
+```
+
+Pour générer une clé publique d'après la clé privée en SSH2 :  
+```
+ssh-keygen -f id_rsa -e -y
+```
+
+Pour générer une clé publique d'après la clé privée en format SSH1 (RSA
+uniquement) :  
+```
+ssh-keygen -f id_rsa -y
+```
+
+
+Générer des clés RSA
+--------------------
+
+> Pour les besoins de l'exemple, et parce que RSA est largement répandu, je
+> fournis des exemples que pour ce type de clé.
+
+
+### Avec OpenSSH
+
+OpenSSH gère les formats SSH1, SSH2 (pour les déclaration de clé publique coté
+serveur), PKCS#1 et PKCS#8 (pour les clés privées). Le moyen le plus rapide et
+le plus simple pour générer sa clé privée et en déduire la clé publique à la
+volé est d'utiliser le commande OpenSSH suivante :
+
+```
+ssh-keygen -t rsa -b 2048
+```
+
+La clé publique est dans le fichier ```id_rsa.pub``` au format SSH1
+et la clé privé est dans ```id_rsa``` (sans extention) dont le format
+est SSH1 par défaut sauf si vous avez donné une passphrase pour crypter la
+clé. Dans ce cas, la clé privée est stockée dans un fichier PEM au format PKCS#1
+crypté via l'algorithme AES en 128 bits (notez que le fichier n'a pas
+d'extension).
+
+> Attention : Putty (Windows) requiert une clé stockée dans un fichier PEM et
+> cryptée en DES3. Préférez la méthode avec OpenSSL dans ce cas pour générer
+> votre clé privée au format PKCS#8.
+
+**Exemple de clé RSA au format PKCS#1 (si cryptée avec une passphrase)**
+
+```
+-----BEGIN RSA PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: AES-128-CBC,81A7919B178B29A2B49FBDC272317925
+
+KH1FJLzkERveYpJppjAAR47E9nqw1IwE4jxdSF0mVelJDZwiiEfMzCMwasIQzlrU
+YxeFVE5bCG42/TbVKTcQlH3gop9p2eoZ9BzqvLkfiN/Aozkz2IOux77Ul5Y0HgrN
+wkG61MxTsciJbWSPYc+so9gIHVYyBCn90PFilEJn0TzGsIm8SrSvzd2jLP9mU4Al
+1hvhTCUfriMkXFtlTV1HFg3wRBVcMvzgAU/p9CQOJqRGeM7UG47Em8dJTJger9Np
+v7a35B1H7VGn8doz/3ztfT/jNF8W5dRYQW3yQOnFGb/NJ3KKwCv11gZAyJ41BBNL
+16NhJpFTxAaGK6Cgj89UvPNkI3pJ9arsHYzBt3X67gROlU9sJgM9xO9ZwnCzTIdj
+JG6zRMqPW0MugKdp9IePEIlDfzp6AgYbfdir/LJBkiukNIgF8bNyvNxrDtZgyXvj
+/R19fGtT4fBMZMngnHRQObemY8hWs0wLg6KrYGqs74r4rF54kRpMtr+JfNhiQtIz
+p0RTLjKPbWR87GrueDVIkDs2WkrlHpPpuQZpjKfe0luukjXKTBxwhyChFoHXwwXL
+jjz/5X+0IWlvnwU65kwXtAsl5ykdr5HV0TFwBGvSV8uy6UCh/Hjm6qLEwCYLU/yT
+TTk9K3DoxTRgcxa6E/H1QIDs3UUqcH/F9VW1OxmGJFdgJmnXME+/KNbkGes/spfC
+D39bPJyxCYnyMdrRwM9UIRwGnTUZ6FTUYK8FUx1kI+1W4tP0GYmfhOrMfI1HcsRA
+b/kgAW6jLeJEeZYSudClUJczQEIU4KEI+knc/4A+iv05rbp/KY7IHbwbawnuxgoh
+I4vZeTqWuUNCbd3g/X2fK1onNJrEsELZky2J6cnCVpVU3edl220FNOIoZZW4IFiB
+XCTfuLWWHKuy1GjZbZBgzGfujTvfZ/OFB0TKckLaop47VCCWsIyg3pIzTObVk5A7
+avGXxkNjYUKd9xhq0YMXQ1CQQyoemVxM41SNNY3WopHbA8jMljQlnVqjqU6xo32k
+KGHO6+Mej4bD0L4xohiwcN48E+9cT/kxuRUlMZ8yV73WPmNkMOI110HusuuhlyoW
+GuutOpK0eHoY2KIrKb1haKaUUxGAx/V+gegFcCDgN+MLDi8MyyDZHzMkpo4pl6W+
+KIuw9onwGU+tyPBYiGTGD8CWQ4ShiVS8QnXfgsIRmrtdqgfuERIR+1a3+xS2m8FV
+z3GdTYlW6qU15UGQdQgxxYLJAUKRGRneZbOmIyM87F/cHqVQkVChxrZ1jZDq3Acm
+GF3QPHI6kAC+57fpykenqHuoqicn38fSQ57ZEaXqkIq5ttYVxjPCcqX8UTFE5w7g
+hj/K1HCxvRSrOoqQ7DrVOD+Q6p9Pg+sxo1ZIg7VXWN7vEqDsM0PUeU1MpHbC000J
+59otDIneKk6telULtGrdJZ7WIz+iUdPKhihUGTjx4ez59MaUHOEZLAe7EgutYP8m
+IB/ojXufXfLwL+alf0qiabNh0Ko+4P1YXfo2nOdwQxEjXRblWW8yqTwTrlwHxyf4
+pFUZ4eArQ0Una1Vn2ZF6eLlFzCkQsyd9kCby5ZOdS0BAdMzRgnpKxSPI3Fnd+qxj
+-----END RSA PRIVATE KEY-----
+```
+
+
+Il n'est pas nécessaire de conserver la clé publique. Celle-ci pourra être
+déduite d'après la clé privée via la commande suivante :
+
+```
+ssh-keygen -f id_rsa -y > id_rsa.pub
+```
+
+**RESULTAT : Clé au format SSH1 (RSA)**
+
+```
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCvYwy4ZcnP3j74D8f06WVWHGPxIK8pIs8qDOE6loQR
+SRauPf8Vy0TbT3TBovysWUa1I5b6EFdLfO29HkbebhqsIAVh2wgYf4tWte2zMWGvujGS0P7Dzx2wBrcn
+xVEFYRfFsT2PhI+NaoGmyDYeR+1tMDL4oPL7uSzzOPwHZih83eYMuRElIZDD3b697IVDxHLGp8uJSJAE
+0VAlx7Uujd3UUjUt/Jc4ngsORGOR6ikW4u70tbWtzbTWQ7ldysJHSATLbivg2jH2P5VnuHy2LWEuAjnW
+BvTtzpIB/EQFM1GufPQiUU//8CAP112CUbdLcd3G6ifvmVKXBAN6IOMY/+g9
+```
+
+Pour déclarer la clé sur un serveur, il suffit de copier la ligne dans le
+fichier ```autorhized_keys``` (une ligne par clé).
+
+> Noter que ssh-keygen génère systèmatiquement des formats SSH1 / PKCS#1; Si
+> vous souhaitez utiliser le format SSH2 / PKCS#8, vous devrez exporter la clé
+> sous ces formats.
+
+### Avec OpenSSL
+
+Utiliser openssl pour contrôler plus facilement la génération de vos clés et
+sotcker vos clés dans des fichiers PEM au format PKCS#8. Ce format est correctement supporté
+par tous les logiciels exploitant des clés ainsi que OpenSSH.
+
+Ici, nous générons les mêmes clés (RSA), mais avec l'algorithme de cryptage DES3
+pour la clé privé. Les clés sont stockées dans un fichier PEM au format PKCS#8.
+
+```
+openssl genpkey -des3 -out id_rsa -outform PEM -algorithm RSA -pkeyopt
+rsa_keygen_bits:2048
+```
+
+Algorithme associé à la clé : RSA ou DSA  
+Format de sortie : PEM ou DEM  
+Cryptage de la clé privée : des3 ou aes-128-cbc  
+
+**RESULTAT : Fichier PEM au format PKCS#8**
+
+```
+-----BEGIN ENCRYPTED PRIVATE KEY-----
+MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIL6yMBt4gNfkCAggA
+MBQGCCqGSIb3DQMHBAiTUclx1mMrOwSCBMgaz8FWgjlA0rVHaicaHj3xpLfriipQ
+BEeBKEneOrpJmAsmJ5qXE5Nayyn0NDH61JWTC7Wwn55quVJ0uMSwKLRt6PknFoAz
+2u/NhQo9+t6vjzUa0xajDqwIr2rt10/xCpQkzhEJiwVs8m44zSoIKqv+EB+kdFAa
+vOeeEc/lw5BbYnu64/bb74cr8D8Y0fzR3pvkAPBYTKXdtdyzsUsCqtNl41PWuQff
+54LeWlCxygMd24bvM9DO4QVX/Ixw5Y736TJkPT0g4va4pTftsGbUGD87JBsZKcG+
+l3XFudhrdnPzqKdzfMRMJZAULNafO5YHngWmXDmhDYSgqeEd3Kqk/laepgkgcf+r
+rrhJGHmOsuX/zEkAGoq3UG8TUz2ochaLPo/6iRhEKELIxLN5lI1wx++UcOsLzNY6
+Vs+NlXjzFYUY8vUmODXD6OBrXGzPJqFV8deBH3ww/jXAcSfxBfdckP5Oc821XJhW
+0zvFu0foaUOQgcb4Mm4sp0SpkQnDrmGWNZP6edsg6g9+V3Bio0UvjTn7vNFh2ZOi
+w3+3/hZpJi44CWMk9QR79aOKQiIo1SprjkvPHRNwI5qYs+BXaRE73CNAjdblntTy
+lWiG/cHcDnPuZ9XsSyEE8FpkR6ZnZj54aG09pGXfEBrXIOSjv0s2CJw2hh02fCF3
+c9SmKffPeiKrXqpwdv+fWZQJ+rPceKu3QWswdgQQ5xf3ElTFDYbxyz27PnGSEHgt
+lLIOKBssfN1TK00Nt+L58PhH8pWNibQqKrO496Df7ZiGu8aD3or/CRR8FlTXHrHs
+zVCKLmOkNXKgZBApErpScrRCswCGfyScIQVl5ASJq9MT3LizQJbHTwKLrRXiKoB+
+jHg0cR/30vQ+MT5Y83yayAJveaV5GH9Gh70UvmAqjlaN9geCqHdUomvLt8DtLaqb
+cbpTlyKKN5ITwOBK6gpZp69frxn3h7zn6xxSQneM4NBdc4NtvkttbsYgLzbXDP6k
+1QOz8JmFDkT0kZ9HGmE2mVxx4ExI2uPPVNyYD9yvKBDy2cpEKYYAthuYkDlSFvlC
+NBXz+3OmSGOKkPAPkL/U+mcd/y5FXGhHb+LMKW9+mZXNaQ1cDtDskhdKO1TTJUgZ
++vkNrrmcTWngmlqRxPKA0duhU+OD5D32SfnzBt+XLvyM6w2a8gl+lIWh3A+QCuIx
+SmHf3E/A384Tzz3Q68fuJnqNVuBt2KKL2BYwif8zGCjZhh33I7VtdTr7a2QluKK8
+SrXVXlIBcogwr64t1v2g4ul4Kd7zNxFHWYli9Z6UgEob6i0wibmnUkDsTvsc/u9w
+x/BukROq1Qv/nsVcUWUp93hBLhgjXCt3r8GBK7dN/+bwqpcUCS/48G6o+K42YC5V
+P/dmskSdnBXjGeq/wiGLPEiJ0apSq2HZQQxy4UJlD3h1Y0UWhDndCp4Rpu2U5DtU
+uTZ4lwylVFAib1xdUZ7SOybT4GAXnmDccp3cObLWpeuKNxXgYG1vvqEBWCMrfhT2
+/950u9adwGRITu+FZq+viXFveOzvEl6S9RBHzYUCQpyq91jJB7zWzZYjwp3UXScq
+YGQwLceTGyOZ9G7WRyru/u2WqJazPEYwXx3lge0j3/BBxkFZgrqZf61sJ3n53cvh
+aAs=
+-----END ENCRYPTED PRIVATE KEY-----
+```
+
+**Nota :**  
+Pour extraire une clé privée en claire et l'enregistré de façon non sécurisé,
+utiliser la commande suivante :
+
+```
+openssl rsa -in id_rsa -out id_rsa.pem
+```
+
+Beaucoup sont habitués à l'ancienne syntaxe mais elle avait l'inconvénient
+d'avoir un jeu d'option trop spécifique entre les différents algorithmes de clé.
+Cependant, OpenSSL la supporte toujours très bien :
+
+```
+openssl genrsa -des3 -out id_rsa 2048
+```
+
+**RESULTAT : Fichier PEM au format PKCS#1**
+
+```
+-----BEGIN RSA PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: DES-EDE3-CBC,788EEB11AA55046D
+
+H4Ya4Df5yEyG9KJJ+gvkXCzsKWgKgRq/SSlu9CjlYped1MUXlwAMVBXB467hTap5
+yvmrxg4xsOZOSRlEXuInKBz/B+j/PMHx1jZ0/UwPz/eMIGDK5uVgRyx06gMZfIJy
+/MUKVY/vUNoy0uKYMFWBElHxJaLNIfFJ+reaQDfmkQRMekG7BRSBfh31jfU37d0r
++Ny38B0yvebIupgQqpQiTUStq7vB0No0mjPxj1M3sZT/AEOPQ1XJWiH6VOGbhga+
+NqQDhShRI3IR/aTr+Q6P04qfNrk6bPM5zzG+9F0YkVoBcuo6/YGoJ6WDIlNCzU/Z
++6qY1pckYgIbE7kS0okvnR8YQeWoXrf3DbLf/LEFwouitOKV06zd2dZ+jCD77nJh
+L5TcxEEnKg0TRUHNawSdEbBI8qkG5kUx/BdZT4vB3jEIcFj4KB2Ck1gnPSHFRA59
+Tp/lx+n5poq2qKr9Bg7y/HLnyn3FTZOpHchrtug1f5aMIRrlsaYULVuy8kLoz7i4
++6CQmetaCD1ghWDFh9Sk96u4rvYaea43MtWsRghV6H2TEwLmBy3Ggio1GENurNGx
+oRlIuyDwB3vOhnfVpV4vv2znqrZ2vWe+qvoGV2Vd7Dj27j6JLOnXMH2K1lCW/vcK
+JhbBK6FfFy7UUP8Kjs1gwayBaYBu2F7X76uey0AiqvkYFAK8j52ataDcsJ5EgjUA
+OdwHiId8o29AQc140SYaH60fHPtxegIpLMPjk+1xvntEuuwu6zDMtIib4PD5SCy7
+5Aek1iOy43N0lGOeP0uULev1tmQlw4JmnLY+SkmnPdjVIG4A3XhX/fiOvyr/NLIB
+Rro9D/XLZZMaGPNhzATWmYeqNDuFaQHRx2WtcrXM/u8NQ57YJSMUmKtHoBxGN8Um
+NLfDcPHuvUl4tX8TiOVXitAKWuFkJ3GU95OvJLeGPjjF+rthdWEwAZrsMrglwBNM
+Hr8gRn4hZ5KPIEZBBEoeXc9PeJkHCb230FDIupvQcPh5cd2Kbm2lIUndFXdWCsZa
+93MP0vIz+8TeKvOEts09cW3lzueR4nijoclolXYLwLLEVA1YcYsR/RmwLDGP5gzc
+g6UyCyd8Jj+UiUzo7C3Ia9qmXGWlfjx0bP5OE/Y8Da00I+z3TnSxDNoXCetHqEky
+dOoVlM9/V0N7DSQR7WpRZKdQ7NXk/yBmOe5WULdoqoDCNxjiOZmk1W/QyhUOKErN
+pNnmiCFgvc31gUv8uC8ajZoUHB06NZ9Ryb4HLzpxSZm0ke9a7PD5iEf7gZJk3Aj5
+YCG51QqtcOboaUdRUtWQh9ykWuUsMaJmFDvC9y7H4eOF9b4ZJHK1BZXxb9iH52Tw
+u8q6EbVSxqumVXMu/t/r7NOYUNDEjW8bKkbKcMmaFM2wtCIuKXkWhmAUfulH8+ne
+ku9Xe8aEFDkY/R6kZlxKhTKOXSTayGeeSqi3fWaNWXHyLGXXqTwMfdCN0B4rNjGl
+dsECokxH/Xar9v03/1QuYiY+vSPDMHPd94vfGCtqyhO5zO45SDHdUkztymGyJrcG
+UYWNW+XSSKQAeABfx1HiNwgtU4DJ3Si1f8EIOB7PY7bG5lZ7VZhgvA==
+-----END RSA PRIVATE KEY-----
+```
+
+> ```genrsa``` génère un fichier PEM au format PKCS#1. Ce format est parfois
+> nécessaire pour des applications anciennes.
+
+Pour déduire la clé publique correspondante :
+
+```
+openssl rsa -in id_rsa -pubout > id_rsa_pub.pem
+```
+
+**RESULTAT : Fichier PEM au format PKCS#8**
+
+```
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr2MMuGXJz94++A/H9Oll
+Vhxj8SCvKSLPKgzhOpaEEUkWrj3/FctE2090waL8rFlGtSOW+hBXS3ztvR5G3m4a
+rCAFYdsIGH+LVrXtszFhr7oxktD+w88dsAa3J8VRBWEXxbE9j4SPjWqBpsg2Hkft
+bTAy+KDy+7ks8zj8B2YofN3mDLkRJSGQw92+veyFQ8RyxqfLiUiQBNFQJce1Lo3d
+1FI1LfyXOJ4LDkRjkeopFuLu9LW1rc201kO5XcrCR0gEy24r4Nox9j+VZ7h8ti1h
+LgI51gb07c6SAfxEBTNRrnz0IlFP//AgD9ddglG3S3Hdxuon75lSlwQDeiDjGP/o
+PQIDAQAB
+-----END PUBLIC KEY-----
+```
+
+
+### Clé publique au format PEM (PKCS#8) ou SSH1/SSH2 ?
+
+Si vous souhaitez échanger avec un administrateur système votre clé publique, il
+faudra favoriser le format SSH1 ou SSH2 car son contenu pourra être ajouté
+facilement dans le fichier correspondant.
+
+Cependant, pour des échanges de clés publiques sur des services en ligne,
+préférez les fichiers PEM au format PKCS#8, largement reconnu. Si vous envoyez
+une clé sous ce format à un administrateur, il lui faudra la convertir en clé
+SSH via la commande suivante, ce qui est peut pratique pour lui :
+
+```ssh-keygen -t rsa -f id_rsa_pub.pem -i -m PKCS8```
+
+Cette commande converti une clé RSA au format PKCS#8 vers le format
+SSH1. Ce qui donne le résultat suivant :
+
+```
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCvYwy4ZcnP3j74D8f06WVWHGPxIK8pIs8qDOE6loQR
+SRauPf8Vy0TbT3TBovysWUa1I5b6EFdLfO29HkbebhqsIAVh2wgYf4tWte2zMWGvujGS0P7Dzx2wBrcn
+xVEFYRfFsT2PhI+NaoGmyDYeR+1tMDL4oPL7uSzzOPwHZih83eYMuRElIZDD3b697IVDxHLGp8uJSJAE
+0VAlx7Uujd3UUjUt/Jc4ngsORGOR6ikW4u70tbWtzbTWQ7ldysJHSATLbivg2jH2P5VnuHy2LWEuAjnW
+BvTtzpIB/EQFM1GufPQiUU//8CAP112CUbdLcd3G6ifvmVKXBAN6IOMY/+g9
+```
+
+### Extraire la clé publique d'un certificat
+
+Si vous avez un certificat et souhaitez en extraire sa clé publique :  
+(remplacer ```-inform def``` par ```-inform pem``` si vous avez un fichier au
+format PEM)
+
+```
+openssl x509 -inform der -in certificat_file.cer -noout -pubkey > server_key.pub
+```
+
+
+Utiliser dans SSH
+-----------------
+
+La gestion des clés (client et serveur) se font généralement dans le sous
+dossier ```.ssh/``` situé dans votre dossier utilisateur.
+
+### Coté client
+
+On utilise la clé privée. Le fichier ```config``` décrit la configuration pour
+chaque serveur (ou alias) auquel on souhaite se connecter. En l'absence de ce
+fichier, OpenSSH test par défaut toutes les clés privées. Exemple :  
+
+```
+Host mon_alias_a_moi
+  HostName        github.com
+  Port            22
+  User            user_name
+  IdentityFile    /home/ubuntu/.ssh/id_rsa
+  IdentitiesOnly  yes
+```
+
+Si vous ne souhaitez pas utiliser d'alias, remplacer ```mon_alias_a_moi``` avec
+l'adresse du serveur cible, et retirez la ligne HostName qui fait doublon.
+
+Précisez IdentityFile et IdentitiesOnly si vous disposez de plusieurs clés.
+Sinon, votre client SSH va tester toutes vos clés.
+
+> Si votre serveur utilise le port par défaut (22), l'option Port est inutile.
+
+
+**SSH-Agent**  
+Une clé privée est normalement cryptée, et la passphrase vous est demandée à
+chaque fois que le client SSH y accède. Pour ne pas répeter la passphrase, vous
+pouvez utiliser SSH-Agent (Linux). Voici comment automatiser son chargement :
+
+1. Ouvrez le fichier .profile (si accès en console) ou .xsession si vous
+utilisez l'environnement graphique X (certaines distributions intègrent un
+client graphique et chargent automatiquement SSH-Agent).
+
+2. Ajouter les lignes suivantes :
+
+```
+export SSH_AUTH_SOCK=~/.ssh/ssh-agent.local.sock
+ps -aux|grep "[s]sh-agent" >/dev/null || ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
+ssh-add -l
+  ```
+
+> Ici, on impose que le client SSH-Agent écoute sur un socket unix qui sera
+> toujours le même (chemun par défaut). Ensuite, on utilise ssh-add pour
+> afficher les clés déjà en mémoire.
+
+Pour ajouter une clé, tapez la commande ```ssh-add nom_de_ma_cle```
+
+
+### Coté serveur
+
+On déclare la clé publique. Pour chaque dossier utilisateur pour lequel la clé
+est utilisable, il faudra rajouter la clé SSH1 dans le fichier
+```.ssh/authorized_keys``` (une ligne par clé). Si elle est au format SSH2, il
+faudra l'ajouter au fichier ```.ssh/authorized_keys2```
+
+
+Utiliser sur GitHub
+-------------------
+
+Il est possible d'associer des clés par dépot GIT. Cette option est accessible
+dans les paramètres de votre dépôt GIT (onglet "collaborateurs").
+
+
+[RFC-2986]:       https://tools.ietf.org/rfc/rfc2986.txt
+[RFC-3548]:       https://www.ietf.org/rfc/rfc3548.txt
+[RFC-2315]:       https://tools.ietf.org/rfc/rfc2315.txt
+[RFC-1421]:       https://tools.ietf.org/rfc/rfc1421.txt
+[RFC-1424]:       https://tools.ietf.org/rfc/rfc1424.txt
+[X.690]:          http://www.itu.int/ITU-T/studygroups/com17/languages/X.690-0207.pdf
+[RFC-1986]:       https://tools.ietf.org/rfc/rfc2986.txt
+[RFC-3280]:       http://www.ietf.org/rfc/rfc3280.txt
+[RFC-4716]:       https://tools.ietf.org/rfc/rfc4716.txt
+[RFC-5208]:       http://tools.ietf.org/rfc/rfc5208.txt
+
