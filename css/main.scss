@@ -121,6 +121,17 @@ nav {
   overflow: hidden;
 }
 
+@media screen and (min-width: 761px) {
+  .img-low{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .img-hight {
+    display: none
+  }
+}
 @media screen and (max-width: 600px) {
   div[role=main] {
     float: none;
