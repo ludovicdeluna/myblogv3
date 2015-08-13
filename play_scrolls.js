@@ -13,121 +13,67 @@
  * par rapport à lui. Il faut trouver sa position au parent pour faire les bons calculs
  */
 
-!function(){
+
+!function(exports){
   'use strict';
-  var nav = document.getElementsByTagName('nav')[0];
-  var navContainer = document.getElementById('pageContent');
-  var position = {Y: window.pageYOffset};
-  var doc = document.documentElement;
   
-  var height = Math.max(doc.clientHeight, window.innerHeight || 0)
+  function Navmark(track){
+    this.track = track || document.getElementById('track');   
+    this.nav = this.track ? this.track.getElementsByTagName('nav')[0] : null;
+    this.footer = this.track ? this.track.getElementsByTagName('footer')[0] : null;
+
+    if( !this.nav ) throw 'Navmark not instantiated';   
+    this.attachEvents();
+  };
   
-  nav.style.position = "absolute";
-  nav.style.right = "30px";
+  Navmark.prototype.attachEvents = function(){
+    this.windowPageY = exports.pageYOffset;
+    this.isScrolling = false;
+    exports.onscroll = function(e){ this.scrollEvent(e) }.bind(this);
+  };
   
-  var isScrollDown = function(e, position){
-    var result = e.pageY > position.Y;
-    position.Y = window.pageYOffset;
-    var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
-    return result;
-  }
-  
-  var blockBottomNav = function(){
-    var bottom = nav.getBoundingClientRect().bottom;
-    if( bottom < height ) {
-      var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
-      nav.style.top = (top - navContainer.offsetTop) + "px";
-      console.log(nav.style);
-    }
-    /**
-    if( bottom > height ) {
-      console.log('dépasse');
-    } else {
-      console.log('pas encore');
-    }
-    **/
-  }
-   
-  document.onscroll = function(e){ (isScrollDown(e, position) ? blockBottomNav() : false) };
-  document.onscroll = null;
-  console.log("loaded");
-  
-  function goUp(){
-    var containerTop = document.getElementById("pageContent").offsetTop;
-    var pageTop = window.pageYOffset;  
-    document.getElementsByTagName('nav')[0].style.top = (pageTop - containerTop) + "px";    
-  }
-  
-  function goDown(){
+  Navmark.prototype.scrollEvent = function(e){
+    if( this.nav.className !== 'stick-on-scroll' || this.isScrolling ) return;
+
+    this.isScrolling = true;
+       
+    var viewportScrollTop = exports.scrollY     || exports.document.documentElement.scrollTop ;
+    var viewportHeight    = exports.innerHeight || exports.document.documentElement.clientHeight;
+    var trackPosY         = viewportScrollTop + Math.round( this.track.getBoundingClientRect().top, 2 );
+    var trackHeight       = this.track.clientHeight - Math.round(this.footer.getBoundingClientRect().height, 2) ;
+    var navHeight         = Math.round(this.nav.clientHeight, 2);
     
-    var windowTopY      = window.pageYOffset;
-    var containerTopY   = document.getElementById("pageContent").offsetTop;
-    var containerHeight = document.getElementById("pageContent").clientHeight;
-    var navHeight       = document.getElementsByTagName('nav')[0].clientHeight;
+    var posTop    = viewportScrollTop - trackPosY;
+    var posBottom = posTop + viewportHeight - navHeight - 30;
     
-    var windowHeight = document.documentElement.clientHeight;
-    var navHeight = ( document.getElementsByTagName('nav')[0]
-                      .getBoundingClientRect().height );
-    var pos = (windowTopY - containerTopY) ;
-    document.getElementsByTagName('nav')[0].style.top = pos + "px";
-  }
-  
-  function oldgoUpNew(){
-    var windowY   = window.pageYOffset;
-    var container = document.getElementById("pageContent").getBoundingClientRect();
-    var nav       = document.getElementsByTagName("nav")[0].getBoundingClientRect();
-    
-    var pos = windowY - container.Top;
-    console.log(container);
-  }
-  
-  function goUpNew(){
-    var nav       = document.getElementsByTagName("nav")[0];
-    var container = document.getElementById("pageContent");
-    var position  = {Y: window.pageYOffset};
-    document.onscroll = function(e){
-      var scrollY = document.documentElement.scrollTop || document.body.scrollTop ;
-      var viewBottom = document.documentElement.clientHeight || document.body.clientHeight
-      var tabTop  = Math.round( container.getBoundingClientRect().top, 2) + scrollY ;
-      var posTop = scrollY - tabTop;
-      var posBottom = posTop + viewBottom - nav.getBoundingClientRect().height ;
-      
-      if( isScrollDown(e, position) ) {
-        if( posTop > 0){
-          nav.style.top = posTop + "px";      
-        }
+    if( this.isScrollDown(e) ) {
+      if( posTop > 0 ) {
+        if( posTop + navHeight < trackHeight ) this.nav.style.top = posTop + "px";
       } else {
-        if( posBottom > 0) {
-          nav.style.top = posBottom - 30 + "px";
-        }
+        this.nav.style.top = 0;
       }
+    } else {
+      if( posBottom > 0 && posBottom + navHeight < trackHeight ) this.nav.style.top = posBottom + "px";
     }
     
-    /**    
-    var nav = function(navigation){
-      return  { object: navigation,
-                bounds: navigation.getBoundingClientRect(),
-                top: navigation.getBoundingClientRect().top + scrollY
-              };
-    }(document.getElementsByTagName("nav")[0]);
-    **/
-    
-    //console.log(posBottom);
-    
-    /**
-    nav.bounds  = nav.object.getBoundingClientRect();
-    var nav     = document.getElementsByTagName("nav")[0];
-    var sidebar = document.getElementById("pageContent");
-    var navPos  = nav.getBoundingClientRect();
-    
-    var   = navPos.top + scrollY;
-    console.log( pos );
-    **/
-    
-  }
+    this.isScrolling = false;
+  };
   
-  goUpNew();
+  Navmark.prototype.isScrollDown = function(e){
+    var windowPageY = this.windowPageY;
+    this.windowPageY = exports.scrollY || exports.document.body.scrollTop;
+    
+    return e.pageY > windowPageY;
+  };
+   
   
+  exports.Navmark = Navmark;
+}(window);
+
+!function(exports){
+  exports.navmark = new Navmark( document.getElementById('pageContent') );
+  console.log(navmark);
+}(window);
+
+
   
-  
-}();
