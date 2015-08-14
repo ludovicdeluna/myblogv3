@@ -13,7 +13,109 @@
  * par rapport à lui. Il faut trouver sa position au parent pour faire les bons calculs
  */
 
+!function(exports){
+  'use strict';
+  
+  if( !exports.document.getElementById('pageContent') ){
+    alert('pas la bonne page');
+    return;
+  }
+  
+  exports.navmark = null;
+  
+  function Viewport(top, height) {
+    this.top = exports.scrollY;
+    this.height = exports.document.documentElement.clientHeight;
+    this.bottom = this.top + this.height;
+  };
+  
+  function Navmark() {
+    this.slide  = exports.document.getElementById('pageContent');
+    this.nav    = this.slide.getElementsByTagName('nav')[0];
+    this.scrollY  = exports.scrollY;
+    this.attachEvents();
+  };
+  
+  Navmark.prototype.attachEvents = function(){
+    exports.document.onscroll = function(event){
+      this.scrollEvent(event);
+      this.scrollY = exports.scrollY;
+    }.bind(this);
+  };
+  
+  Navmark.prototype.isScrollDown = function(){
+    return exports.scrollY > this.scrollY
+  }
+  
+  Navmark.prototype.scrollEvent = function(e){
+    var viewport = new Viewport();
 
+    var slide = this.slide.getBoundingClientRect();
+    if( viewport.height - 30 > slide.height ) {
+      console.log('Slide too small. Nothing to move');
+      return;
+    }
+    
+    var nav = this.nav.getBoundingClientRect();
+    if( slide.height - 30 <= nav.height ) {
+      console.log('Nav has no space to move into slide');
+      return;
+    }
+    
+    var isBigNav = nav.height > viewport.height - 30;
+    
+    if( this.isScrollDown() ){
+      if( isBigNav ) {
+        console.log( 'Big Nav !' );
+      } else {
+        if( exports.scrollY + nav.height + 30 >= exports.scrollY + slide.bottom ) {
+          this.nav.style.top = slide.height - nav.height - 30 + "px";
+          return;
+        } 
+        if( nav.top < 0 ) {
+          this.nav.style.top = (
+            exports.scrollY -
+            (exports.scrollY + slide.top) + "px"
+          );
+        }
+      }
+    } else {
+      if( isBigNav ) {
+        console.log( 'Big Nav !' );
+      } else {
+        if( exports.scrollY + viewport.height - nav.height - 30 <= exports.scrollY + slide.top ) {
+          this.nav.style.top = 0;
+          return;
+        }
+        if( (nav.bottom - viewport.height) * -1 < 30 ) {
+          this.nav.style.top = (
+            exports.scrollY + viewport.height - nav.height - 30 -
+            (exports.scrollY + slide.top) + "px"
+          );
+        }
+      }
+    }
+    
+    /**
+    var slide = {
+      top: slide.top + viewport.top ,
+      bottom: slide.bottom + viewport.top,
+      height: slide.height,
+    }
+    **/
+  
+    
+  };
+  
+  
+  exports.navmark = new Navmark;
+}(window)
+
+
+
+
+
+/**
 !function(exports){
   'use strict';
   
@@ -74,6 +176,4 @@
   exports.navmark = new Navmark( document.getElementById('pageContent') );
   console.log(navmark);
 }(window);
-
-
-  
+**/
