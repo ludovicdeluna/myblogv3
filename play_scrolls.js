@@ -26,7 +26,10 @@
   function Viewport(top, height) {
     this.top = exports.scrollY;
     this.height = exports.document.documentElement.clientHeight;
-    this.bottom = this.top + this.height;
+  }
+  
+  Viewport.prototype.bottom = function(){
+    return exports.scrollY + exports.document.documentElement.clientHeight;
   };
   
   function Navmark() {
@@ -34,7 +37,15 @@
     this.nav    = this.slide.getElementsByTagName('nav')[0];
     this.scrollY  = exports.scrollY;
     this.attachEvents();
-  };
+  }
+  
+  function absTop(elm) {
+    return exports.scrollY + elm.top;
+  }
+  
+  function absBottom(elm) {
+    return exports.scrollY + elm.bottom;
+  }
   
   Navmark.prototype.attachEvents = function(){
     exports.document.onscroll = function(event){
@@ -45,7 +56,7 @@
   
   Navmark.prototype.isScrollDown = function(){
     return exports.scrollY > this.scrollY
-  }
+  };
   
   Navmark.prototype.scrollEvent = function(e){
     var viewport = new Viewport();
@@ -66,35 +77,26 @@
     
     if( this.isScrollDown() ){
       if( isBigNav ) {
-        console.log( 'Big Nav !' );
-      } else {
-        if( exports.scrollY + nav.height + 30 >= exports.scrollY + slide.bottom ) {
-          this.nav.style.top = slide.height - nav.height - 30 + "px";
-          return;
-        } 
-        if( nav.top < 0 ) {
-          this.nav.style.top = (
-            exports.scrollY -
-            (exports.scrollY + slide.top) + "px"
-          );
+        if( (nav.bottom - viewport.height) * -1 > 30 ) {
+          this.nav.style.top = viewport.bottom() - absTop( slide ) - nav.height - 30 + "px";
         }
+        return;
+      }
+      if( exports.scrollY + nav.height + 30 >= absBottom( slide ) ) {
+        this.nav.style.top = slide.height - nav.height - 30 + "px";
+      } else if( nav.top < 0 ) {
+        this.nav.style.top = exports.scrollY - absTop( slide ) + "px"
       }
     } else {
-      if( isBigNav ) {
-        console.log( 'Big Nav !' );
-      } else {
-        if( exports.scrollY + viewport.height - nav.height - 30 <= exports.scrollY + slide.top ) {
-          this.nav.style.top = 0;
-          return;
-        }
-        if( (nav.bottom - viewport.height) * -1 < 30 ) {
-          this.nav.style.top = (
-            exports.scrollY + viewport.height - nav.height - 30 -
-            (exports.scrollY + slide.top) + "px"
-          );
-        }
+      if( viewport.bottom() - nav.height - 30 <= absTop( slide ) ) {
+        this.nav.style.top = 0;
+      } else if( (nav.bottom - viewport.height) * -1 < 30 ) {
+        this.nav.style.top = (
+          viewport.bottom() - nav.height - 30 - absTop( slide ) + "px"
+        );
       }
     }
+  };
     
     /**
     var slide = {
@@ -103,9 +105,6 @@
       height: slide.height,
     }
     **/
-  
-    
-  };
   
   
   exports.navmark = new Navmark;
