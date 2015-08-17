@@ -26,11 +26,14 @@
   function Viewport(top, height) {
     this.top = exports.scrollY;
     this.height = exports.document.documentElement.clientHeight;
+    this.bottom = this.top + this.height;
   }
   
+  /**
   Viewport.prototype.bottom = function(){
     return exports.scrollY + exports.document.documentElement.clientHeight;
   };
+  **/
   
   function Navmark() {
     this.slide  = exports.document.getElementById('pageContent');
@@ -77,23 +80,36 @@
     
     if( this.isScrollDown() ){
       if( isBigNav ) {
-        if( (nav.bottom - viewport.height) * -1 > 30 ) {
-          this.nav.style.top = viewport.bottom() - absTop( slide ) - nav.height - 30 + "px";
+        if( viewport.bottom > absBottom( slide ) ) {
+          this.nav.style.top = slide.height - nav.height - 30 + "px";
+        } else if( viewport.top + nav.bottom + 30 < viewport.bottom  ) {
+          this.nav.style.top = viewport.bottom - absTop( slide ) - nav.height - 30 + "px";
         }
         return;
       }
-      if( exports.scrollY + nav.height + 30 >= absBottom( slide ) ) {
+      if( viewport.top + nav.height + 30 >= absBottom( slide ) ) {
         this.nav.style.top = slide.height - nav.height - 30 + "px";
       } else if( nav.top < 0 ) {
-        this.nav.style.top = exports.scrollY - absTop( slide ) + "px"
+        this.nav.style.top = viewport.top - absTop( slide ) + "px"
       }
     } else {
-      if( viewport.bottom() - nav.height - 30 <= absTop( slide ) ) {
-        this.nav.style.top = 0;
-      } else if( (nav.bottom - viewport.height) * -1 < 30 ) {
+      if( isBigNav ) {
+        if( viewport.top < absTop( slide ) ) {
+          this.nav.style.top = 0;
+        } else if( nav.top > 0 )  {
+          this.nav.style.top = viewport.top - absTop( slide ) + "px"
+        }
+        return;
+      }
+      if( viewport.top < absTop( slide ) ) {
+        this.nav.style.top = 0 + "px";
+      } else if( viewport.top < absBottom( slide ) - nav.height - 30 ) {
+        this.nav.style.top = viewport.top - absTop( slide ) + "px";
+        /**
         this.nav.style.top = (
-          viewport.bottom() - nav.height - 30 - absTop( slide ) + "px"
+          viewport.bottom - nav.height - 30 - absTop( slide ) + "px"
         );
+        **/
       }
     }
   };
