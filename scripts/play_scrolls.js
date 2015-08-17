@@ -15,12 +15,12 @@
 
 !function(exports){
   'use strict';
-  
+  /**
   if( !exports.document.getElementById('pageContent') ){
     alert('pas la bonne page');
     return;
   }
-  
+  **/
   exports.navmark = null;
   
   function Viewport(top, height) {
@@ -82,15 +82,15 @@
       if( isBigNav ) {
         if( viewport.bottom > absBottom( slide ) ) {
           this.nav.style.top = slide.height - nav.height - 30 + "px";
-        } else if( viewport.top + nav.bottom + 30 < viewport.bottom  ) {
+        } else if( absBottom( nav ) + 30 < viewport.bottom  ) {
           this.nav.style.top = viewport.bottom - absTop( slide ) - nav.height - 30 + "px";
         }
-        return;
-      }
-      if( viewport.top + nav.height + 30 >= absBottom( slide ) ) {
-        this.nav.style.top = slide.height - nav.height - 30 + "px";
-      } else if( nav.top < 0 ) {
-        this.nav.style.top = viewport.top - absTop( slide ) + "px"
+      } else {
+        if( viewport.top + nav.height + 30 >= absBottom( slide ) ) {
+          this.nav.style.top = slide.height - nav.height - 30 + "px";
+        } else if( nav.top < 0 ) {
+          this.nav.style.top = viewport.top - absTop( slide ) + "px"
+        }
       }
     } else {
       if( isBigNav ) {
@@ -105,11 +105,6 @@
         this.nav.style.top = 0 + "px";
       } else if( viewport.top < absBottom( slide ) - nav.height - 30 ) {
         this.nav.style.top = viewport.top - absTop( slide ) + "px";
-        /**
-        this.nav.style.top = (
-          viewport.bottom - nav.height - 30 - absTop( slide ) + "px"
-        );
-        **/
       }
     }
   };
@@ -123,7 +118,9 @@
     **/
   
   
-  exports.navmark = new Navmark;
+  exports.onload = function(){
+    navmark = new Navmark;
+  };
 }(window)
 
 
