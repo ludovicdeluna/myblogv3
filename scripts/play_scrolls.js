@@ -1,191 +1,175 @@
-/*
- * Ceci est une ardoise JavaScript.
- *
- * Saisissez du code JavaScript, puis faites un clic droit ou sélectionnez à partir du menu Exécuter :
- * 1. Exécuter pour évaluer le texte sélectionné (Ctrl+R),
- * 2. Examiner pour mettre en place un objet Inspector sur le résultat (Ctrl+I), ou,
- * 3. Afficher pour insérer le résultat dans un commentaire après la sélection. (Ctrl+L)
- */
-
-/*
- * Mon element actuel est repositionné par rapport à la position top de la fenêtre,
- * mais il est dans un div (position relative) et donc le positionnement se fait
- * par rapport à lui. Il faut trouver sa position au parent pour faire les bons calculs
- */
 
 !function(exports){
   'use strict';
-  /**
-  if( !exports.document.getElementById('pageContent') ){
-    alert('pas la bonne page');
-    return;
-  }
-  **/
-  exports.navmark = null;
   
-  function Viewport(top, height) {
+  var yPosBeforeScroll = 0;
+  function isScrollDown() {
+    return yPosBeforeScroll < exports.scrollY;
+  }
+  
+  function Viewport() {
     this.top = exports.scrollY;
-    this.height = exports.document.documentElement.clientHeight;
+    this.height = exports.document.documentElement.clientHeight;  
     this.bottom = this.top + this.height;
   }
   
-  /**
-  Viewport.prototype.bottom = function(){
-    return exports.scrollY + exports.document.documentElement.clientHeight;
-  };
-  **/
+  function VisualElmWith(viewport){
+    var VisualElm = function(element){
+      this.element = element;
+      this.refresh();
+    };
+    
+    VisualElm.prototype.refresh = function(){
+      var elm = this.element.getBoundingClientRect();      
+      this.elmdebug = elm;
+      this.bottomFromTop = elm.bottom;
+      this.top = elm.top;
+      this.height = elm.height;
+      return true;
+    };
+       
+    VisualElm.prototype.absTop = function(){
+      return viewport.top + this.top;
+    };
+    
+    VisualElm.prototype.absBottom = function(){
+      return viewport.top + this.bottomFromTop ;
+    };
+    
+    VisualElm.prototype.bottom = function(){
+      return this.absBottom() - viewport.bottom;
+    };
+    
+    return VisualElm;
+  }
   
   function Navmark() {
-    this.slide  = exports.document.getElementById('pageContent');
-    this.nav    = this.slide.getElementsByTagName('nav')[0];
-    this.scrollY  = exports.scrollY;
+    yPosBeforeScroll = exports.scrollY;
+    this.nav = document.getElementsByTagName('nav')[0];
+    this.slide = this.nav.parentNode;
     this.attachEvents();
-  }
-  
-  function absTop(elm) {
-    return exports.scrollY + elm.top;
-  }
-  
-  function absBottom(elm) {
-    return exports.scrollY + elm.bottom;
   }
   
   Navmark.prototype.attachEvents = function(){
     exports.document.onscroll = function(event){
       this.scrollEvent(event);
-      this.scrollY = exports.scrollY;
+      yPosBeforeScroll = exports.scrollY;
     }.bind(this);
   };
   
-  Navmark.prototype.isScrollDown = function(){
-    return exports.scrollY > this.scrollY
-  };
-  
   Navmark.prototype.scrollEvent = function(e){
-    var viewport = new Viewport();
+    var viewport = new Viewport;
+    var VisualElm = new VisualElmWith( viewport );
+    
+    var nav = new VisualElm(this.nav);
+    var slide = new VisualElm(this.slide);
+    
 
-    var slide = this.slide.getBoundingClientRect();
-    if( viewport.height - 30 > slide.height ) {
-      console.log('Slide too small. Nothing to move');
-      return;
-    }
-    
-    var nav = this.nav.getBoundingClientRect();
-    if( slide.height - 30 <= nav.height ) {
-      console.log('Nav has no space to move into slide');
-      return;
-    }
-    
-    var isBigNav = nav.height > viewport.height - 30;
-    
-    if( this.isScrollDown() ){
-      if( isBigNav ) {
-        if( viewport.bottom > absBottom( slide ) ) {
-          this.nav.style.top = slide.height - nav.height - 30 + "px";
-        } else if( absBottom( nav ) + 30 < viewport.bottom  ) {
-          this.nav.style.top = viewport.bottom - absTop( slide ) - nav.height - 30 + "px";
-        }
-      } else {
-        if( viewport.top + nav.height + 30 >= absBottom( slide ) ) {
-          this.nav.style.top = slide.height - nav.height - 30 + "px";
-        } else if( nav.top < 0 ) {
-          this.nav.style.top = viewport.top - absTop( slide ) + "px"
+    if( slide.top < 0 ) {
+      if( nav.height >= viewport.height ) {
+        if( isScrollDown() ){
+          if( slide.bottom() > 0 ) {
+            if( nav.element.style.position == "fixed" ) {
+              console.log( slide.elmdebug );
+              return;
+            }
+            if( nav.bottom() < 0 ) {
+              nav.element.style.position = "fixed";
+              nav.element.style.bottom = "0";
+              nav.element.style.top = "";
+            }
+          }
+        } else {
+          if( nav.element.style.position == "absolute" ) return;
+          nav.element.style.position = "absolute";
+          nav.element.style.bottom = "";
+          nav.element.style.top = viewport.top - (nav.height - viewport.height) - (viewport.top + slide.top) + "px";          
         }
       }
-    } else {
-      if( isBigNav ) {
-        if( viewport.top < absTop( slide ) ) {
-          this.nav.style.top = 0;
-        } else if( nav.top > 0 )  {
-          this.nav.style.top = viewport.top - absTop( slide ) + "px"
-        }
-        return;
-      }
-      if( viewport.top < absTop( slide ) ) {
-        this.nav.style.top = 0 + "px";
-      } else if( viewport.top < absBottom( slide ) - nav.height - 30 ) {
-        this.nav.style.top = viewport.top - absTop( slide ) + "px";
-      }
     }
+    
+    yPosBeforeScroll = exports.scrollY;
   };
-    
-    /**
-    var slide = {
-      top: slide.top + viewport.top ,
-      bottom: slide.bottom + viewport.top,
-      height: slide.height,
-    }
-    **/
-  
   
   exports.onload = function(){
-    navmark = new Navmark;
+    exports.navmark = new Navmark;
+    console.log('Script loaded.');
   };
+
+  function testme(){
+    var viewport = new Viewport;
+    var VisualElm = new VisualElmWith(viewport);
+    
+    var navElm = new VisualElm(nav);
+    
+    var slide = nav.parentNode;
+    var slideElm = new VisualElm(slide);
+    
+    return {slide: slideElm, nav: navElm, viewport: viewport};
+  }
+
 }(window)
 
 
 
 
 
-/**
+
 !function(exports){
   'use strict';
-  
-  function Navmark(track){
-    this.track = track || document.getElementById('track');   
-    this.nav = this.track ? this.track.getElementsByTagName('nav')[0] : null;
-    this.footer = this.track ? this.track.getElementsByTagName('footer')[0] : null;
 
-    if( !this.nav ) throw 'Navmark not instantiated';   
+  function Viewport(top, height) {
+    this.top = exports.scrollY;
+    this.height = exports.document.documentElement.clientHeight;
+    this.bottom = this.top + this.height;
+  }
+
+  function absTop(elm) {
+    return exports.scrollY + elm.top;
+  }
+
+  function absBottom(elm) {
+    return exports.scrollY + elm.bottom;
+  }
+
+  function Navmark() {
+    console.log('loading...');
+    this.slide  = exports.document.getElementById('pageContent');
+    this.nav    = this.slide.getElementsByTagName('nav')[0];
+    this.scrollY  = exports.scrollY;
     this.attachEvents();
-  };
-  
-  Navmark.prototype.attachEvents = function(){
-    this.windowPageY = exports.pageYOffset;
-    this.isScrolling = false;
-    exports.onscroll = function(e){ this.scrollEvent(e) }.bind(this);
-  };
-  
-  Navmark.prototype.scrollEvent = function(e){
-    if( this.nav.className !== 'stick-on-scroll' || this.isScrolling ) return;
+    console.log('loaded.');
+  }
 
-    this.isScrolling = true;
-       
-    var viewportScrollTop = exports.scrollY     || exports.document.documentElement.scrollTop ;
-    var viewportHeight    = exports.innerHeight || exports.document.documentElement.clientHeight;
-    var trackPosY         = viewportScrollTop + Math.round( this.track.getBoundingClientRect().top, 2 );
-    var trackHeight       = this.track.clientHeight - Math.round(this.footer.getBoundingClientRect().height, 2) ;
-    var navHeight         = Math.round(this.nav.clientHeight, 2);
-    
-    var posTop    = viewportScrollTop - trackPosY;
-    var posBottom = posTop + viewportHeight - navHeight - 30;
-    
-    if( this.isScrollDown(e) ) {
-      if( posTop > 0 ) {
-        if( posTop + navHeight < trackHeight ) this.nav.style.top = posTop + "px";
-      } else {
-        this.nav.style.top = 0;
+  Navmark.prototype.isScrollDown = function(){
+    return exports.scrollY > this.scrollY
+  };
+
+  Navmark.prototype.attachEvents = function(){
+    exports.document.onscroll = function(event){
+      this.scrollEvent(event);
+      this.scrollY = exports.scrollY;
+      console.log(exports.scrollY);
+    }.bind(this);
+  };
+
+  Navmark.prototype.scrollEvent = function(e){
+    var viewport = new Viewport();
+    var slide = this.slide.getBoundingClientRect();
+    var nav = this.nav.getBoundingClientRect();
+
+    if( this.isScrollDown ){
+      console.log( slide.top + " < " + 0  + " && " + absTop(slide) + nav.height + " > " + viewport.bottom )
+      if( nav.top < viewport.top && absBottom(nav) >= viewport.bottom ){
+        //this.nav.style.bottom = "0px";
+        //this.nav.style.position = "fixed";
+        return;
       }
     } else {
-      if( posBottom > 0 && posBottom + navHeight < trackHeight ) this.nav.style.top = posBottom + "px";
+      console.log('up');
     }
-    
-    this.isScrolling = false;
   };
-  
-  Navmark.prototype.isScrollDown = function(e){
-    var windowPageY = this.windowPageY;
-    this.windowPageY = exports.scrollY || exports.document.body.scrollTop;
-    
-    return e.pageY > windowPageY;
-  };
-   
-  
-  exports.Navmark = Navmark;
-}(window);
 
-!function(exports){
-  exports.navmark = new Navmark( document.getElementById('pageContent') );
-  console.log(navmark);
-}(window);
-**/
+
+}(window)
+
