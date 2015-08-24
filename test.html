@@ -40,6 +40,7 @@
     }
 
     #main-content{
+      position: relative;
       margin-top: 65px;
       overflow: hidden;
     }
@@ -87,8 +88,38 @@
       max-width: 23%;
     }
 
+    .nav-flow-stick{
+      float:left;
+    }
+
     .nav-main{
+      position: relative;
       overflow: hidden;
+      width: 200px;
+    }
+
+    .nav-main-fixed-top{
+      position: fixed;
+      top: 0;
+    }
+
+    .nav-main-fixed-bottom{
+      position: fixed;
+      bottom: 0;
+    }
+
+    .nav-main-to-position{
+      position: absolute;
+    }
+
+    .nav-main-to-top{
+      position: absolute;
+      top: 0;
+    }
+
+    .nav-main-to-bottom{
+      position: absolute;
+      bottom: 0;
     }
 
     .footer-main{
@@ -110,6 +141,19 @@
       text-align: justify;
     }
 
+    .background-page-on-top{
+      padding-top: 1px;
+      margin-top: -1px;
+      background-color: green;
+    }
+
+    .background-page-on-top{
+      /** Select a Page background with progressive alpha-100 **/
+      background: green url('') fixed top center scroll;
+      min-height: 400px;
+    }
+
+
   </style>
 </head>
 <body>
@@ -119,81 +163,83 @@
         <h1>Cast Title Here</h1>
       </div>
     </header>
-    <div class="head-meta">
-      <p class="article-category">
-        <span class="article-category-square">Category here</span>
-      </p>
-      <span class="photo-credits">Crédit photo: <a href=""
-        title="Site de l'auteur de la photo ou de l'image">Lien vers la page</a></span>
-    </div>
-    <div id="main-content" class="paged">
-      <div role="main">
-        <article>
-          <div class="article-meta">
-            <h1>Main title here. This is no other level (no h1 before)</h1>
-            <span>Publié le 28 Aout 2015</span>
-          </div>
-          <div>
-            <p>
-              Erat autem diritatis eius hoc quoque indicium nec obscurum nec
-              latens, quod ludicris cruentis delectabatur et in circo sex vel
-              septem aliquotiens vetitis certaminibus pugilum vicissim se
-              concidentium perfusorumque sanguine specie ut lucratus ingentia
-              laetabatur.
-            </p>
-            <p>
-              Utque proeliorum periti rectores primo catervas densas opponunt et
-              fortes, deinde leves armaturas, post iaculatores ultimasque
-              subsidiales acies, si fors adegerit, iuvaturas, ita praepositis
-              urbanae familiae suspensae digerentibus sollicite, quos insignes
-              faciunt virgae dexteris aptatae velut tessera data castrensi iuxta
-              vehiculi frontem omne textrinum incedit: huic atratum coquinae
-              iungitur ministerium, dein totum promiscue servitium cum otiosis
-              plebeiis de vicinitate coniunctis: postrema multitudo spadonum a
-              senibus in pueros desinens, obluridi distortaque lineamentorum
-              conpage deformes, ut quaqua incesserit quisquam cernens mutilorum
-              hominum agmina detestetur memoriam Samiramidis reginae illius
-              veteris, quae teneros mares castravit omnium prima velut vim
-              iniectans naturae, eandemque ab instituto cursu retorquens, quae
-              inter ipsa oriundi crepundia per primigenios seminis fontes tacita
-              quodam modo lege vias propagandae posteritatis ostendit.
-            </p>
-            <h2>Title / Heading level 2 here</h2>
-            <p>
-              Hanc regionem praestitutis celebritati diebus invadere parans dux
-              ante edictus per solitudines Aboraeque amnis herbidas ripas, suorum
-              indicio proditus, qui admissi flagitii metu exagitati ad praesidia
-              descivere Romana. absque ullo egressus effectu deinde tabescebat
-              immobilis.
-            </p>
-            <p>
-              Post hoc impie perpetratum quod in aliis quoque iam timebatur,
-              tamquam licentia crudelitati indulta per suspicionum nebulas
-              aestimati quidam noxii damnabantur. quorum pars necati, alii puniti
-              bonorum multatione actique laribus suis extorres nullo sibi relicto
-              praeter querelas et lacrimas, stipe conlaticia victitabant, et
-              civili iustoque imperio ad voluntatem converso cruentam,
-              claudebantur opulentae domus et clarae.
-            </p>
-            <h2>Heading Level 2 Here</h2>
-            <p>
-              Et est admodum mirum videre plebem innumeram mentibus ardore quodam
-              infuso cum dimicationum curulium eventu pendentem. haec similiaque
-              memorabile nihil vel serium agi Romae permittunt. ergo redeundum ad
-              textum.
-            </p>
-          </div>
-        </article>
+    <div class="background-page-on-top">
+      <div class="head-meta">
+        <p class="article-category">
+          <span class="article-category-square">Category here</span>
+        </p>
+        <span class="photo-credits">Crédit photo: <a href=""
+          title="Site de l'auteur de la photo ou de l'image">Lien vers la page</a></span>
       </div>
-      <aside>
-        <nav class="nav-main">
-          <ul>
-            <li><a href="">Lien du menu 1</a></li>
-            <li><a href="">Lien du menu 2</a></li>
-            <li><a href="">Lien du menu 3</a></li>
-            <li><a href="">Lien du menu 4</a></li>
-        </nav>
-      </aside>
+      <div id="main-content" class="paged">
+        <div role="main">
+          <article>
+            <div class="article-meta">
+              <h1>Main title here. This is no other level (no h1 before)</h1>
+              <span>Publié le 28 Aout 2015</span>
+            </div>
+            <div>
+              <p>
+                Erat autem diritatis eius hoc quoque indicium nec obscurum nec
+                latens, quod ludicris cruentis delectabatur et in circo sex vel
+                septem aliquotiens vetitis certaminibus pugilum vicissim se
+                concidentium perfusorumque sanguine specie ut lucratus ingentia
+                laetabatur.
+              </p>
+              <p>
+                Utque proeliorum periti rectores primo catervas densas opponunt et
+                fortes, deinde leves armaturas, post iaculatores ultimasque
+                subsidiales acies, si fors adegerit, iuvaturas, ita praepositis
+                urbanae familiae suspensae digerentibus sollicite, quos insignes
+                faciunt virgae dexteris aptatae velut tessera data castrensi iuxta
+                vehiculi frontem omne textrinum incedit: huic atratum coquinae
+                iungitur ministerium, dein totum promiscue servitium cum otiosis
+                plebeiis de vicinitate coniunctis: postrema multitudo spadonum a
+                senibus in pueros desinens, obluridi distortaque lineamentorum
+                conpage deformes, ut quaqua incesserit quisquam cernens mutilorum
+                hominum agmina detestetur memoriam Samiramidis reginae illius
+                veteris, quae teneros mares castravit omnium prima velut vim
+                iniectans naturae, eandemque ab instituto cursu retorquens, quae
+                inter ipsa oriundi crepundia per primigenios seminis fontes tacita
+                quodam modo lege vias propagandae posteritatis ostendit.
+              </p>
+              <h2>Title / Heading level 2 here</h2>
+              <p>
+                Hanc regionem praestitutis celebritati diebus invadere parans dux
+                ante edictus per solitudines Aboraeque amnis herbidas ripas, suorum
+                indicio proditus, qui admissi flagitii metu exagitati ad praesidia
+                descivere Romana. absque ullo egressus effectu deinde tabescebat
+                immobilis.
+              </p>
+              <p>
+                Post hoc impie perpetratum quod in aliis quoque iam timebatur,
+                tamquam licentia crudelitati indulta per suspicionum nebulas
+                aestimati quidam noxii damnabantur. quorum pars necati, alii puniti
+                bonorum multatione actique laribus suis extorres nullo sibi relicto
+                praeter querelas et lacrimas, stipe conlaticia victitabant, et
+                civili iustoque imperio ad voluntatem converso cruentam,
+                claudebantur opulentae domus et clarae.
+              </p>
+              <h2>Heading Level 2 Here</h2>
+              <p>
+                Et est admodum mirum videre plebem innumeram mentibus ardore quodam
+                infuso cum dimicationum curulium eventu pendentem. haec similiaque
+                memorabile nihil vel serium agi Romae permittunt. ergo redeundum ad
+                textum.
+              </p>
+            </div>
+          </article>
+        </div>
+        <aside class="nav-flow-stick">
+          <nav class="nav-main nav-main-to-top">
+            <ul>
+              <li><a href="">Lien du menu 1</a></li>
+              <li><a href="">Lien du menu 2</a></li>
+              <li><a href="">Lien du menu 3</a></li>
+              <li><a href="">Lien du menu 4</a></li>
+          </nav>
+        </aside>
+      </div>
     </div>
   </div>
   <footer class="footer-main">
