@@ -28,6 +28,7 @@
   Navscroll.prototype.scrollEvent = function(e){
     var nav = this.nav.getBoundingClientRect();
     var page = this.page.getBoundingClientRect();
+
     if( nav.height < exports.document.documentElement.clientHeight ){
       this.scrollEventSmallMenu(nav, page);
     }else{
@@ -37,6 +38,16 @@
 
   Navscroll.prototype.scrollEventBigMenu = function(nav, page){
     if( isScrollDown() ){
+      if(
+        nav.top <= 0 &&
+        page.bottom < exports.document.documentElement.clientHeight &&
+        this.nav.classList.contains('nav-main-to-top')
+      ) {
+        this.nav.classList.remove('nav-main-to-top');
+        this.nav.classList.add('nav-main-to-bottom');
+        return;
+      }
+
       if(
         nav.top <= 0 &&
         nav.bottom <= exports.document.documentElement.clientHeight &&
@@ -101,12 +112,22 @@
       if(
         nav.top <= 0 &&
         page.bottom < exports.document.documentElement.clientHeight &&
+        nav.height < page.bottom &&
+        this.nav.classList.contains('nav-main-to-top')
+      ) {
+        this.nav.classList.remove('nav-main-to-top');
+        this.nav.classList.add('nav-main-fixed-top');
+        return;
+      }else if(
+        nav.top <= 0 &&
+        page.bottom < exports.document.documentElement.clientHeight &&
         this.nav.classList.contains('nav-main-to-top')
       ) {
         this.nav.classList.remove('nav-main-to-top');
         this.nav.classList.add('nav-main-to-bottom');
         return;
       }
+
       if(
           nav.top <= 0 &&
           this.nav.classList.contains('nav-main-to-top')
