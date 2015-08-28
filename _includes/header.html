@@ -1,40 +1,8 @@
-{% if page.picture %}
-  <header role="main" class="header-banner-image"
-          style="background-image: url({{ site.baseurl }}/images/{{ page.picture }})">
-  </header>
-{% else %}
-  <header role="main" class="header-banner-image"
-          style="background-image: url({{ site.baseurl }}/images/header-picture.jpg)">
-  </header>
-{% endif %}
-{% if page.credits or page.categories %}
-  <div class="wrapper">
-    {% if page.categories %}
-      <div class="header-category">
-        <span class="header-category">{{ page.categories | join: ', ' }}</span>
-      </div>
-    {% endif %}
-    {% if page.credits %}
-      <p class="header-banner-credits">
-        Crédits :
-        {% if page.link %}
-          <a href="{{ page.link }}" title="Site de l'auteur">{{ page.credits }}</a>
-        {% else %}
-          {{ page.credits }}
-        {% endif %}
-      </p>
-    {% endif %}
+<header id="header-cast-wrap">
+  <div id="header-cast-content">
+    <h1>{{ page.title }}</h1>
   </div>
-{% endif %}
-
-
-
-
-
-
-
-
-
+</header>
 
 
 

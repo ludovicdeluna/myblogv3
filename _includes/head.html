@@ -6,8 +6,153 @@
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
 
-  <script src="{{ "/scripts/play_scrolls.js" | prepend: scite.baseurl }}"></script>
-  <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+  <!--<link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">-->
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
+  <style media="screen">
+    html, body{ margin: 0; padding: 0; height: 100% ; background-color: white ; }
+
+    #wrap{
+      min-height: calc( 100% - 100px);
+      background: grey;
+      overflow: hidden;
+    }
+
+    header{
+      height: 40vw;
+      max-height: 45vh;
+      min-height: 190px;
+      background: blue;
+      overflow: hidden;
+      background: transparent url(./images/header-picture.jpg) center center / cover;
+      /** Temporary **/
+      background-color: blue;
+      background-image: none;
+    }
+
+    #header-cast-wrap {
+      display: table;
+      width: 100%;
+      text-align: center;
+    }
+
+    #header-cast-content {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    #main-content{
+      position: relative;
+      margin-top: 65px;
+      overflow: hidden;
+    }
+
+    div[role=main]{
+      float: left;
+      width: calc(100% - 200px);
+    }
+
+    .paged,
+    .head-meta {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 880px;
+      background-color: #E8E8E8;
+    }
+
+    .head-meta {
+      ///display: none;
+      max-width: none;
+      position: relative;
+      background-color: #444444;
+    }
+
+    .photo-credits {
+      position: absolute;
+      right: 0;
+      background-color: white;
+      max-width: 30%;
+    }
+
+    .article-category{
+      position: absolute;
+      margin-top: calc(80px / 2 * -1);
+      text-align: center;
+      width: 100%;
+    }
+
+    .article-category-square {
+      display: inline-block;
+      padding: 30px 40px;
+      margin: 0;
+      background-color: red;
+      line-height: 20px;
+      max-width: 23%;
+    }
+
+    .nav-flow-stick{
+      float:left;
+    }
+
+    .nav-main{
+      position: relative;
+      overflow: hidden;
+      width: 200px;
+    }
+
+    .nav-main-fixed-top{
+      position: fixed;
+      top: 0;
+    }
+
+    .nav-main-fixed-bottom{
+      position: fixed;
+      bottom: 0;
+    }
+
+    .nav-main-to-position{
+      position: absolute;
+    }
+
+    .nav-main-to-top{
+      position: absolute;
+      top: 0;
+    }
+
+    .nav-main-to-bottom{
+      position: absolute;
+      bottom: 0;
+    }
+
+    .footer-main{
+      width: 100%;
+      height: 100px;
+      background: black;
+      overflow: hidden;
+      padding:0;
+      margin:0;
+      background: black;
+    }
+
+    .footer-main .paged{
+      color: white;
+      background-color: inherit;
+    }
+
+    .text-justify{
+      text-align: justify;
+    }
+
+    .background-page-on-top{
+      padding-top: 1px;
+      margin-top: -1px;
+      background-color: green;
+    }
+
+    .background-page-on-top{
+      /** Select a Page background with progressive alpha-100 **/
+      background: green url('') fixed top center scroll;
+      min-height: 400px;
+    }
+  </style>
 </head>

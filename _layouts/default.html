@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html lang="{% if page.lang %}{{ page.lang }}{% else %}fr{% endif %}">
 {% include head.html %}
-<body id="top" dir="ltr">
-  {% include header.html %}
-  <div id="pageContent" class="wrapper content">
-    <div role="main">{{ content }}</div>
-    {% include topics.html %}
+<body dir="ltr">
+  <div id="wrap">
+    {% if page.picture %}
+    <header id="header" style="background-image: url({{ site.baseurl }}/images/{{ page.picture }})">
+    </header>
+    {% else %}{% include header.html %}{% endif %}
+    <div class="background-page-on-top">
+      {% if page.categories or page.credit-author %}{% include header-meta.html %}{% endif %}
+      <div id="main-content" class="paged">
+        <div role="main">
+          {{ content }}
+        </div>
+        <aside class="nav-flow-stick">
+          <nav class="nav-main nav-main-to-top">
+            {% include navigation.html %}
+          </nav>
+        </aside>
+      </div>
+    </div>
   </div>
-  <div class="wrapper">
-    {% include footer.html %}
-  </div>
-  {% include navigate.html %}
+  {% include footer.html %}
 </body>
 </html>
