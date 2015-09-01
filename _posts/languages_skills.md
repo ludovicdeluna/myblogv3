@@ -18,8 +18,7 @@ Skills
 - **Data** :              Redis, MongoDB, PG
 
 ### Secondary
-- **Data Processing** :   Scala (Spark)
-- **Data** :              Cassandra
+- **Calculs** :           Go
 - **Low Level** :         C/C++
 
 Experience
@@ -30,9 +29,9 @@ Experience
 
 Adomik is the leading programmatic advertising in the US market, especially through Machine Learning techniques and the use of Big Data. I collaborate with Business Teams and Data Scientists to optimize the critical parts of our technology that are responsible for receive, analyze and lead investments on main US AD-Exchange platforms. With the UI Team, I build lot of useful APIs for graphical interfaces and client applications.
 
-Adomik est le leader sur le marché nord-américain de la publicité programmatique, en particulier via l'utilisation de techniques de Machine Learning et l'usage du Big Data. En collaboration avec les équipes Business et Data Scientists, j'optimise les parties critiques de notre solution en charge de réceptionner, analyser et piloter les placements des principales places d'AD-Exchange américaines. En collaboration avec les équipes UI, j'assure également la création des API nécessaires aux interfaces graphiques et applications clientes.
+Adomik est le leader sur le marché nord-américain de la publicité programmatique, en particulier via l'utilisation des techniques de Machine Learning et l'usage du Big Data pour analyser et piloter des inventaires publicitaires sur des places de marcher spécialisées. Mes challenges ne portent pas sur des problèmatiques de traffic utilisteur, mais sur le traitement en quasi temps-reel d'un grand volume de données à restituer aux interfaces utilisateur dans une fenêtre de temps prédéfinie. Dans ce cadre, je suis particulièrement investi dans la conception et l'optimisation de composants pour gérer, analyser, transformer, croiser et restituer nos flux de données à travers des API ou des interfaces, effectuant par la même un pont vers les principales places d'Ad-Exchange (Appnexus, AOL, Rubicon...). Je porte une grande attention au design du code, la validation des temps de calculs pour les parties critiques (Ruby / Go) et optimiser l'usage de nos bases de données. Je travaille en collaboration avec des Data Scientists ayant en charge de fournir la partie "intelligente" à nos données (simulations, prédictions comportementales, analyse de performance) ainsi qu'une équipe UI fournissant l'interface web sous AngularJS.
 
-Environnement technique: ES3/EC2, MongoDB, PG, Cassandra, Ruby/Rails, Python, Javascript, Redis, API (EC2, Appnexus, Rubicon), Travis, Scala+Spark, Redshift, Hadoop.
+Environnement technique: Amazon EC2/S3, MongoDB, PG, Cassandra, Ruby/Rails, Go, Python, Javascript, Redis, API (Appnexus, Rubicon, AOL), Travis, Scala + Spark, Redshift, Hadoop.
 
 
 ### AF83 : Expert Ruby / Ruby on Rails
