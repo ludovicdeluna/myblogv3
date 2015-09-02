@@ -1,236 +1,152 @@
 /**
- * Site header
+ * Site Layout
  */
-.site-header {
-    border-top: 5px solid $grey-color-dark;
-    border-bottom: 1px solid $grey-color-light;
-    min-height: 56px;
 
-    // Positioning context for the mobile navigation icon
-    position: relative;
+html, body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: white;
 }
 
-.site-title {
-    font-size: 26px;
-    line-height: 56px;
-    letter-spacing: -1px;
-    margin-bottom: 0;
-    float: left;
-
-    &,
-    &:visited {
-        color: $grey-color-dark;
-    }
+#wrap{
+  min-height: calc( 100% - 100px);
+  background: grey;
+  overflow: hidden;
 }
 
-.site-nav {
-    float: right;
-    line-height: 56px;
-
-    .menu-icon {
-        display: none;
-    }
-
-    .page-link {
-        color: $text-color;
-        line-height: $base-line-height;
-
-        // Gaps between nav items, but not on the first one
-        &:not(:first-child) {
-            margin-left: 20px;
-        }
-    }
-
-    @include media-query($on-palm) {
-        position: absolute;
-        top: 9px;
-        right: 30px;
-        background-color: $background-color;
-        border: 1px solid $grey-color-light;
-        border-radius: 5px;
-        text-align: right;
-
-        .menu-icon {
-            display: block;
-            float: right;
-            width: 36px;
-            height: 26px;
-            line-height: 0;
-            padding-top: 10px;
-            text-align: center;
-
-            > svg {
-                width: 18px;
-                height: 15px;
-
-                path {
-                    fill: $grey-color-dark;
-                }
-            }
-        }
-
-        .trigger {
-            clear: both;
-            display: none;
-        }
-
-        &:hover .trigger {
-            display: block;
-            padding-bottom: 5px;
-        }
-
-        .page-link {
-            display: block;
-            padding: 5px 10px;
-        }
-    }
+header{
+  height: 40vw;
+  max-height: 45vh;
+  min-height: 190px;
+  background: blue;
+  overflow: hidden;
+  background: transparent url(/images/header-picture.jpg) center center / cover;
+  /** Temporary **/
+  background-color: blue;
+  /** background-image: none; **/
 }
 
-
-
-/**
- * Site footer
- */
-.site-footer {
-    border-top: 1px solid $grey-color-light;
-    padding: $spacing-unit 0;
+#header-cast-wrap {
+  display: table;
+  width: 100%;
+  text-align: center;
 }
 
-.footer-heading {
-    font-size: 18px;
-    margin-bottom: $spacing-unit / 2;
+#header-cast-content {
+  display: table-cell;
+  vertical-align: middle;
 }
 
-.contact-list,
-.social-media-list {
-    list-style: none;
-    margin-left: 0;
+#main-content{
+  position: relative;
+  margin-top: 65px;
+  overflow: hidden;
 }
 
-.footer-col-wrapper {
-    font-size: 15px;
-    color: $grey-color;
-    margin-left: -$spacing-unit / 2;
-    @extend %clearfix;
+div[role=main]{
+  float: left;
+  width: calc(100% - 200px);
 }
 
-.footer-col {
-    float: left;
-    margin-bottom: $spacing-unit / 2;
-    padding-left: $spacing-unit / 2;
+.paged,
+.head-meta {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 880px;
+  background-color: #E8E8E8;
 }
 
-.footer-col-1 {
-    width: -webkit-calc(35% - (#{$spacing-unit} / 2));
-    width:         calc(35% - (#{$spacing-unit} / 2));
+.head-meta {
+  max-width: none;
+  position: relative;
+  background-color: #444444;
 }
 
-.footer-col-2 {
-    width: -webkit-calc(20% - (#{$spacing-unit} / 2));
-    width:         calc(20% - (#{$spacing-unit} / 2));
+.photo-credits {
+  position: absolute;
+  right: 0;
+  background-color: white;
+  max-width: 30%;
 }
 
-.footer-col-3 {
-    width: -webkit-calc(45% - (#{$spacing-unit} / 2));
-    width:         calc(45% - (#{$spacing-unit} / 2));
+.article-category{
+  position: absolute;
+  margin-top: calc(80px / 2 * -1);
+  text-align: center;
+  width: 100%;
 }
 
-@include media-query($on-laptop) {
-    .footer-col-1,
-    .footer-col-2 {
-        width: -webkit-calc(50% - (#{$spacing-unit} / 2));
-        width:         calc(50% - (#{$spacing-unit} / 2));
-    }
-
-    .footer-col-3 {
-        width: -webkit-calc(100% - (#{$spacing-unit} / 2));
-        width:         calc(100% - (#{$spacing-unit} / 2));
-    }
+.article-category-square {
+  display: inline-block;
+  padding: 30px 40px;
+  margin: 0;
+  background-color: red;
+  line-height: 20px;
+  max-width: 23%;
 }
 
-@include media-query($on-palm) {
-    .footer-col {
-        float: none;
-        width: -webkit-calc(100% - (#{$spacing-unit} / 2));
-        width:         calc(100% - (#{$spacing-unit} / 2));
-    }
+.nav-flow-stick{
+  float:left;
 }
 
-
-
-/**
- * Page content
- */
-.page-content {
-    padding: $spacing-unit 0;
+.nav-main{
+  position: relative;
+  overflow: hidden;
+  width: 200px;
 }
 
-.page-heading {
-    font-size: 20px;
+.nav-main-fixed-top{
+  position: fixed;
+  top: 0;
 }
 
-.post-list {
-    margin-left: 0;
-    list-style: none;
-
-    > li {
-        margin-bottom: $spacing-unit;
-    }
+.nav-main-fixed-bottom{
+  position: fixed;
+  bottom: 0;
 }
 
-.post-meta {
-    font-size: $small-font-size;
-    color: $grey-color;
+.nav-main-to-position{
+  position: absolute;
 }
 
-.post-link {
-    display: block;
-    font-size: 24px;
+.nav-main-to-top{
+  position: absolute;
+  top: 0;
 }
 
-
-
-/**
- * Posts
- */
-.post-header {
-    margin-bottom: $spacing-unit;
+.nav-main-to-bottom{
+  position: absolute;
+  bottom: 0;
 }
 
-.post-title {
-    font-size: 42px;
-    letter-spacing: -1px;
-    line-height: 1;
-
-    @include media-query($on-laptop) {
-        font-size: 36px;
-    }
+.footer-main{
+  width: 100%;
+  height: 100px;
+  background: black;
+  overflow: hidden;
+  padding:0;
+  margin:0;
+  background: black;
 }
 
-.post-content {
-    margin-bottom: $spacing-unit;
+.footer-main .paged{
+  color: white;
+  background-color: inherit;
+}
 
-    h2 {
-        font-size: 32px;
+.text-justify{
+  text-align: justify;
+}
 
-        @include media-query($on-laptop) {
-            font-size: 28px;
-        }
-    }
+.background-page-on-top{
+  padding-top: 1px;
+  margin-top: -1px;
+  background-color: green;
+}
 
-    h3 {
-        font-size: 26px;
-
-        @include media-query($on-laptop) {
-            font-size: 22px;
-        }
-    }
-
-    h4 {
-        font-size: 20px;
-
-        @include media-query($on-laptop) {
-            font-size: 18px;
-        }
-    }
+.background-page-on-top{
+  /** Select a Page background with progressive alpha-100 **/
+  background: green url('') fixed top center scroll;
+  min-height: 400px;
 }

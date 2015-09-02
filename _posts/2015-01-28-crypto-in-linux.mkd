@@ -3,8 +3,8 @@ layout: post
 title:  "Clé publique / privée chez le dev"
 date:   2015-01-28 17:05:31
 picture: pict2.jpg
-credits: Un super site sympa
-link: http://www.google.com
+credit-author: Un super site sympa
+credit-link: http://www.google.com
 categories: securité
 tags: PKI SSL SSH
 ---
@@ -769,4 +769,3 @@ dans les paramètres de votre dépôt GIT (onglet "collaborateurs").
 [RFC-3280]:       http://www.ietf.org/rfc/rfc3280.txt
 [RFC-4716]:       https://tools.ietf.org/rfc/rfc4716.txt
 [RFC-5208]:       http://tools.ietf.org/rfc/rfc5208.txt
-
