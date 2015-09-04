@@ -123,16 +123,16 @@ div[role=main]{
 .footer-main{
   width: 100%;
   height: 100px;
-  background: black;
+  background-color: grey; /** Make relation with de wrap - bottom background **/
   overflow: hidden;
   padding:0;
   margin:0;
-  background: black;
 }
 
-.footer-main .paged{
+.footer-main-about-site .paged,
+.footer-main-about-site{
+  background-color: black;
   color: white;
-  background-color: inherit;
 }
 
 .text-justify{
@@ -148,5 +148,5 @@ div[role=main]{
 .background-page-on-top{
   /** Select a Page background with progressive alpha-100 **/
   background: green url('') fixed top center scroll;
-  min-height: 400px;
+  min-height: 250px;
 }
