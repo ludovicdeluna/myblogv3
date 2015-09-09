@@ -120,7 +120,12 @@ div[role=main]{
   bottom: 0;
 }
 
-.footer-main{
+.main-about {
+  overflow: hidden;
+}
+
+
+.footer-main {
   width: 100%;
   height: 100px;
   background-color: grey; /** Make relation with de wrap - bottom background **/
@@ -129,8 +134,8 @@ div[role=main]{
   margin:0;
 }
 
-.footer-main-about-site .paged,
-.footer-main-about-site{
+.footer-main,
+.footer-main .paged {
   background-color: black;
   color: white;
 }
