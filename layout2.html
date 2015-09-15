@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="{% if page.lang %}{{ page.lang }}{% else %}fr{% endif %}">
+<!-- head.html -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+
+  <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
+</head>
+<body dir="ltr">
+  <div id="wrapper">
+    <!-- header.html -->
+    <header id="page-header">
+      <div class="headline">
+        <div class="headline-content">
+        </div>
+      </div>
+      <div class="headline-metas">
+        <!-- If photo-credits -->
+        <div class="photo-credits">
+          <span class="photo-author"></span>
+          <span class="photo-links"></span>
+        </div>
+        <!-- If category -->
+        <div class="article-category">
+          <p class="article-category-square"></p>
+        </div>
+      </div>
+    </header>
+    <section class="paged">
+      <div id="page-content">
+        <!-- content: page || post -->
+        <div id="page-content-articles">
+          <div role="main">
+            {{ content }}
+          </div>
+          <!-- nav-pagination.html -->
+          <nav class="nav-pagination"></nav>
+        </div>
+        <!-- nav-site.html -->
+        <aside id="page-content-nav">
+          <div class="vertical-pined">
+            <img class="site-logo">
+            <nav class="nav-site"></nav>
+          </div>
+        </aside>
+      </div>
+      <!-- if not a page || index -->
+      <footer class="article-about"></footer>
+    </section>
+    <!-- footer.html -->
+  </div>
+  <footer id="page-footer">
+    <p class="site-about paged">
+    </p>
+    <ul class="site-links paged">
+    </ul>
+  </footer>
+</body>

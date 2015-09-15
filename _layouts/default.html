@@ -1,40 +1,68 @@
+body
+  #wrapper
+    header #page-header
+      .headline (background + txt)
+      .metas .paged (hors flux)
+        .photo-credits
+          .photo-author
+          .photo-link
+        .article-category
+    section .paged
+      #page-content
+        #page-content-article
+          role=main
+            article
+            article
+          nav.pagination
+        aside #page-content-nav max-width:fix
+          nav.content
+      footer.about
+  footer #page-footer
+
+
+  {}
+  #page-header
+    .headline
+    .metas (hors flux)
+    .photo-credits
+    .article-category
+
+  article
+    .metas
+
+  .metas-posted_at
+  .metas-placeline
+
+  .article-category
+  .article-tags
+  .article-links
+
+  .featured-content
+    .featured-photo
+    .photo-credits
+    .photo-author
+    .photo-link
+
+
+
+
 <!DOCTYPE html>
 <html lang="{% if page.lang %}{{ page.lang }}{% else %}fr{% endif %}">
 {% include head.html %}
 <body dir="ltr">
   <div id="wrap">
-    {% if page.picture %}
-    <header id="header" style="background-image: url({{ site.baseurl }}/images/{{ page.picture }})">
-    </header>
-    {% else %}{% include header.html %}{% endif %}
-    <div class="background-page-on-top">
-      {% if page.categories or page.credit-author %}{% include header-meta.html %}{% endif %}
+    {% include header.html %}
+    <section>
+      {% include article-header.html %}
       <div id="main-content" class="paged">
         <div role="main">
-          {{ content }}
+        {{ content }} <!-- include article tag -->
         </div>
-        <aside class="nav-flow-stick">
-          <nav class="nav-main nav-main-to-top">
-            {% include navigation.html %}
-          </nav>
-        </aside>
+        {% include navigation.html %}
       </div>
-      <div class="main-about paged">
-        <img src="" class="main-about-photo" />
-        <p class="main-about-auhtor">
-          Auteur : <a href="" title="En savoir plus">Ludovic de Luna</a>
-        </p>
-        <p class="main-about-intro">
-          Développeur Ruby / ES6.
-        </p>
-        <ul class="main-about-links">
-          <li>Facebook</li>
-          <li>Facebook</li>
-          <li>Facebook</li>
-          <li>Facebook</li>
-        </ul>
-      </div>
-    </div>
+      <nav>Pagination</nav>
+      {% include article-footer.html %}
+    </section>
   </div>
   {% include footer.html %}
 </body>

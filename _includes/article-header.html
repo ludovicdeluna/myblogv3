@@ -1,0 +1,18 @@
+{% if page.categories or page.credit-author %}
+  <header class="article-header">
+    {% if page.categories %}
+    <p class="article-category">
+      <span class="article-category-square">{{ page.categories | join: ', ' }}</span>
+    </p>
+    {% endif %}
+    {% if page.credit-author %}
+    <span class="header-credits-photo">
+      {% if page.credit-link %}<a href="{{ page.credit-link }}" title="Site de l'auteur">{% endif %}
+      {{ page.credit-author }}
+      {% if page.credit-link %}</a>{% endif %}
+    </span>
+    {% endif %}
+  </div>
+{% else %}
+  <header class="article-header"></header>
+{% endif %}

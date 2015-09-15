@@ -1,8 +1,32 @@
-<header id="header-cast-wrap">
-  <div id="header-cast-content">
-    <h1>{{ page.title }}</h1>
-  </div>
+{% if page.picture %}
+  {% capture header_picture %}{{ site.baseurl }}/images/{{ page.picture }}{% endcapture %}
+{% else %}
+  {% capture header_picture %}{{ site.baseurl }}/images/header-main.jpg{% endcapture %}
+{% endif %}
+<header class="header-main" style="background-image: url( {{header_picture}} )">
+  {% unless page.picture %}
+    <div id="header-cast-wrap">
+      <div id="header-cast-content">
+        <h1>{{ page.title }}</h1>
+      </div>
+    </div>
+  {% endunless %}
 </header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
