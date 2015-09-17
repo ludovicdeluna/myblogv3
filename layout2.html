@@ -10,30 +10,32 @@
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
 
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+  <link rel="stylesheet" href="layout2.css">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
 </head>
 <body dir="ltr">
-  <div id="wrapper">
+  <div id="wrapper" class="bg-bottom">
     <!-- header.html -->
     <header id="page-header">
       <div class="headline">
         <div class="headline-content">
+          <p>Make your taste easy</p>
         </div>
       </div>
       <div class="headline-metas">
         <!-- If photo-credits -->
-        <div class="photo-credits">
-          <span class="photo-author"></span>
-          <span class="photo-links"></span>
-        </div>
+        <p class="photo-credits">
+          <span class="photo-author">Crédit photo : </span>
+          <a href="." class="photo-links">Ludovic de Luna</a>
+        </p>
         <!-- If category -->
-        <div class="article-category">
-          <p class="article-category-square"></p>
+        <div class="header-title">
+          <div class="article-category">Catégorie</div>
         </div>
       </div>
     </header>
-    <section class="paged">
+    <section class="bg-top paged">
       <div id="page-content">
         <!-- content: page || post -->
         <div id="page-content-articles">
