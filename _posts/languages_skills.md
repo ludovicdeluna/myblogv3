@@ -26,6 +26,8 @@ Adomik is the leading programmatic advertising in the US market, especially thro
 
 Evolutions des composants backend dans une architecture orientée services en mode SAAS, dont les briques responsbales du pilotage des placements sur les Ad exchanges (Appnexus, AOL, Rubicon) et celles fournissant la logique métier aux interfaces (UI / API). Le context spécifique lié au Big Data me donne l'oportunité de profiler nos algorithmes et l'usage de notre infrastrcuture (bases, caches, CPU/Mem, bande passante...) afin d'optimiser les temps de réponse et anticiper les besoins en scaling horizontal. J'opère principalement dans l'écosystème Ruby, je reserve Python pour des travaux conjoins avec les Data Scientists qui sont principalement en Python / Scala (Spark).
 
+Développements spécialisés sur architecture hautement parallélisée (technologie Cloud Amazon) ayant en charge l'analyse des flux publicitaires, leur optimisation financière et le pilotage des principales places Ad exchanges aux USA. Je me spécialise sur l'optimisation d'algorithmes analytiques et la création de services optimisés utilisés aussi bien par l'application Adomik (interface sous AngularJS) que par les SI des clients (API).
+
 Environnement technique: Amazon EC2/S3, MongoDB, PG, Ruby, Rails, Javascript, C, Redis, API d'Ad Exchanges, Travis, Python, Scala + Spark, Redshift, Hadoop.
 
 
@@ -37,11 +39,7 @@ Adomik est le leader sur le marché nord-américain de la publicité programmati
 ### AF83 : Expert Ruby / Ruby on Rails
 **10/2014 - 02/2015**
 
-AF83 est un acteur principal dans les stratégies d'évolution numériques de grandes sociétés mais égalements d'instituts publics. J'ai fait deux missions dans le cadre des chantiers 2014:
-  - Mon Album Photo
-  Evoluton sur la partie "création d'album" répondant aux attentes des internautes à l'approche de Noël, mais également à destination de l'équipe interne en charge de la plateforme qui a ainsi bénéficié d'outils de monitoring pour assurer le fonctionnement continue même au plus fort de sa charge. Architecture hautement parallélisée sous Rails/Mongo/PG utilisant un design autour de micros services.
-  - SFR
-  Migration technologique d'une plateforme de services visant à centraliser les retours clients sur les produits à venir pour la marque et ses partenaires. Anciennement PHP (Drupal), passage vers une plateforme sur-mesure sous Rails avec prise en charge du service SSO de SFR et des bases clientes. Architecture Rails/Mongo et adaptation de l'ancien design des bases (relationnel vers du NoSQL) et rattrapage des données de Drupal.
+Prise en charge de plusieurs évolutions dans une structure intervenant dans l'évolution des stratégies digitales de grandes sociétés et instituts publiques : Le service en ligne Mon Album Photo et la plate-forme de relation avec la communauté actives des utilisateurs SFR (retour sur produits innovants chez SFR).
 
 Environnement technique: Rails, Jenkins, MongoDB, PG, MySQL, Coffeescript
 

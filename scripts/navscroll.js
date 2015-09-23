@@ -7,8 +7,13 @@
   }
 
   function Navscroll(){
-    this.nav = document.getElementsByClassName('nav-main')[0];
-    this.page = document.getElementById('main-content');
+    // Rendre parametrable
+    //this.nav = document.getElementsByClassName('nav-main')[0];
+    this.nav = document.getElementById('page-content-nav');
+
+    // Prendre le parent systèmatiquement (si non fournis)
+    //this.page = document.getElementById('main-content');
+    this.page = document.getElementById('page-content');
     this.pollifyScrollY = (exports.scrollY === undefined ? true : false) ;
     if( this.pollifyScrollY ) { console.log('Navscroll: window.scrollY use pollify') }
     this.attachEvents();

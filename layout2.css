@@ -72,6 +72,28 @@ html, body{
 }
 
 #page-content {
+  padding: 0 0 0 20px;
+}
+
+#page-content {
+  overflow: hidden;
+  position: relative;
+}
+
+#page-content-articles {
+  float: left;
+  width: calc(100% - 200px);
+}
+
+#page-content-nav {
+  overflow: hidden;
+}
+
+#page-content .nav-pagination {
+  text-align: center;
+}
+
+footer .article-about {
   clear: both;
 }
 
@@ -79,4 +101,38 @@ html, body{
   margin: 0 auto;
   width: 100%;
   max-width: 880px;
+}
+
+.nav-flow-stick{
+  float:left;
+}
+
+.nav-main{
+  position: relative;
+  overflow: hidden;
+  width: 200px;
+}
+
+.nav-main-fixed-top{
+  position: fixed;
+  top: 0;
+}
+
+.nav-main-fixed-bottom{
+  position: fixed;
+  bottom: 0;
+}
+
+.nav-main-to-position{
+  position: absolute;
+}
+
+.nav-main-to-top{
+  position: absolute;
+  top: 0;
+}
+
+.nav-main-to-bottom{
+  position: absolute;
+  bottom: 0;
 }

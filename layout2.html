@@ -2,17 +2,34 @@
 <html lang="{% if page.lang %}{{ page.lang }}{% else %}fr{% endif %}">
 <!-- head.html -->
 <head>
+  <!-- Interpreter Parameters -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <!-- Head Site -->
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="author" content="Ludovic de Luna">
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-
+  <meta name="revisit-after" CONTENT="120 days">
+  <!-- Open Graph data -->
+  <meta property="og:site_name" content="Ludovic Blog">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="http://example.com/image.jpg">
+  <!-- Twitter data -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:image:src" content="http://fqdsfqs.jpg">
+  <meta property="twitter:creator" content="@ludovic_deluna">
+  <!-- Google data -->
+  <meta name="google-site-verification" content="+fdqsfqs=">
+  <!-- Style Sheet -->
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
   <link rel="stylesheet" href="layout2.css">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
+  <!-- Icon -->
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"><!-- 32x32 -->
+  <link rel="icon" href="/favicon.png" type="image/png" sizes="196x196">
 </head>
 <body dir="ltr">
   <div id="wrapper" class="bg-bottom">
@@ -35,33 +52,129 @@
         </div>
       </div>
     </header>
-    <section class="bg-top paged">
-      <div id="page-content">
-        <!-- content: page || post -->
-        <div id="page-content-articles">
-          <div role="main">
-            {{ content }}
+    <div class="bg-top">
+      <section class="paged">
+        <div id="page-content">
+          <!-- content: page || post -->
+          <div id="page-content-articles">
+            <div role="main">
+              <article class="post-article">
+                <h1>Hoc inmaturo interitu ipse quoque</h1>
+                <p>
+                  Post hoc impie perpetratum quod in aliis quoque iam timebatur,
+                  tamquam licentia crudelitati indulta per suspicionum nebulas
+                  aestimati quidam noxii damnabantur. quorum pars necati, alii
+                  puniti bonorum multatione actique laribus suis extorres nullo
+                  sibi relicto praeter querelas et lacrimas, stipe conlaticia
+                  victitabant, et civili iustoque imperio ad voluntatem converso
+                  cruentam, claudebantur opulentae domus et clarae.
+                </p>
+                <p>
+                  Hoc inmaturo interitu ipse quoque sui pertaesus excessit e vita
+                  aetatis nono anno atque vicensimo cum quadriennio imperasset.
+                  natus apud Tuscos in Massa Veternensi, patre Constantio
+                  Constantini fratre imperatoris, matreque Galla sorore Rufini et
+                  Cerealis, quos trabeae consulares nobilitarunt et praefecturae.
+                </p>
+                <p>
+                  Thalassius vero ea tempestate praefectus praetorio praesens ipse
+                  quoque adrogantis ingenii, considerans incitationem eius ad
+                  multorum augeri discrimina, non maturitate vel consiliis
+                  mitigabat, ut aliquotiens celsae potestates iras principum
+                  molliverunt, sed adversando iurgandoque cum parum congrueret,
+                  eum ad rabiem potius evibrabat, Augustum actus eius exaggerando
+                  creberrime docens, idque, incertum qua mente, ne lateret
+                  adfectans. quibus mox Caesar acrius efferatus, velut contumaciae
+                  quoddam vexillum altius erigens, sine respectu salutis alienae
+                  vel suae ad vertenda opposita instar rapidi fluminis
+                  irrevocabili impetu ferebatur.
+                </p>
+                <p>
+                  Et olim licet otiosae sint tribus pacataeque centuriae et nulla
+                  suffragiorum certamina set Pompiliani redierit securitas
+                  temporis, per omnes tamen quotquot sunt partes terrarum, ut
+                  domina suscipitur et regina et ubique patrum reverenda cum
+                  auctoritate canities populique Romani nomen circumspectum et
+                  verecundum.
+                </p>
+                <p>
+                  At nunc si ad aliquem bene nummatum tumentemque ideo honestus
+                  advena salutatum introieris, primitus tamquam exoptatus
+                  suscipieris et interrogatus multa coactusque mentiri, miraberis
+                  numquam antea visus summatem virum tenuem te sic enixius
+                  observantem, ut paeniteat ob haec bona tamquam praecipua non
+                  vidisse ante decennium Romam.
+                </p>
+                <!-- if not a page || index -->
+                <footer class="article-about">
+                  Partager cet article.
+                  <a rel="author" href="layout2_about.html">Ludovic de Luna</a>
+                  <a href="#twitter">Twitter</a>
+                  <a href="#G+">Google +</a>
+                  <a href="#Linkedin">Linkedin</a>
+                  <p class="meta-updated_at">
+                    Mis à jour le
+                    <time datetime="2015-03-22T10:23Z" pubdate>22 mars 2015</time>
+                  </p>
+                  <p class="meta-tags">
+                    Tags: Linux, App, Ruby
+                  </p>
+                </footer>
+              </article>
+            </div>
+            <!-- nav-pagination.html -->
+            <nav class="nav-pagination">
+              <a href="#">1</a> | <a href="#">2</a> | <a href="#">3</a>
+            </nav>
+            <section id="page-comments">
+              <!-- Reagissez -->
+              <h1>Réagissez ici !</h1>
+              <!-- nav-pagination.html -->
+              <nav class="nav-comments-pagination">
+                <a href="#">1</a> | <a href="#">2</a> | <a href="#">3</a>
+              </nav>
+            </section>
           </div>
-          <!-- nav-pagination.html -->
-          <nav class="nav-pagination"></nav>
+          <!-- nav-site.html -->
+          <div class="nav-flow-stick">
+            <aside id="page-content-nav" class="nav-main nav-main-to-top">
+              <header class="site-about">
+                <img src="" width="100" height="100">
+                <p itemscope itemtype="http://schema.org/Person" class="meta-author">
+                  Article proposé par par
+                  <a rel="author" href="layout2_about.html"><span itemprop="name">Ludovic de Luna</span></a>
+                  <!-- Voir ce link itemprop -->
+                  <a itemprop="url" href="http://www.your-company-site.com"/>
+                  <a itemprop="sameAs" href="http://www.facebook.com/your-company">FB</a>
+                  <a itemprop="sameAs" href="http://www.twitter.com/YourCompany">Twitter</a>
+                </p>
+              </header>
+              <img class="site-logo">
+              <nav class="nav-site">
+                <ul>
+                  <li><a href="#">Test lien 1</a></li>
+                  <li><a href="#">Test lien 1</a></li>
+                  <li><a href="#">Test lien 1</a></li>
+                  <li><a href="#">Test lien 1</a></li>
+                  <li><a href="#">Test lien 1</a></li>
+                  <li><a href="#">Test lien 1</a></li>
+                  <li><a href="#">Test lien 1</a></li>
+                  <li><a href="#">Test lien 1</a></li>
+                  <li><a href="#">Test lien 1</a></li>
+                  <li><a href="#">Test lien 1</a></li>
+                </ul>
+              </nav>
+            </aside>
+          </div>
         </div>
-        <!-- nav-site.html -->
-        <aside id="page-content-nav">
-          <div class="vertical-pined">
-            <img class="site-logo">
-            <nav class="nav-site"></nav>
-          </div>
-        </aside>
-      </div>
-      <!-- if not a page || index -->
-      <footer class="article-about"></footer>
-    </section>
+      </section>
+    </div>
     <!-- footer.html -->
   </div>
   <footer id="page-footer">
     <p class="site-about paged">
-    </p>
-    <ul class="site-links paged">
-    </ul>
+      Copyright, lien vers des sites partenaires autre ou interessants,
+      sponsoring, sitemap, etc...<br><br><br><br><br>
   </footer>
+  <script src="scripts/navscroll.js"></script>
 </body>
