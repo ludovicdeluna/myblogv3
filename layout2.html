@@ -48,7 +48,7 @@
         </p>
         <!-- If category -->
         <div class="header-title">
-          <div class="article-category">Catégorie</div>
+          <div class="article-category"><span class="category-logo-ruby">|</span>Catégorie</div>
         </div>
       </div>
     </header>
@@ -58,6 +58,55 @@
           <!-- content: page || post -->
           <div id="page-content-articles">
             <div role="main">
+
+              <!-- Index View -->
+              <article class="post-article article-preview">
+                <h1>
+                  <span class="category-logo-ruby">|</span>
+                  <a href="#">Hoc inmaturo interitu ipse quoque</a>
+                </h1>
+                <div class="article-about">
+                  <p class="meta-updated_at">
+                    Mis à jour le
+                    <time datetime="2015-03-22T10:23Z" pubdate>22 mars 2015</time>
+                  </p>
+                </div>
+                <a href="#"><img class="article-preview-photo" src="" width="100", height="100" alt="prev" title="Titre"></a>
+                <p class="article-preview-excerpt">
+                  Post hoc impie perpetratum quod in aliis quoque iam timebatur,
+                  tamquam licentia crudelitati indulta per suspicionum nebulas
+                  aestimati quidam noxii damnabantur. quorum pars necati, alii
+                  puniti bonorum multatione actique laribus suis extorres nullo
+                  sibi relicto praeter querelas et lacrimas, stipe conlaticia
+                  victitabant, et civili iustoque imperio ad voluntatem converso
+                  cruentam, claudebantur opulentae domus et clarae.
+                  <a href="#">read more</a>
+                </p>
+              </article>
+              <article class="post-article article-preview">
+                <h1>
+                  <span class="category-logo-ruby">|</span>
+                  <a href="#">Thalassius vero ea tempestate praefectus</a>
+                </h1>
+                <div class="article-about">
+                  <p class="meta-updated_at">
+                    Mis à jour le
+                    <time datetime="2015-03-18T10:23Z" pubdate>18 mars 2015</time>
+                  </p>
+                </div>
+                <a href="#"><img class="article-preview-photo" src="" width="100", height="100" alt="prev" title="Titre"></a>
+                <p class="article-preview-excerpt">
+                  Et olim licet otiosae sint tribus pacataeque centuriae et nulla
+                  suffragiorum certamina set Pompiliani redierit securitas
+                  temporis, per omnes tamen quotquot sunt partes terrarum, ut
+                  domina suscipitur et regina et ubique patrum reverenda cum
+                  auctoritate canities populique Romani nomen circumspectum et
+                  verecundum.
+                  <a href="#">read more</a>
+                </p>
+              </article>
+
+              <!-- One Article View -->
               <article class="post-article">
                 <h1>Hoc inmaturo interitu ipse quoque</h1>
                 <p>
@@ -108,23 +157,27 @@
                 <!-- if not a page || index -->
                 <footer class="article-about">
                   Partager cet article.
-                  <a rel="author" href="layout2_about.html">Ludovic de Luna</a>
                   <a href="#twitter">Twitter</a>
+                  <a href="#Linkedin">FB</a>
                   <a href="#G+">Google +</a>
                   <a href="#Linkedin">Linkedin</a>
-                  <p class="meta-updated_at">
+                  <a href="#Linkedin">Viadeo</a>
+                  <p>
                     Mis à jour le
-                    <time datetime="2015-03-22T10:23Z" pubdate>22 mars 2015</time>
+                    <time class="meta-updated-at" datetime="2015-03-22T10:23Z" pubdate>22 mars 2015</time>
+                    | Publié dans la catégorie <a class="meta-category" href="#">Category</a>.
                   </p>
                   <p class="meta-tags">
-                    Tags: Linux, App, Ruby
+                    #Tags : Linux, App, Ruby
                   </p>
                 </footer>
               </article>
             </div>
             <!-- nav-pagination.html -->
             <nav class="nav-pagination">
-              <a href="#">1</a> | <a href="#">2</a> | <a href="#">3</a>
+              <a href="#">&lt;&lt; Archives</a><br>
+              <a href="#">1</a> | <a href="#">2</a> | <a href="#">3</a><br>
+              <a href="#">Article précédent</a> | <a href="#">Article suivant</a>
             </nav>
             <section id="page-comments">
               <!-- Reagissez -->
@@ -173,6 +226,9 @@
   </div>
   <footer id="page-footer">
     <p class="site-about paged">
+      Ce site n'utilise pas de cookies pour vous traquer. Seul l'hébergeur
+      dispose d'un cookie afin de suivre la charge lié à l'access vers son infrastructure. Aucun
+      tracking n'est effectué par l'auteur de ce site (respect de la vie privée).
       Copyright, lien vers des sites partenaires autre ou interessants,
       sponsoring, sitemap, etc...<br><br><br><br><br>
   </footer>

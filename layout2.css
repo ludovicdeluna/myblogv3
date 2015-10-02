@@ -87,6 +87,7 @@ html, body{
 
 #page-content-nav {
   overflow: hidden;
+  padding-left: 20px;
 }
 
 #page-content .nav-pagination {
@@ -103,36 +104,44 @@ footer .article-about {
   max-width: 880px;
 }
 
-.nav-flow-stick{
+.nav-flow-stick {
   float:left;
 }
 
-.nav-main{
+.nav-main {
   position: relative;
   overflow: hidden;
   width: 200px;
 }
 
-.nav-main-fixed-top{
+.nav-main-fixed-top {
   position: fixed;
   top: 0;
 }
 
-.nav-main-fixed-bottom{
+.nav-main-fixed-bottom {
   position: fixed;
   bottom: 0;
 }
 
-.nav-main-to-position{
+.nav-main-to-position {
   position: absolute;
 }
 
-.nav-main-to-top{
+.nav-main-to-top {
   position: absolute;
   top: 0;
 }
 
-.nav-main-to-bottom{
+.nav-main-to-bottom {
   position: absolute;
   bottom: 0;
+}
+
+.article-preview-photo {
+  float: left;
+}
+.article-preview-excerpt {
+  padding-left: 100px;
+  text-align: justify;
 }
