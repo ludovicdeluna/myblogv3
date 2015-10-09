@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<!--
+Voir ça :
+https://medium.com/uprooted
+http://engineering.clever.com/
+http://mrale.ph/blog/2014/07/30/constructor-vs-objectcreate.html
+https://www.google.com/contributor/welcome/
+http://theultralinx.com/2012/11/15-stylish-examples-portfolio-web-design-inspiration/
+http://tutsplus.com/tutorials
+http://jobs.humancoders.com/
+-->
 <html lang="{% if page.lang %}{{ page.lang }}{% else %}fr{% endif %}">
 <!-- head.html -->
 <head>
@@ -42,9 +52,9 @@
       </div>
       <div class="headline-metas">
         <!-- If photo-credits -->
-        <p class="photo-credits">
-          <span class="photo-author">Crédit photo : </span>
-          <a href="." class="photo-links">Ludovic de Luna</a>
+        <p class="meta-photo">
+          <span class="meta-photo-desc">Crédits photo :</span>
+          <a class="meta-photo-link" href="." title="Site de l'auteur">Ludovic de Luna</a>
         </p>
         <!-- If category -->
         <div class="header-title">
@@ -53,7 +63,7 @@
       </div>
     </header>
     <div class="bg-top">
-      <section class="paged">
+      <section class="paged bg-bottom">
         <div id="page-content">
           <!-- content: page || post -->
           <div id="page-content-articles">
@@ -61,17 +71,16 @@
 
               <!-- Index View -->
               <article class="post-article article-preview">
-                <h1>
-                  <span class="category-logo-ruby">|</span>
-                  <a href="#">Hoc inmaturo interitu ipse quoque</a>
+                <h1><b class="category-logo-ruby">|</b>
+                    <a href="#">Hoc inmaturo interitu ipse quoque</a>
                 </h1>
-                <div class="article-about">
-                  <p class="meta-updated_at">
-                    Mis à jour le
+                <div class="meta-article">
+                  <span class="meta-article-updated-at">Mis à jour le
                     <time datetime="2015-03-22T10:23Z" pubdate>22 mars 2015</time>
-                  </p>
+                  </span>
                 </div>
-                <a href="#"><img class="article-preview-photo" src="" width="100", height="100" alt="prev" title="Titre"></a>
+                <a class="article-preview-photo"
+                   href="#"><img src="" alt="Photo article" title="Titre"></a>
                 <p class="article-preview-excerpt">
                   Post hoc impie perpetratum quod in aliis quoque iam timebatur,
                   tamquam licentia crudelitati indulta per suspicionum nebulas
@@ -82,32 +91,46 @@
                   cruentam, claudebantur opulentae domus et clarae.
                   <a href="#">read more</a>
                 </p>
+                <div class="meta-article-tags">
+                  #Tags:
+                  <ul>
+                    <li><a class="tag-link" href="#">Ruby</a></li>
+                    <li><a class="tag-link" href="#">Ruby on Rails</a></li>
+                  </ul>
+                </div>
               </article>
               <article class="post-article article-preview">
-                <h1>
-                  <span class="category-logo-ruby">|</span>
-                  <a href="#">Thalassius vero ea tempestate praefectus</a>
+                <h1><b class="category-logo-ruby">|</b>
+                    <a href="#">molliverunt, sed adversando iurgandoque</a>
                 </h1>
-                <div class="article-about">
-                  <p class="meta-updated_at">
-                    Mis à jour le
-                    <time datetime="2015-03-18T10:23Z" pubdate>18 mars 2015</time>
-                  </p>
+                <div class="meta-article">
+                  <span class="meta-article-updated-at">Mis à jour le
+                    <time datetime="2015-01-16T10:23Z" pubdate>16 janv. 2015</time>
+                  </span>
                 </div>
-                <a href="#"><img class="article-preview-photo" src="" width="100", height="100" alt="prev" title="Titre"></a>
+                <a class="article-preview-photo"
+                   href="#"><img src="" alt="Photo article" title="Titre"></a>
                 <p class="article-preview-excerpt">
-                  Et olim licet otiosae sint tribus pacataeque centuriae et nulla
-                  suffragiorum certamina set Pompiliani redierit securitas
-                  temporis, per omnes tamen quotquot sunt partes terrarum, ut
-                  domina suscipitur et regina et ubique patrum reverenda cum
-                  auctoritate canities populique Romani nomen circumspectum et
-                  verecundum.
+                  Post hoc impie perpetratum quod in aliis quoque iam timebatur,
+                  tamquam licentia crudelitati indulta per suspicionum nebulas
+                  aestimati quidam noxii damnabantur. quorum pars necati, alii
+                  puniti bonorum multatione actique laribus suis extorres nullo
+                  sibi relicto praeter querelas et lacrimas, stipe conlaticia
+                  victitabant, et civili iustoque imperio ad voluntatem converso
+                  cruentam, claudebantur opulentae domus et clarae.
                   <a href="#">read more</a>
                 </p>
+                <div class="meta-article-tags">
+                  #Tags:
+                  <ul>
+                    <li><a class="tag-link" href="#">Ruby</a></li>
+                    <li><a class="tag-link" href="#">Ruby on Rails</a></li>
+                  </ul>
+                </div>
               </article>
 
               <!-- One Article View -->
-              <article class="post-article">
+              <article class="post-article article-full">
                 <h1>Hoc inmaturo interitu ipse quoque</h1>
                 <p>
                   Post hoc impie perpetratum quod in aliis quoque iam timebatur,
@@ -155,66 +178,92 @@
                   vidisse ante decennium Romam.
                 </p>
                 <!-- if not a page || index -->
-                <footer class="article-about">
-                  Partager cet article.
-                  <a href="#twitter">Twitter</a>
-                  <a href="#Linkedin">FB</a>
-                  <a href="#G+">Google +</a>
-                  <a href="#Linkedin">Linkedin</a>
-                  <a href="#Linkedin">Viadeo</a>
-                  <p>
-                    Mis à jour le
-                    <time class="meta-updated-at" datetime="2015-03-22T10:23Z" pubdate>22 mars 2015</time>
-                    | Publié dans la catégorie <a class="meta-category" href="#">Category</a>.
-                  </p>
-                  <p class="meta-tags">
-                    #Tags : Linux, App, Ruby
-                  </p>
+                <footer class="meta-article">
+                  <div class="meta-article-share">
+                    Partager cet article.
+                    <a href="#twitter">Twitter</a>
+                    <a href="#Linkedin">FB</a>
+                    <a href="#G+">Google +</a>
+                    <a href="#Linkedin">Linkedin</a>
+                    <a href="#Linkedin">Viadeo</a>
+                  </div>
+                  <div>
+                    <span class="meta-article-updated-at">
+                      Mis à jour le <time datetime="2015-01-16T10:23Z" pubdate>16 janv. 2015</time>
+                    </span>
+                    <span class="meta-article-category">
+                      dans la catégorie <a  href="#">Catégorie</a>
+                    </span>
+                  </div>
+                  <div class="meta-article-tags">
+                    #Tags:
+                    <ul>
+                      <li><a class="tag-link" href="#">Ruby</a></li>
+                      <li><a class="tag-link" href="#">Ruby on Rails</a></li>
+                    </ul>
+                  </div>
                 </footer>
               </article>
             </div>
+
             <!-- nav-pagination.html -->
-            <nav class="nav-pagination">
-              <a href="#">&lt;&lt; Archives</a><br>
-              <a href="#">1</a> | <a href="#">2</a> | <a href="#">3</a><br>
-              <a href="#">Article précédent</a> | <a href="#">Article suivant</a>
+            <nav class="nav-article-pagination">
+              <a class="nav-article pagination-older" href="#">&lt;&lt; Archives</a><br>
+              <ul class="nav-article pagination-pages">
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+              </ul>
+              <a class="nav-article pagination-prev" href="#">Article précédent</a>
+              <a class="nav-article pagination-nex" href="#">Article suivant</a>
             </nav>
-            <section id="page-comments">
-              <!-- Reagissez -->
-              <h1>Réagissez ici !</h1>
+
+            <section id="article-comments">
+              <h1>Réagir à cet article</h1>
+              [... Voir l'outil pour les commentaires ...]
               <!-- nav-pagination.html -->
               <nav class="nav-comments-pagination">
-                <a href="#">1</a> | <a href="#">2</a> | <a href="#">3</a>
+                <ul class="nav-comments pagination-pages">
+                  <li><a href="#">1</a></li>
+                  <li><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                </ul>
               </nav>
             </section>
           </div>
+
           <!-- nav-site.html -->
           <div class="nav-flow-stick">
             <aside id="page-content-nav" class="nav-main nav-main-to-top">
               <header class="site-about">
                 <img src="" width="100" height="100">
-                <p itemscope itemtype="http://schema.org/Person" class="meta-author">
+                <p>
+                  oxii damnabantur. quorum pars necati, alii puniti bonorum
+                  multatione actique laribus suis
+                </p>
+                <ul class="author-links">
+                  <li><a class="link-fb" href="http://www.facebook.com/your-company">FB</a></li>
+                  <li><a class="link-twitter" href="http://www.twitter.com/YourCompany">Twitter</a></li>
+                  <li><a class="link-github" href="http://www.github.com/YourCompany">Github</a></li>
+                </ul>
+                <!--
                   Article proposé par par
-                  <a rel="author" href="layout2_about.html"><span itemprop="name">Ludovic de Luna</span></a>
+                  <a rel="author" itemscope itemtype="http://schema.org/Person" class="meta-author" href="layout2_about.html"><span itemprop="name">Ludovic de Luna</span></a>
+                -->
                   <!-- Voir ce link itemprop -->
+                <!--
                   <a itemprop="url" href="http://www.your-company-site.com"/>
                   <a itemprop="sameAs" href="http://www.facebook.com/your-company">FB</a>
                   <a itemprop="sameAs" href="http://www.twitter.com/YourCompany">Twitter</a>
+                -->
                 </p>
               </header>
-              <img class="site-logo">
-              <nav class="nav-site">
+              <nav class="nav-rubriques">
                 <ul>
-                  <li><a href="#">Test lien 1</a></li>
-                  <li><a href="#">Test lien 1</a></li>
-                  <li><a href="#">Test lien 1</a></li>
-                  <li><a href="#">Test lien 1</a></li>
-                  <li><a href="#">Test lien 1</a></li>
-                  <li><a href="#">Test lien 1</a></li>
-                  <li><a href="#">Test lien 1</a></li>
-                  <li><a href="#">Test lien 1</a></li>
-                  <li><a href="#">Test lien 1</a></li>
-                  <li><a href="#">Test lien 1</a></li>
+                  <li><a href="#">Ruby / Rails</a></li>
+                  <li><a href="#">Web</a></li>
+                  <li><a href="#">Outils</a></li>
+                  <li><a href="#">Humeur</a></li>
                 </ul>
               </nav>
             </aside>
@@ -226,10 +275,7 @@
   </div>
   <footer id="page-footer">
     <p class="site-about paged">
-      Ce site n'utilise pas de cookies pour vous traquer. Seul l'hébergeur
-      dispose d'un cookie afin de suivre la charge lié à l'access vers son infrastructure. Aucun
-      tracking n'est effectué par l'auteur de ce site (respect de la vie privée).
-      Copyright, lien vers des sites partenaires autre ou interessants,
+      lien vers des sites partenaires autre ou interessants,
       sponsoring, sitemap, etc...<br><br><br><br><br>
   </footer>
   <script src="scripts/navscroll.js"></script>

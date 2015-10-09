@@ -1,0 +1,125 @@
+---
+---
+<!DOCTYPE html>
+<!--
+Voir ça :
+https://medium.com/uprooted
+http://engineering.clever.com/
+http://mrale.ph/blog/2014/07/30/constructor-vs-objectcreate.html
+https://www.google.com/contributor/welcome/
+http://theultralinx.com/2012/11/15-stylish-examples-portfolio-web-design-inspiration/
+http://tutsplus.com/tutorials
+http://jobs.humancoders.com/
++ https://www.groovehq.com/blog/discontinuing-live-chat
+-->
+<html lang="{% if page.lang %}{{ page.lang }}{% else %}fr{% endif %}">
+<!-- head.html -->
+<head>
+  <!-- Interpreter Parameters -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Head Site -->
+  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="author" content="Ludovic de Luna">
+  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  <meta name="revisit-after" CONTENT="120 days">
+  <!-- Open Graph data -->
+  <meta property="og:site_name" content="Ludovic Blog">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="http://example.com/image.jpg">
+  <!-- Twitter data -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:image:src" content="http://fqdsfqs.jpg">
+  <meta property="twitter:creator" content="@ludovic_deluna">
+  <!-- Google data -->
+  <meta name="google-site-verification" content="+fdqsfqs=">
+  <!-- Style Sheet -->
+  <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
+  <!-- Icon -->
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"><!-- 32x32 -->
+  <link rel="icon" href="/favicon.png" type="image/png" sizes="196x196">
+</head>
+<body dir="ltr">
+  <div id="wrapper">
+    <header id="page-header">
+      <div class="header-background">
+        <div class="category"><span>Web Coding</span></div>
+        <p class="headline">A blog from a Web Ruby Dev</p>
+      </div>
+      <div class="about">Illustration par
+        <a class="about-link"
+           href="http://stoicstudio.com/gallery/">Stoic Studios</a>
+      </div>
+      <ul class="list-category">
+        <li><a href="#"class="list-link cat-home">
+          <svg version="1.1" width="18px" height="18px" viewBox="0 0 590 590" class="cat-home-icon">
+        		<g>
+        			<path d="M591.6,367.2c-11.261,0-20.399,9.139-20.399
+              20.399V530.4H40.8V387.6c0-11.261-9.139-20.399-20.4-20.399
+        			S0,376.339,0,387.6v163.2c0,11.261,9.139,20.4
+              20.4,20.4h571.2c11.261,0,20.4-9.14,20.4-20.4V387.6
+        			C612,376.339,602.86,367.2,591.6
+              367.2z M291.394,442.884c4.039,4.039,9.302,6.039
+              14.606,6.039c5.304,0,10.567-2,14.606-5.998
+        			l122.277-142.678c8.038-8.038,8.038-21.093
+              0-29.131c-8.037-8.038-21.053-8.038-29.131,0L326.4,373.075V61.2
+        			c0-11.261-9.14-20.4-20.4-20.4s-20.4,9.14-20.4
+              20.4v311.875l-87.394-101.959c-8.038-8.038-21.053-8.038-29.131,
+              0,c-8.038,8.038-8.038,21.093,0,29.131L291.394,442.884z"
+              fill="white"/>
+        		</g>
+          </svg>
+          Toute catégorie
+        </a></li>
+        <li><a href="#"class="list-link cat-code">Web Coding</a></li>
+        <li><a href="#"class="list-link cat-mongo">Database</a></li>
+        <li><a href="#"class="list-link cat-os">Système</a></li>
+        <li><a href="#"class="list-link cat-tools">Outils</a></li>
+        <li><a href="#"class="list-link cat-human">Humeure</a></li>
+      </ul>
+    </header>
+    <div role="main" id="page-main">
+      <div class="section-published-at"><time datetime="2015-03-22T10:23Z" pubdate>Mars 2015</time></div>
+      <article class="post-article preview">
+        <div class="category">Web Coding</div>
+        <h1><a href="#">Hoc inmaturo interitu ipse quoque</a></h1>
+        <a href="#" class="preview-article-link">
+          <p>
+            Post hoc impie perpetratum quod in aliis quoque iam timebatur,
+            tamquam licentia crudelitati indulta per suspicionum nebulas
+            aestimati quidam noxii damnabantur. quorum pars necati, alii
+            puniti bonorum multatione actique laribus suis extorres nullo
+            sibi relicto praeter querelas et lacrimas, stipe conlaticia
+            victitabant, et civili iustoque imperio ad voluntatem converso
+            cruentam, claudebantur opulentae domus et clarae.
+          </p>
+        </a>
+        <a class="preview-link" href="#">Lire la suite</a>
+      </article>
+      <article class="post-article preview">
+        <div class="category">Web Coding</div>
+        <h1><a href="#">molliverunt, sed adversando iurgandoque</a></h1>
+        <a href="#" class="preview-article-link">
+          <p>
+            Thalassius vero ea tempestate praefectus praetorio praesens ipse
+            quoque adrogantis ingenii, considerans incitationem eius ad
+            multorum augeri discrimina, non maturitate vel consiliis
+            mitigabat, ut aliquotiens celsae potestates iras principum
+            molliverunt, sed adversando iurgandoque cum parum congrueret,
+            eum ad rabiem potius evibrabat, Augustum actus eius exaggerando
+            creberrime docens, idque, incertum qua mente, ne lateret
+            adfectans. quibus mox Caesar acrius efferatus, velut contumaciae
+            quoddam vexillum altius erigens, sine respectu salutis alienae
+            vel suae ad vertenda opposita instar rapidi fluminis
+            irrevocabili impetu ferebatur.
+          </p>
+        </a>
+        <a class="preview-link" href="#">Lire la suite</a>
+      </article>
+    </div>
+  </div>
+</body>

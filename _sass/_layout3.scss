@@ -1,0 +1,193 @@
+/**
+ * Layout
+ **/
+#wrapper {
+  min-height: calc( 100% - 100px);
+  background-color: #EEE;
+}
+
+/** Reprise : Start **/
+#page-header {
+  position: relative;
+  margin-bottom: 50px;
+}
+
+#page-header .header-background {
+  position: relative;
+  display: table;
+  padding: 1px 0 0;
+  height: 45vw;
+  max-height: 48vh;
+  min-height: 190px;
+  width: 100%;
+  background: blue url(/images/header-picture.png) center center / cover;
+  text-align: center;
+  /* http://stoicstudio.com/gallery/ */
+}
+
+#page-header .headline {
+  display: table-cell;
+  padding: 10px 0 40px;
+  height: 100%;
+  vertical-align: middle;
+  color: white;
+  font-size: 28px;
+  text-shadow:  -1px -1px 2px rgba(0, 0, 0, 0.7),
+                1px -1px 2px rgba(0, 0, 0, 0.7),
+                -1px 1px 2px rgba(0, 0, 0, 0.7),
+                1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+#page-header .category {
+  position: absolute;
+  display: block;
+  width: 100%;
+  bottom: 0;
+  text-align: center;
+}
+
+#page-header .category span,
+#page-header .list-link {
+  display: inline-block;
+  margin: 0 10px 10px;
+  padding: 8px 15px;
+  border: solid 1px white;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 18px;
+  text-shadow: 1px 1px 5px black;
+  box-shadow: 2px 2px 10px black;
+  border-radius: 4px;
+}
+
+#page-header .list-link:focus {
+  text-decoration: underline;
+}
+
+#page-header .about {
+  position: absolute;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  padding-top: 5px;
+  font-size: 90%;
+}
+
+#page-header .about,
+#page-header .about-link:link,
+#page-header .about-link:visited,
+#page-main .section-published-at {
+  color: #a0a0a0;
+}
+
+#page-header a:link,
+#page-header a:visited {
+  text-decoration: none;
+}
+
+#page-header a:focus {
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+}
+
+#page-header .about-link:focus {
+  text-decoration: underline;
+  border-top: none;
+  border-bottom: none;
+}
+
+#page-header .about-link:hover,
+#page-header .about-link:active {
+  text-decoration: underline;
+}
+
+#page-header .list-category {
+  display: block;
+  width: 100%;
+  max-width: 880px;
+  margin: 70px auto 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+#page-header .list-category li {
+  display: inline-block;
+}
+
+#page-header .list-link {
+  font-size: 90%;
+  line-height: 26px;
+  box-shadow:   0 0 4px rgba(0, 0, 0, 0.7);
+  text-shadow:  -1px -1px 2px rgba(0, 0, 0, 0.6),
+                1px -1px 2px rgba(0, 0, 0, 0.6),
+                -1px 1px 2px rgba(0, 0, 0, 0.6),
+                1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+#page-header .cat-code {
+  background-color: #BD0808;
+}
+
+#page-header .cat-tools {
+  background-color: #BDBA22;
+}
+
+#page-header .cat-mongo {
+  background-color: #339C10;
+}
+
+#page-header .cat-os {
+  background-color: #2436BF;
+}
+
+#page-header .cat-human {
+  background-color: #9C6024;
+}
+
+#page-header .cat-home-icon {
+  vertical-align: sub;
+}
+#page-header .cat-home {
+  background-color: #721B87;
+}
+
+#page-main {
+  padding: 0 10px;
+}
+
+#page-main .post-article {
+  text-align: justify;
+}
+
+#page-main .preview {
+  overflow: hidden;
+  margin: 10px auto 40px;
+  width: 100%;
+  max-width: 650px;
+}
+
+#page-main .section-published-at {
+  text-align: center;
+}
+
+#page-main .old-preview-link {
+  display: inline-block;
+  background-color: #283E63;
+  padding: 4px 20px 2px;
+  border-radius: 0 0 10px 10px;
+  border-top: solid 2px #BD0808;
+  font-size: 90%;
+}
+
+#page-main .old-preview-link:link,
+#page-main .old-preview-link:visited {
+  color: white;
+}
+
+#page-main .preview-article-link:link,
+#page-main .preview-article-link:visited {
+  display: block;
+  color: inherit;
+  text-decoration: inherit;
+}
