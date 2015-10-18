@@ -54,42 +54,49 @@ http://jobs.humancoders.com/
         <a class="about-link"
            href="http://stoicstudio.com/gallery/">Stoic Studios</a>
       </div>
-      <ul class="list-category">
-        <li><a href="#"class="list-link cat-home">
-          <svg version="1.1" width="18px" height="18px" viewBox="0 0 590 590" class="cat-home-icon">
-        		<g>
-        			<path d="M591.6,367.2c-11.261,0-20.399,9.139-20.399
-              20.399V530.4H40.8V387.6c0-11.261-9.139-20.399-20.4-20.399
-        			S0,376.339,0,387.6v163.2c0,11.261,9.139,20.4
-              20.4,20.4h571.2c11.261,0,20.4-9.14,20.4-20.4V387.6
-        			C612,376.339,602.86,367.2,591.6
-              367.2z M291.394,442.884c4.039,4.039,9.302,6.039
-              14.606,6.039c5.304,0,10.567-2,14.606-5.998
-        			l122.277-142.678c8.038-8.038,8.038-21.093
-              0-29.131c-8.037-8.038-21.053-8.038-29.131,0L326.4,373.075V61.2
-        			c0-11.261-9.14-20.4-20.4-20.4s-20.4,9.14-20.4
-              20.4v311.875l-87.394-101.959c-8.038-8.038-21.053-8.038-29.131,
-              0,c-8.038,8.038-8.038,21.093,0,29.131L291.394,442.884z"
-              fill="white"/>
-        		</g>
-          </svg>
-          Toute catégorie
-        </a></li>
-        <li><a href="#"class="list-link cat-code">Web Coding</a></li>
-        <li><a href="#"class="list-link cat-mongo">Database</a></li>
-        <li><a href="#"class="list-link cat-os">Système</a></li>
-        <li><a href="#"class="list-link cat-tools">Outils</a></li>
-        <li><a href="#"class="list-link cat-human">Humeure</a></li>
-      </ul>
+      <nav>
+        <ul class="list-category">
+          <!--<li><a href="#"class="list-link cat-home">
+            <svg version="1.1" width="18px" height="18px" viewBox="0 0 590 590" class="cat-home-icon">
+          		<g>
+          			<path d="M591.6,367.2c-11.261,0-20.399,9.139-20.399
+                20.399V530.4H40.8V387.6c0-11.261-9.139-20.399-20.4-20.399
+          			S0,376.339,0,387.6v163.2c0,11.261,9.139,20.4
+                20.4,20.4h571.2c11.261,0,20.4-9.14,20.4-20.4V387.6
+          			C612,376.339,602.86,367.2,591.6
+                367.2z M291.394,442.884c4.039,4.039,9.302,6.039
+                14.606,6.039c5.304,0,10.567-2,14.606-5.998
+          			l122.277-142.678c8.038-8.038,8.038-21.093
+                0-29.131c-8.037-8.038-21.053-8.038-29.131,0L326.4,373.075V61.2
+          			c0-11.261-9.14-20.4-20.4-20.4s-20.4,9.14-20.4
+                20.4v311.875l-87.394-101.959c-8.038-8.038-21.053-8.038-29.131,
+                0,c-8.038,8.038-8.038,21.093,0,29.131L291.394,442.884z"
+                fill="white"/>
+          		</g>
+            </svg>
+            Toute catégorie
+          </a></li>-->
+          <li><a href="#"class="list-link cat-code">Web Coding</a></li>
+          <li><a href="#"class="list-link cat-mongo">Database</a></li>
+          <li><a href="#"class="list-link cat-os">Système</a></li>
+          <li><a href="#"class="list-link cat-tools">Outils</a></li>
+          <li><a href="#"class="list-link cat-human">Humeure</a></li>
+        </ul>
+      </nav>
     </header>
     <div role="main" id="page-main">
-      <div class="section-published-at"><time datetime="2015-03-22T10:23Z" pubdate>Mars 2015</time></div>
+      <div class="section-published-at">
+        Publié en
+        <time datetime="2015-03-22T10:23Z" pubdate>Mars 2015</time>
+      </div>
       <article class="post-article preview">
+        <!--
         <div class="article-meta">
           <a href="#" class="meta-link">Web Coding</a> :
           <a href="#" class="meta-link">Ruby</a>,
           <a href="#" class="meta-link">Coffescript</a>
         </div>
+        -->
         <h1><a href="#">Hoc inmaturo interitu ipse quoque</a></h1>
         <a href="#" class="preview-article-link">
           <p>
@@ -103,12 +110,18 @@ http://jobs.humancoders.com/
           </p>
         </a>
         <a class="preview-link" href="#">Lire la suite</a>
+        <ul class="tags tag-code">
+          <li><a href="#">Ruby</a></li>
+          <li><a href="#">Coffee Script</a></li>
+        </ul>
       </article>
       <article class="post-article preview">
+        <!--
         <div class="article-meta">
           <a href="#" class="meta-link">Web Coding</a> :
           <a href="#" class="meta-link">Ruby on Rails</a>
         </div>
+        -->
         <h1><a href="#">molliverunt, sed adversando iurgandoque</a></h1>
         <a href="#" class="preview-article-link">
           <p>
@@ -126,7 +139,40 @@ http://jobs.humancoders.com/
           </p>
         </a>
         <a class="preview-link" href="#">Lire la suite</a>
+        <ul class="tags tag-code">
+          <li><a href="#">Ruby on Rails</a></li>
+        </ul>
       </article>
+      <nav class="nav-article-pagination">
+        <a class="nav-article pagination-button" href="#">Plus d'articles</a><br>
+        <!--
+        <ul class="nav-article pagination-pages">
+          <li><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+        </ul>
+        <a class="nav-article pagination-prev" href="#">Article précédent</a>
+        <a class="nav-article pagination-nex" href="#">Article suivant</a>
+        -->
+      </nav>
     </div>
   </div>
+  <footer class="page-footer">
+    <div class="author">
+      <img src="" alt="Auteur">
+      <span>Ludovic</span>
+    </div>
+    <p class="description">
+      Articles proposés par Ludovic, développeur Ruby on Rails / Javascript.
+    </p>
+    <p class="socials-links">
+      <ul>
+        <li><a href="#" class="link-fb"><span>Facebook</span></a></li>
+        <li><a href="#" class="link-tw"><span>Twitter</span></a></li>
+        <li><a href="#" class="link-gl"><span>Google+</span></a></li>
+        <li><a href="#" class="link-ln"><span>Linkedin</span></a></li>
+        <li><a href="#" class="link-vd"><span>Viadeo</span></a></li>
+      </ul>
+    </p>
+  </footer>
 </body>

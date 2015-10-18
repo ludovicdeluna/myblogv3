@@ -100,6 +100,10 @@ a {
         color: $text-color;
         text-decoration: underline;
     }
+
+    &:focus {
+        text-decoration: underline;
+    }
 }
 
 
