@@ -4,6 +4,7 @@
 #wrapper {
   min-height: calc( 100% - 100px);
   background-color: #EEE;
+  border-bottom: 1px solid grey;
 }
 
 /** Reprise : Start **/
@@ -235,17 +236,28 @@
 
 #page-main .section-published-at {
   display: block;
-  width: 150px;
-  margin: 0 auto;
   padding: 10px 15px 20px;
   text-align: center;
-  border-top: 3px dotted #C4C4C4;
   color: #9C9C9C;
   font-size: 95%;
 }
 
+#page-main .section-published-at p {
+  width: 150px;
+  margin: 0 auto 1px;
+  display: inline-block;
+  width: 150px;
+  border-bottom: 1px solid #A4A4A4;
+}
+
 #page-main .section-published-at time {
+  display: block;
+  width: 150px;
+  margin: 0 auto;
   color: #7C7C7C;
+  background-color: #7E7E7E;
+  border-radius: 0 0 4px 4px;
+  color: white;
 }
 
 
@@ -282,4 +294,69 @@
   padding: 5px 8px;
   color: grey;
   font-size: 85%;
+}
+
+.page-up {
+  display: block;
+  position: relative;
+  top: 5px;
+  width: 30px;
+  height: 23px;
+  padding: 0;
+  line-height: 28px;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 10px 10px 0 0;
+  border: 1px solid grey;
+  border-bottom: none;
+  background: white;
+  font-size: 80%;
+  background: #CCC;
+  background: linear-gradient(to bottom, #CCC, #DDD);
+
+}
+
+#page-footer {
+  border-top: 1px solid white;
+  overflow: hidden;
+  padding-top: 30px;
+  background-color: #DDD;
+}
+
+#page-footer .page-meta {
+  margin: 10px auto 40px;
+  width: 100%;
+  max-width: 650px;
+}
+
+#page-footer .author {
+  float: right;
+  text-align: center;
+}
+
+#page-footer .description {
+  text-align: justify;
+  padding-left: 10px;
+  padding-right: 150px;
+}
+
+#page-footer .socials-links {
+  clear: both;
+}
+
+#page-footer .socials-links {
+  list-style: none;
+  text-align: center;
+}
+
+#page-footer .socials-links li {
+  display: inline;
+  padding: 10px 15px
+}
+
+#page-footer .author-picture {
+
+  border-radius: 110px;
+  border: 1px black solid;
+  border-color:#999;
 }

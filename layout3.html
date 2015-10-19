@@ -11,6 +11,7 @@ http://theultralinx.com/2012/11/15-stylish-examples-portfolio-web-design-inspira
 http://tutsplus.com/tutorials
 http://jobs.humancoders.com/
 + https://www.groovehq.com/blog/discontinuing-live-chat
++ http://slatecustom.com/
 -->
 <html lang="{% if page.lang %}{{ page.lang }}{% else %}fr{% endif %}">
 <!-- head.html -->
@@ -86,7 +87,7 @@ http://jobs.humancoders.com/
     </header>
     <div role="main" id="page-main">
       <div class="section-published-at">
-        Publié en
+        <p>Publié en</p>
         <time datetime="2015-03-22T10:23Z" pubdate>Mars 2015</time>
       </div>
       <article class="post-article preview">
@@ -155,24 +156,32 @@ http://jobs.humancoders.com/
         <a class="nav-article pagination-nex" href="#">Article suivant</a>
         -->
       </nav>
+      <a class="page-up" href="#wrapper">Up</a>
     </div>
   </div>
-  <footer class="page-footer">
-    <div class="author">
-      <img src="" alt="Auteur">
-      <span>Ludovic</span>
-    </div>
-    <p class="description">
-      Articles proposés par Ludovic, développeur Ruby on Rails / Javascript.
-    </p>
-    <p class="socials-links">
-      <ul>
+  <footer id="page-footer">
+    <div class="page-meta">
+      <div class="author">
+        <img class="author-picture" src="/images/about-me.png" width="110" height="110" alt="Auteur">
+        <p><a href="twitter">@ludovic_deluna</a></p>
+      </div>
+      <p class="description">
+        In the web world, I'm a +10 years back-end developper responsible to
+        build robust and highly optimized services that bring strong value to
+        data and process used by our product: the leading programmatic
+        advertising solution in the US market. The heart of <a
+        href="http://www.adomik.com" target="_blank">my company</a> beats for
+        Big Data and Machine Learning ; I've chance to board projects involving
+        heavy data analysis, comportementale pattern discovery technologies and
+        forecast simulations.
+      </p>
+      <ul class="socials-links">
         <li><a href="#" class="link-fb"><span>Facebook</span></a></li>
         <li><a href="#" class="link-tw"><span>Twitter</span></a></li>
         <li><a href="#" class="link-gl"><span>Google+</span></a></li>
         <li><a href="#" class="link-ln"><span>Linkedin</span></a></li>
         <li><a href="#" class="link-vd"><span>Viadeo</span></a></li>
       </ul>
-    </p>
+    </div>
   </footer>
 </body>
