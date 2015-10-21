@@ -104,7 +104,8 @@ a.btn-category {
   color: white;
 }
 
-.btn-category .limited {
+.btn-category.limited::after {
+  content: '...';
   position: absolute;
   left: 0;
   right: 0;
