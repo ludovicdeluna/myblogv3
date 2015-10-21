@@ -32,7 +32,7 @@
   padding: 1px 0 0;
   height: 45vw;
   max-height: 48vh;
-  min-height: 190px;
+  min-height: 250px;
   width: 100%;
   background: blue url(/images/header-picture.png) center center / cover;
   text-align: center;
@@ -125,6 +125,14 @@ a.button.tag-code:focus {
   color: #BD0808;
 }
 
+.category .tag {
+  display: block;
+  margin-top: 5px;
+  padding-top: 5px;
+  border-top: 1px solid white;
+  font-size: 80%;
+}
+
 .category .btn-category {
   font-size: 18px;
   text-shadow: 1px 1px 5px black;
@@ -189,8 +197,14 @@ a.button.tag-code:focus {
 .button.cat-home-icon {
   vertical-align: sub;
 }
+
 .button.cat-home {
   background-color: #721B87;
+}
+
+.button.cat-home:hover,
+.button.cat-home:focus {
+  background-color: #991CB8;
 }
 
 .headline {
