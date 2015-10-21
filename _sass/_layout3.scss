@@ -7,13 +7,22 @@
   border-bottom: 1px solid grey;
 }
 
-/** Reprise : Start **/
 #page-header {
   position: relative;
   margin-bottom: 50px;
 }
 
-#page-header .header-background {
+#page-header .credits {
+  position: absolute;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  padding-top: 5px;
+  font-size: 90%;
+  color: #a0a0a0;
+}
+
+.coverline {
   position: relative;
   display: table;
   padding: 1px 0 0;
@@ -23,51 +32,25 @@
   width: 100%;
   background: blue url(/images/header-picture.png) center center / cover;
   text-align: center;
-  /* http://stoicstudio.com/gallery/ */
 }
 
-#page-header .headline {
-  display: table-cell;
-  padding: 10px 0 40px;
-  height: 100%;
-  vertical-align: middle;
-  color: white;
-  font-size: 28px;
-  text-shadow:  -1px -1px 2px rgba(0, 0, 0, 0.7),
-                1px -1px 2px rgba(0, 0, 0, 0.7),
-                -1px 1px 2px rgba(0, 0, 0, 0.7),
-                1px 1px 2px rgba(0, 0, 0, 0.7);
-}
-
-#page-header .headline::before {
-  content: "“\00A0";
-  color: white;
-  font-size: 190%;
+.coverline .category {
   position: absolute;
-  margin-top: -8px;
-  margin-left: -24px;
-}
-
-#page-header .headline::after {
-  content: "\00A0”";
-  color: white;
-  font-size: 190%;
-  position: absolute;
-  margin-top: -4px;
-  margin-left: -10px;
-}
-
-
-#page-header .category {
-  position: absolute;
-  display: block;
-  width: 100%;
   bottom: 0;
+  width: 100%;
   text-align: center;
 }
 
-#page-header .category span,
-#page-header .list-link {
+a.button-category {
+  font-size: 90%;
+}
+
+a.button-category:link,
+a.button-category:visited {
+  color: white;
+}
+
+.button-category {
   display: inline-block;
   margin: 0 10px 10px;
   padding: 8px 15px;
@@ -80,21 +63,77 @@
   border-radius: 4px;
 }
 
-// #page-header .list-link:focus {
-//   text-decoration: underline;
-// }
-
-#page-header .about {
-  position: absolute;
-  left: 0;
-  text-align: center;
-  width: 100%;
-  padding-top: 5px;
-  font-size: 90%;
+.button-category.cat-code {
+  background-color: #BD0808;
 }
 
-#page-header .about,
-#page-header .about-link,
+.button-category.cat-tools {
+  background-color: #BDBA22;
+}
+
+.button-category.cat-mongo {
+  background-color: #339C10;
+}
+
+.button-category.cat-os {
+  background-color: #2436BF;
+}
+
+.button-category.cat-human {
+  background-color: #9C6024;
+}
+
+.button-category.cat-home-icon {
+  vertical-align: sub;
+}
+.button-category.cat-home {
+  background-color: #721B87;
+}
+
+.headline {
+  display: table-cell;
+  padding: 10px 0 40px;
+  height: 100%;
+  vertical-align: middle;
+  color: white;
+  font-size: 28px;
+  text-shadow:  -1px -1px 2px rgba(0, 0, 0, 0.7),
+                1px -1px 2px rgba(0, 0, 0, 0.7),
+                -1px 1px 2px rgba(0, 0, 0, 0.7),
+                1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.headline::before {
+  content: "“\00A0";
+  color: white;
+  font-size: 190%;
+  position: absolute;
+  margin-top: -8px;
+  margin-left: -24px;
+}
+
+.headline::after {
+  content: "\00A0”";
+  color: white;
+  font-size: 190%;
+  position: absolute;
+  margin-top: -4px;
+  margin-left: -10px;
+}
+
+.credits .source {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.credits a.source:hover,
+.credits a.source:focus {
+  color: #2A7AE2;
+}
+
+
+/** Continuer ici TODO **/
+
 #page-main .section-published-at {
   color: #a0a0a0;
 }
@@ -104,28 +143,7 @@
 }
 
 
-// #page-header a:link,
-// #page-header a:visited {
-//   text-decoration: none;
-// }
-
-// #page-header a:focus {
-//   border-top: 1px solid grey;
-//   border-bottom: 1px solid grey;
-// }
-
-// #page-header .about-link:focus {
-//   text-decoration: underline;
-//   border-top: none;
-//   border-bottom: none;
-// }
-
-// #page-header .about-link:hover,
-// #page-header .about-link:active {
-//   text-decoration: underline;
-// }
-
-#page-header .list-category {
+#page-header .categories {
   display: block;
   width: 100%;
   max-width: 880px;
@@ -135,7 +153,7 @@
   text-align: center;
 }
 
-#page-header .list-category li {
+#page-header .categories li {
   display: inline-block;
 }
 
@@ -149,32 +167,7 @@
                 1px 1px 2px rgba(0, 0, 0, 0.6);
 }
 
-#page-header .cat-code {
-  background-color: #BD0808;
-}
 
-#page-header .cat-tools {
-  background-color: #BDBA22;
-}
-
-#page-header .cat-mongo {
-  background-color: #339C10;
-}
-
-#page-header .cat-os {
-  background-color: #2436BF;
-}
-
-#page-header .cat-human {
-  background-color: #9C6024;
-}
-
-#page-header .cat-home-icon {
-  vertical-align: sub;
-}
-#page-header .cat-home {
-  background-color: #721B87;
-}
 
 #page-main {
   padding: 0 10px;
