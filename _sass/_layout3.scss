@@ -93,6 +93,7 @@ a.btn-more-articles:focus {
 }
 
 .btn-category {
+  position: relative;
   background-color: rgba(0, 0, 0, 0.5);
   margin: 0 10px 10px;
   border-radius: 4px;
@@ -101,6 +102,15 @@ a.btn-more-articles:focus {
 
 a.btn-category {
   color: white;
+}
+
+.btn-category .limited {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 120%;
+  text-shadow: none;
 }
 
 .button.btn-tag {
