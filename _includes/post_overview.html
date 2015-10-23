@@ -2,7 +2,7 @@
   <h1><a href="{{ post.url | prepend: site.baseurl }}" class="readmore">{{ post.title }}</a></h1>
   <a href="{{ post.url | prepend: site.baseurl }}" class="readmore">
     <p>
-      {{ post.excerpt | strip_html }}
+      {{ post.excerpt | markdownify | strip_html }}
     </p>
   </a>
   <a href="{{ post.url | prepend: site.baseurl }}">Lire la suite</a>

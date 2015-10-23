@@ -1,0 +1,10 @@
+{% capture monthly_post %}{{post.date | date_localize: "%B %Y" | capitalize}}{% endcapture %}
+{% if current_monthly != monthly_post %}{% capture current_monthly %}{{ monthly_post }} {% endcapture %}
+  <div class="publishing">
+    <div class="publishing-header">Publié en</div>
+    <div class="updated-at">
+      <time datetime="2015-03-22T10:23Z" pubdate>{{ monthly_post }}</time>
+    </div>
+  </div>
+{% endif %}
+{% include post_overview.html %}

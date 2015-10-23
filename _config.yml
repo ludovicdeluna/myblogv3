@@ -24,6 +24,7 @@ markdown: redcarpet # More respect of fenced backtick. Kramdown GFM is bad.
 # To use Rouge, install it before (gem install rouge). Be aware, latest version
 # is really unstable. To use it, uncomment bellow:
 # highlighter: rouge
+highlighter: pygments
 
 # Pagination
 paginate: 5
@@ -39,4 +40,4 @@ defaults:
       type: "posts"
     values:
       permalink: "posts/:categories/:year/:month/:day/:title/"
-      #excerpt_separator: "<!--more-->"
+      excerpt_separator: "<!--more-->"

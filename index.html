@@ -8,21 +8,12 @@ credits:
 <div role="main" id="page-main" class="all-posts">
   {% if paginator.page %}
     {% for post in paginator.posts %}
-      {% capture monthly_post %}{{post.date | date_localize: "%B %Y" | capitalize}}{% endcapture %}
-      {% if current_monthly != monthly_post %}{% capture current_monthly %}{{ monthly_post }} {% endcapture %}
-        <div class="publishing">
-          <div class="publishing-header">Publié en</div>
-          <div class="updated-at">
-            <time datetime="2015-03-22T10:23Z" pubdate>{{ monthly_post }}</time>
-          </div>
-        </div>
-      {% endif %}
-      {% include post_overview.html %}
+      {% include list.html %}
     {% endfor %}
     {% include pagination.html %}
   {% else %}
     {% for post in site.posts %}
-      ...
+      {% include list.html %}
     {% endfor %}
   {% endif %}
 </div>

@@ -1,6 +1,23 @@
 ---
-layout: page
+layout: default
 ---
+<div role="main" id="page-main" class="all-posts">
+  {% if paginator.page %}
+    {% for post in paginator.posts %}
+      {% for tag in post.tags %}
+        {% if page.tag == tag %}{% include list.html %}{% endif %}
+      {% endfor %}
+    {% endfor %}
+    {% include pagination.html %}
+  {% else %}
+    {% for post in site.posts %}
+      {% for tag in post.tags %}
+        {% if page.tag == tag %}{% include list.html %}{% endif %}
+      {% endfor %}
+    {% endfor %}
+  {% endif %}
+</div>
+{% comment %}
 {% assign current_year = 0 %}
 {% assign year_block = false %}
 {% for post in site.posts %}
@@ -12,3 +29,4 @@ layout: page
   {% endfor %}
 {% endfor %}
 {% if year_block %}</ul>{% endif %}
+{% endcomment %}

@@ -4,12 +4,15 @@ title:  "Deployer avec Git facilement"
 date:   2015-02-05 10:00:28
 categories: tools
 tags: bash github
-author: ludovic
+picture: pict1.jpg
 ---
+
 
 Les projets sont généralements hébergés sur un dépôt GIT. Qu'il s'agisse d'un
 dépôt sur serveur privé ou via un service (GitHub, Bitbucket), il est possible
 d'associer un déploiement automatique vers vos serveurs.
+
+
 
 Introduction
 ------------

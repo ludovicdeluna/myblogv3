@@ -3,17 +3,12 @@ layout: post
 title:  "Clé publique / privée chez le dev"
 date:   2015-01-28 17:05:31
 picture: pict2.jpg
-credit-author: Un super site sympa
-credit-link: http://www.google.com
 categories: os
 tags: PKI SSL SSH
 ---
 
-
-
 Introduction
 ------------
-
 Le principe de clé publique / privée est l'une des solutions la plus adaptée
 pour sécuriser les échanges électroniques. Qu'il s'agisse de crypter / décrypter
 des messages, signer des documents, certifier l'identité d'un service ou d'un

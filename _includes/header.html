@@ -16,10 +16,10 @@
     {{ page.credits["text"] }}
     <a class="source" target="_blank" href="{{ credits[1] }}">{{ credits[0] }}</a>
   </div>{% endif %}
-  {% unless page.categories %}
+  {% unless page.cartegories %}
   <nav>
     <ul class="categories">
-      {% if page.category or page.tag %}<li>
+      {% if page.categories or page.category or page.tag %}<li>
         <a href="{{ site.url | append: site.baseurl }}" class="button btn-category cat-home">Tous les articles</a>
       </li>{% endif %}
       {% for category in site.list_categories %}
