@@ -1,69 +1,47 @@
-body
-  #wrapper
-    header #page-header
-      .headline (background + txt)
-      .metas .paged (hors flux)
-        .photo-credits
-          .photo-author
-          .photo-link
-        .article-category
-    section .paged
-      #page-content
-        #page-content-article
-          role=main
-            article
-            article
-          nav.pagination
-        aside #page-content-nav max-width:fix
-          nav.content
-      footer.about
-  footer #page-footer
-
-
-  {}
-  #page-header
-    .headline
-    .metas (hors flux)
-    .photo-credits
-    .article-category
-
-  article
-    .metas
-
-  .metas-posted_at
-  .metas-placeline
-
-  .article-category
-  .article-tags
-  .article-links
-
-  .featured-content
-    .featured-photo
-    .photo-credits
-    .photo-author
-    .photo-link
-
-
-
-
-<!DOCTYPE html>
-<html lang="{% if page.lang %}{{ page.lang }}{% else %}fr{% endif %}">
 {% include head.html %}
 <body dir="ltr">
-  <div id="wrap">
+  <div id="wrapper">
     {% include header.html %}
-    <section>
-      {% include article-header.html %}
-      <div id="main-content" class="paged">
-        <div role="main">
-        {{ content }} <!-- include article tag -->
-        </div>
-        {% include navigation.html %}
-      </div>
-      <nav>Pagination</nav>
-      {% include article-footer.html %}
-    </section>
+    {{ content }}
+    <!-- TODO Reviser la pagination -->
+    <nav class="pagination">
+      <a class="button btn-more-articles" href="/">Plus d'articles</a><br>
+      <!--
+      <ul class="nav-article pagination-pages">
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+      </ul>
+      <a class="nav-article pagination-prev" href="#">Article précédent</a>
+      <a class="nav-article pagination-nex" href="#">Article suivant</a>
+      -->
+    </nav>
+    <a class="page-up" href="#wrapper">Up</a>
   </div>
-  {% include footer.html %}
-</body>
+  <footer id="page-footer">
+    <div class="page-meta">
+      <div class="author">
+        <img class="author-picture" src="/images/about-me.png" width="110" height="110" alt="Auteur">
+        <p><a href="twitter">@ludovic_deluna</a></p>
+      </div>
+      <p class="description">
+        In the web world, I'm a +10 years back-end developper responsible to
+        build robust and highly optimized services that bring strong value to
+        data and process used by our product: the leading programmatic
+        advertising solution in the US market. The heart of <a
+        href="http://www.adomik.com" target="_blank">my company</a> beats for
+        Big Data and Machine Learning ; I've chance to board projects involving
+        heavy data analysis, comportementale pattern discovery technologies and
+        forecast simulations.
+      </p>
+      <ul class="socials-links">
+        <li><a href="#" class="link-fb"><span>Facebook</span></a></li>
+        <li><a href="#" class="link-tw"><span>Twitter</span></a></li>
+        <li><a href="#" class="link-gl"><span>Google+</span></a></li>
+        <li><a href="#" class="link-ln"><span>Linkedin</span></a></li>
+        <li><a href="#" class="link-vd"><span>Viadeo</span></a></li>
+      </ul>
+    </div>
+  </footer>
+  </body>
 </html>

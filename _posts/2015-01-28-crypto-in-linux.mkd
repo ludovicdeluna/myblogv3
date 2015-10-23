@@ -5,7 +5,7 @@ date:   2015-01-28 17:05:31
 picture: pict2.jpg
 credit-author: Un super site sympa
 credit-link: http://www.google.com
-categories: securité
+categories: os
 tags: PKI SSL SSH
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title:  "Welcome to Jekyll!"
 date:   2014-07-29 09:06:15
-categories: jekyll
+categories: code
 lang: en
 tags: ruby javascript
 ---

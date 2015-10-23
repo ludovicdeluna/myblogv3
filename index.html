@@ -1,16 +1,28 @@
 ---
 layout: default
+picture: header-picture.png
+credits:
+  text: Crédit photo
+  link: Ludovic de Luna|http://ludovic.deluna.fr
 ---
-<section class="posts">
-  <h1>Derniers billets</h1>
+<div role="main" id="page-main" class="all-posts">
   {% if paginator.page %}
     {% for post in paginator.posts %}
+      {% capture monthly_post %}{{post.date | date_localize: "%B %Y" | capitalize}}{% endcapture %}
+      {% if current_monthly != monthly_post %}{% capture current_monthly %}{{ monthly_post }} {% endcapture %}
+        <div class="publishing">
+          <div class="publishing-header">Publié en</div>
+          <div class="updated-at">
+            <time datetime="2015-03-22T10:23Z" pubdate>{{ monthly_post }}</time>
+          </div>
+        </div>
+      {% endif %}
       {% include post_overview.html %}
     {% endfor %}
     {% include pagination.html %}
   {% else %}
     {% for post in site.posts %}
-      {% include post_overview.html %}
+      ...
     {% endfor %}
   {% endif %}
-</section>
+</div>
