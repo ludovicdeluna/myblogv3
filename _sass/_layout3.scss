@@ -38,11 +38,30 @@
   text-align: center;
 }
 
-.coverline .page-subject {
+.coverline .button {
   position: absolute;
   bottom: 0;
-  width: 100%;
-  text-align: center;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.tags::before {
+  content: '#';
+}
+
+.coverline .btn-category.tags {
+  font-size: 100%;
+  overflow: hidden;
+  padding: 8px 25px;
+  opacity: inherit;
+}
+
+.coverline .btn-category.tags::before {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  font-size: 370%;
+  opacity: 0.1;
 }
 
 .categories {
@@ -104,45 +123,6 @@ a.btn-category {
   color: white;
 }
 
-.page-subject .btn-category.btn-tag-selected {
-  font-size: 90%;
-}
-.page-subject .btn-tag-selected::before {
-  content: '#';
-  font-size: 110%;
-  position: absolute;
-  left: -25px;
-  padding: 0 5px;
-  margin-top: -2px;
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
-  background: rgba(0,0,0,0.5);
-  border-radius: 50px;
-  //color: white;
-}
-
-.btn-category.with-tag::after {
-  display: inline-block;
-  position: absolute;
-  content: '...';
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  color: white;
-  font-size: 120%;
-  font-weight: 400;
-  text-shadow: none;
-}
-
-a.button.with-tag:hover,
-a.button.with-tag:focus {
-  text-decoration: line-through;
-  background-color: grey;
-}
-
 .button.btn-tag {
   background: transparent;
   border: 1px solid;
@@ -179,14 +159,7 @@ a.button.tag-code:focus {
   padding-top: 0;
 }
 
-.btn-category.cat-empty .tag::before {
-  content: '#\00A0';
-  font-size: 110%;
-  font-weight: 600;
-  vertical-align: middle;
-}
-
-.page-subject .btn-category {
+.coverline .btn-category {
   font-size: 18px;
   text-shadow: 1px 1px 5px black;
   box-shadow: 2px 2px 10px black;
@@ -340,6 +313,15 @@ a.button.tag-code:focus {
   float: right;
 }
 
+article .tags::before {
+  position: absolute;
+  vertical-align: middle;
+  line-height: 28px;
+  margin-left: -15px;
+  font-size: 110%;
+  opacity: 0.5;
+}
+
 .tags {
   list-style: none;
   text-align: right;
@@ -349,29 +331,6 @@ a.button.tag-code:focus {
 .tags li {
   display: inline-block;
 }
-
-article .tags::before {
-  content: '#';
-  color: black;
-  left: -25px;
-  opacity: 0.4;
-  font-size: 110%;
-  font-weight: 200;
-}
-
-// .page-subject .btn-tag-selected::before {
-//   content: '#';
-//   font-size: 110%;
-//   position: absolute;
-//   left: -25px;
-//   padding: 0 5px;
-//   border-top: 1px solid white;
-//   border-bottom: 1px solid white;
-//   background: rgba(0,0,0,0.5);
-//   border-radius: 50px;
-//   //color: white;
-// }
-
 
 a.readmore {
   color: inherit;
