@@ -10,7 +10,7 @@
     <ul class="tags">
       {% for tag in post.tags %}
       <li>
-        <a class="button btn-tag tag-code" href="{{site.url}}{{site.baseurl}}/tags/{{ tag | append: '/index.html' }}">{{ tag }}</a>
+        <a class="button btn-tag tag-code" href="{{site.url}}{{site.baseurl}}/tags/{{ tag }}">{{ tag }}</a>
       </li>
       {% endfor %}
     </ul>

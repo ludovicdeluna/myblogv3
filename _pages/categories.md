@@ -6,4 +6,5 @@ permalink: /categories/
 menu: false
 ---
 
-Ici la liste des catégories
+Vous trouverez sur cette page la liste des catégories et le nombre d'articles
+contenue dans chacune d'elle.

@@ -1,0 +1,7 @@
+<ul>
+  {% for tags in site.tags %}
+    <li><a  class="site-category"
+            href="{{ site.baseurl }}/tags/{{ tags[0] }}"
+        >{{ tags[0] | capitalize }} ({{ tags[1].size }})</a></li>
+  {% endfor %}
+</ul>

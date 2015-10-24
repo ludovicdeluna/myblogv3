@@ -4,6 +4,7 @@
     {% if page.category %}<div class="button btn-category">
       {% for category in site.list_categories %}{% if category[0] == page.category %}{{ category[1] | capitalize }}{% endif %}{% endfor %}
     </div>
+    {% elsif page.categories == 'Catégories' or page.categories == 'Sujets' %}<div class="button btn-category">{{ page.categories }}</div>
     {% elsif page.categories %}<div class="button btn-category">{% assign current_cat = page.categories.first %}
       {% for category in site.list_categories %}{% if category[0] == current_cat %}{{ category[1] | capitalize }}{% endif %}{% endfor %}
     </div>
@@ -24,7 +25,7 @@
       </li>{% endif %}
       {% for category in site.list_categories %}
         {% if category[0] != page.category %}<li>
-          <a href="{{ category[0] | append: '/index.html' | prepend: '/categories/' | prepend: site.baseurl | prepend: site.url }}"
+          <a href="{{ category[0] | prepend: '/categories/' | prepend: site.baseurl | prepend: site.url }}"
              class="button btn-category cat-{{ category[0] }}">{{ category[1] }}</a>
         </li>{% endif %}
       {% endfor %}{% comment %}{% for category in site.categories %}.{% endfor %}{% endcomment %}

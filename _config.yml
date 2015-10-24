@@ -14,7 +14,7 @@ tag_title_prefix: Site avec &ldquo;
 # Added a spcial folder to keep all pages
 include: ['_pages']
 
-list_categories: { code: 'Web Coding', mongo: 'Database', os: 'Système', tools: 'Outils', human: 'Humain' }
+list_categories: { code: 'Web Coding', mongo: 'Database', os: 'Système', tools: 'Outils', human: 'Humeure' }
 
 # Build settings.
 #markdown: kramdown
@@ -39,5 +39,5 @@ defaults:
     scope:
       type: "posts"
     values:
-      permalink: "posts/:categories/:year/:month/:day/:title/"
-      excerpt_separator: "<!--more-->"
+      permalink: "categories/:categories/:year-:month-:day_:title.html"
+      #excerpt_separator: "<!--more-->"
