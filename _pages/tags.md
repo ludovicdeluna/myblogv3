@@ -1,9 +1,9 @@
 ---
 layout: tags
-title: Tags
+title: Sujets
 banner_image: sample-banner-image-3.jpg
 permalink: /tags/
-menu: false
+menu: true
 ---
 
 Ensemble des sujets traités sur le site.

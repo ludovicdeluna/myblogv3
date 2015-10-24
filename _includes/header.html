@@ -1,13 +1,8 @@
-{% if page.picture %}{% assign picture = page.picture | prepend: '/images/' | prepend: site.baseurl | prepend: site.url %}{% endif %}
+{% if page.picture %}{% assign picture = page.picture | prepend: '/images/' | prepend: site.baseurl | prepend: site.url %}{% endif %}{% assign article_category = page.categories | first %}
 <header id="page-header">
   <div class="coverline"{% if picture %} style="background-image: url({{ picture }})"{% endif %}>
-    {% if page.category %}<div class="button btn-category">
-      {% for category in site.list_categories %}{% if category[0] == page.category %}{{ category[1] | capitalize }}{% endif %}{% endfor %}
-    </div>
-    {% elsif page.categories == 'Catégories' or page.categories == 'Sujets' %}<div class="button btn-category">{{ page.categories }}</div>
-    {% elsif page.categories %}<div class="button btn-category">{% assign current_cat = page.categories.first %}
-      {% for category in site.list_categories %}{% if category[0] == current_cat %}{{ category[1] | capitalize }}{% endif %}{% endfor %}
-    </div>
+    {% if article_category %}<div class="button btn-category">{{ site.list_categories[article_category] }}</div>
+    {% elsif page.category %}<div class="button btn-category">{{ site.list_categories[page.category] }}</div>
     {% elsif page.tag %}<div class="button btn-category tags">{{ page.tag }}</div>{% endif %}
     {% if page.headline %}<div class="headline">{{ page.headline }}</div>
     {% else %}<div class="headline">A blog from a Web Ruby Dev</div>{% endif %}

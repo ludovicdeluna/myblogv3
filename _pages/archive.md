@@ -1,7 +1,7 @@
 ---
 layout: archive
 title: Archives
-permalink: pages/archive.html
+permalink: categories/archive.html
 picture: pict1.jpg
 credits: A great style
 link: http://www.google.com

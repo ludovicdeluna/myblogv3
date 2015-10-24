@@ -1,7 +1,6 @@
 <ul>
-  {% for category in site.categories %}
-    <li><a  class="site-category"
-            href="{{ site.baseurl }}/categories/{{ category[0] | downcase }}/index.html"
-        >{{ category[0] | capitalize }} ({{ category[1].size }})</a></li>
-  {% endfor %}
+  {% for category in site.categories %}{% assign article_category = category | first %}<li>
+    <a href="{{ site.baseurl }}/categories/{{ category[0] | downcase }}/index.html"
+           class="site-category">{{ site.list_categories[article_category] | capitalize }} ({{ category[1].size }})</a>
+  </li>{% endfor %}
 </ul>

@@ -8,6 +8,7 @@ module Jekyll
       self.process(@name)
       self.read_yaml(File.join(base, '_layouts'), 'category.html')
       self.data["category"] = category
+      self.data["menu"] = false
       cat_title_prefix = site.config['cat_title_prefix'] || 'Category &ldquo;'
       cat_title_suffix = site.config['cat_title_suffix'] || '&rdquo;'
       self.data['title'] = "#{cat_title_prefix}#{category.capitalize}#{cat_title_suffix}"
