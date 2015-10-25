@@ -12,19 +12,14 @@
     {{ page.credits["text"] }}
     <a class="source" target="_blank" href="{{ credits[1] }}">{{ credits[0] }}</a>
   </div>{% endif %}
-  {% unless page.cartegories %}
   <nav>
     <ul class="categories">
-      {% if page.categories or page.category or page.tag %}<li>
+      {% if page.categories or page.category or page.tag or page.menu %}<li>
         <a href="{{ site.url | append: site.baseurl }}" class="button btn-category cat-home">Tous les articles</a>
       </li>{% endif %}
-      {% for category in site.list_categories %}
-        {% if category[0] != page.category %}<li>
-          <a href="{{ category[0] | prepend: '/categories/' | prepend: site.baseurl | prepend: site.url }}"
-             class="button btn-category cat-{{ category[0] }}">{{ category[1] }}</a>
-        </li>{% endif %}
-      {% endfor %}{% comment %}{% for category in site.categories %}.{% endfor %}{% endcomment %}
+      {% for category in site.categories %}{% assign licat = category | first %}<li>{% if licat != page.category %}
+      <a href="{{ category[0] | prepend: '/categories/' | prepend: site.baseurl | prepend: site.url }}" class="button btn-category cat-{{ category[0] }}">{{ site.list_categories[licat] | capitalize }}</a>
+    </li>{% endif %}{% endfor %}
     </ul>
   </nav>
-  {% endunless %}
 </header>
