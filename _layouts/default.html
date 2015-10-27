@@ -2,6 +2,7 @@
 <body dir="ltr">
   <div id="wrapper">
     {% include header.html %}
+    <!-- Content -->
     {{ content }}
     <!-- TODO Reviser la pagination -->
     <nav class="pagination">{% capture cat_root %}{{ site.url | append: site.baseurl }}/categories/{% endcapture %}

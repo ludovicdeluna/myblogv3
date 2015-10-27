@@ -1,25 +1,21 @@
-{% if page.picture %}{% assign picture = page.picture | prepend: '/images/' | prepend: site.baseurl | prepend: site.url %}{% endif %}{% assign article_category = page.categories | first %}
-<header id="page-header">
+<!-- Header -->
+<header id="page-header">{% assign category = page.categories | first %}
   <div class="coverline"{% if picture %} style="background-image: url({{ picture }})"{% endif %}>
-    {% if article_category %}<div class="button btn-category">{{ site.list_categories[article_category] }}</div>
+    {% if category %}<div class="button btn-category">{{ site.list_categories[category]] }}</div>
     {% elsif page.category %}<div class="button btn-category">{{ site.list_categories[page.category] }}</div>
-    {% elsif page.tag %}<div class="button btn-category tags">{{ page.tag }}</div>{% endif %}
-    {% if page.headline %}<div class="headline">{{ page.headline }}</div>
+    {% elsif page.tag %}<div class="button btn-category tags">{{ page.tag }}</div>
+    {% endif %}{% if page.headline %}<div class="headline">{{ page.headline }}</div>
     {% else %}<div class="headline">A blog from a Web Ruby Dev</div>{% endif %}
-  </div>
-  {% if page.credits %}<div class="credits">
-    {% if page.credits and page.credits["link"] %}{% assign credits = page.credits["link"] | split: '|' %}{% endif %}
+  </div>{% if page.credits and page.credits["link"] %}{% assign credits = page.credits["link"] | split: '|' %}
+  <div class="credits">
     {{ page.credits["text"] }}
     <a class="source" target="_blank" href="{{ credits[1] }}">{{ credits[0] }}</a>
   </div>{% endif %}
   <nav>
-    <ul class="categories">
-      {% if page.categories or page.category or page.tag or page.menu %}<li>
-        <a href="{{ site.url | append: site.baseurl }}" class="button btn-category cat-home">Tous les articles</a>
-      </li>{% endif %}
-      {% for category in site.categories %}{% assign licat = category | first %}<li>{% if licat != page.category %}
-      <a href="{{ category[0] | prepend: '/categories/' | prepend: site.baseurl | prepend: site.url }}" class="button btn-category cat-{{ category[0] }}">{{ site.list_categories[licat] | capitalize }}</a>
-    </li>{% endif %}{% endfor %}
+    <ul class="categories">{% if category or page.category or page.tag or page.menu %}
+      <li><a href="{{ site.url | append: site.baseurl }}" class="button btn-category cat-home">Tous les articles</a></li>
+      {% endif %}{% for category in site.categories %}{% assign licat = category | first %}{% if licat != page.category %}
+      <li><a href="{{ category[0] | prepend: '/categories/' | prepend: site.baseurl | prepend: site.url }}" class="button btn-category cat-{{ category[0] }}">{{ site.list_categories[licat] | capitalize }}</a></li>{% endif %}{% endfor %}
     </ul>
   </nav>
 </header>

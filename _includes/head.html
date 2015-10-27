@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>{% assign full_url = site.url | append: site.baseurl %}
 <html lang="{% if page.lang %}{{ page.lang }}{% else %}fr{% endif %}">
 <head>
   <meta charset="utf-8">
@@ -8,16 +8,17 @@
   <meta name="author" content="Ludovic de Luna">
   <meta name="google-site-verification" content="+fdqsfqs=">
   <meta name="revisit-after" CONTENT="120 days">
-  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | trucate: 160 }}{% else %}{{ site.description | strip_newlines }}{% endif %}">
-  <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl | prepend: site.url }}">
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
-  <link rel="shortcut icon" href="{{ "/favicon.ico" | prepend: site.baseurl | prepend: site.url }}" type="image/x-icon">
-  <link rel="icon" href="{{ "/favicon.png" | prepend: site.baseurl | prepend: site.url }}" type="image/png" sizes="196x196">
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
+  {% if page.excerpt %}<meta name="description" content="{{ page.excerpt | strip_html | strip_newlines | trucate: 160 }}">
+  {% else %}<meta name="description" content="{{ site.description | strip_newlines }}">{% endif %}
+  <link rel="stylesheet" href="{{ "/css/main.css" | prepend: full_url }}">
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: full_url }}">
+  <link rel="shortcut icon" href="{{ "/favicon.ico" | prepend: full_url }}" type="image/x-icon">
+  <link rel="icon" href="{{ "/favicon.png" | prepend: full_url }}" type="image/png" sizes="196x196">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: full_url }}" />
   <meta property="og:site_name" content="Ludovic Blog">
   <meta property="og:type" content="article">
   <meta property="og:image" content="http://example.com/image.jpg">
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:image:src" content="http://fqdsfqs.jpg">
   <meta property="twitter:creator" content="@ludovic_deluna">
-</head>
+</head>{% if page.picture %}{% assign picture = page.picture | prepend: '/images/' | prepend: full_url %}{% endif %}
