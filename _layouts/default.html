@@ -4,8 +4,10 @@
     {% include header.html %}
     {{ content }}
     <!-- TODO Reviser la pagination -->
-    <nav class="pagination">
-      <a class="button btn-more-articles" href="/">Plus d'articles</a><br>
+    <nav class="pagination">{% capture cat_root %}{{ site.url | append: site.baseurl }}/categories/{% endcapture %}
+      {% if page.categories %}<a class="button btn-more-articles" href="{{ cat_root }}{{ page.categories.first }}">Plus d'articles sur : {{ site.list_categories[page.categories.first] }}</a><br>
+      {% elsif page.category %}<a class="button btn-more-articles" href="{{ cat_root }}{{ page.category }}">Plus d'articles sur : {{ site.list_categories[page.category] }}</a><br>
+      {% else %}<a class="button btn-more-articles" href="/">Plus d'articles</a><br>{% endif %}
       <!--
       <ul class="nav-article pagination-pages">
         <li><a href="#">1</a></li>
