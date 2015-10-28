@@ -2,54 +2,9 @@
 <body dir="ltr">
   <div id="wrapper">
     {% include header.html %}
-    <!-- Content -->
     {{ content }}
-    <!-- TODO Reviser la pagination -->
-    <nav class="pagination">{% capture cat_root %}{{ site.url | append: site.baseurl }}/categories/{% endcapture %}
-      {% if page.categories %}<a class="button btn-more-articles" href="{{ cat_root }}{{ page.categories.first }}">Plus d'articles sur : {{ site.list_categories[page.categories.first] }}</a><br>
-      {% elsif page.category %}<a class="button btn-more-articles" href="{{ cat_root }}{{ page.category }}">Plus d'articles sur : {{ site.list_categories[page.category] }}</a><br>
-      {% else %}<a class="button btn-more-articles" href="/">Plus d'articles</a><br>{% endif %}
-      <!--
-      <ul class="nav-article pagination-pages">
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-      </ul>
-      <a class="nav-article pagination-prev" href="#">Article précédent</a>
-      <a class="nav-article pagination-nex" href="#">Article suivant</a>
-      -->
-    </nav>
     <a class="page-up" href="#wrapper">Up</a>
   </div>
-  <footer id="page-footer">
-    <div class="page-meta">
-      <div class="author">
-        <img class="author-picture" src="/images/about-me.png" width="110" height="110" alt="Auteur">
-        <p><a href="twitter">@ludovic_deluna</a></p>
-      </div>
-      <p class="description">
-        In the web world, I'm a +10 years back-end developper responsible to
-        build robust and highly optimized services that bring strong value to
-        data and process used by our product: the leading programmatic
-        advertising solution in the US market. The heart of <a
-        href="http://www.adomik.com" target="_blank">my company</a> beats for
-        Big Data and Machine Learning ; I've chance to board projects involving
-        heavy data analysis, comportementale pattern discovery technologies and
-        forecast simulations.
-      </p>
-      <ul class="socials-links">
-        <li><a href="#" class="link-fb"><span>Facebook</span></a></li>
-        <li><a href="#" class="link-tw"><span>Twitter</span></a></li>
-        <li><a href="#" class="link-gl"><span>Google+</span></a></li>
-        <li><a href="#" class="link-ln"><span>Linkedin</span></a></li>
-        <li><a href="#" class="link-vd"><span>Viadeo</span></a></li>
-      </ul>
-      <ul class="other-pages">
-        {% for page in site.pages %}
-          {% if page.menu %}<li><a href="{{ page.url }}">{{ page.title }}</a></li>{% endif %}
-        {% endfor %}
-      </ul>
-    </div>
-  </footer>
-  </body>
+  {% include footer.html %}
+</body>
 </html>

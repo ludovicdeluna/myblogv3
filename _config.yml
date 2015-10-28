@@ -27,7 +27,7 @@ markdown: redcarpet # More respect of fenced backtick. Kramdown GFM is bad.
 highlighter: pygments
 
 # Pagination
-paginate: 5
+paginate: 2
 
 # Category generated page config
 cat_title_prefix: "Catégorie : "

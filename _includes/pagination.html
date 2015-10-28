@@ -1,3 +1,19 @@
+<!-- TODO Reviser la pagination -->
+<nav class="pagination">{% capture cat_root %}{{ site.url | append: site.baseurl }}/categories/{% endcapture %}
+  {% if page.categories %}<a class="button btn-more-articles" href="{{ cat_root }}{{ page.categories.first }}">Plus d'articles sur : {{ site.list_categories[page.categories.first] }}</a><br>
+  {% elsif page.category %}<a class="button btn-more-articles" href="{{ cat_root }}{{ page.category }}">Plus d'articles sur : {{ site.list_categories[page.category] }}</a><br>
+  {% else %}<a class="button btn-more-articles" href="/">Tous les articles</a><br>{% endif %}
+  <!--
+  <ul class="nav-article pagination-pages">
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+  </ul>
+  <a class="nav-article pagination-prev" href="#">Article précédent</a>
+  <a class="nav-article pagination-nex" href="#">Article suivant</a>
+  -->
+</nav>
+
 {% if paginator.total_pages > 1 %}
   <div class="pagination">
     Nombre de posts: {{ paginator.total_posts }}
@@ -13,7 +29,7 @@
       <a class="pagination-item newer btn " href="{{ paginator.previous_page_path | prepend: site.baseurl | append: '/' | replace: '//', '/' }}">Newer</a>
     {% else %}
       <span class="pagination-item newer btn-disabled">Newer</span>
-    {% endif %}  
+    {% endif %}
 
   </div>
 {% endif %}

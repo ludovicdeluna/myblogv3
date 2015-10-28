@@ -14,6 +14,11 @@ layout: default
     </ul>
   {% endif %}
 </article>
+{% if page.categories %}
+  <nav class="pagination">
+    <a class="button btn-more-articles" href="{{site.url | append: site.baseurl}}/categories/{{ page.categories.first }}">{{ site.list_categories[page.categories.first] }}</a><br>
+  </nav>
+{% endif %}
 {% comment %}
 <article>
   <div class="post-header">

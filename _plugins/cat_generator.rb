@@ -1,4 +1,5 @@
 module Jekyll
+  require 'pry'
   class CatIndex < Page
     def initialize(site, base, dir, category)
       @site = site
@@ -25,6 +26,7 @@ module Jekyll
       end
     end
     def write_category_index(site, dir, category)
+      binding.pry
       index = CatIndex.new(site, site.source, dir, category)
       index.render(site.layouts, site.site_payload)
       index.write(site.dest)
